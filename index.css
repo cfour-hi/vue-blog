@@ -3,18 +3,31 @@ html {
 	height: 100%;
 }
 
-body  {
+body {
 	width: 100%;
 	height: 100%;
 	padding: 0;
 	margin: 0;
+	overflow: hidden;
+	font-family: Tahoma, Helvetica, Arial, sans-serif;
 }
 
-/* header */
+h2 {
+	text-align: center;
+}
+
+blockquote {
+  margin: 1.5em;
+  padding-left: 1.5em;
+  border-left: solid 3px #e73;
+}
+
+/* header >>> */
 header {
 	position: relative;
+	float: left;
 	display: table;
-	width: 33%;
+	width: 25%;
 	height: 100%;
 	color: #fff;
 	background: #333 url(res/header-bg.jpg);
@@ -27,6 +40,7 @@ header .header-content {
 	vertical-align: middle;
 	z-index: 1;
 	width: 100%;
+	min-width: 200px;
 	text-align: center;
 }
 
@@ -62,19 +76,85 @@ header .header-overlay {
 .header-content .hr-better {
 	width: 15%;
 }
+/* <<< header */
 
-.header-content nav .article {
-	vertical-align: super;
-	padding: 10px 20px;
-	border: 1px solid #bbb;
-	border-radius: 20px;
-	margin-right: 10px;
-	text-decoration: none;
-	color: #bbb;
+/* content >>> */
+.content {
+	float: left;
+	box-sizing: border-box;
+	width: 70%;
+	height: 100%;
+	padding: 2% 5%;
+	overflow: auto;
 }
 
-.header-content nav .article:hover {
-	border: 1px solid #fff;
+.content > * {
+	max-width: calc(100% - 7px);
+}
+
+.content::-webkit-scrollbar {
+	width: 7px;
+}
+
+.content::-webkit-scrollbar-thumb {
+	background-color: #999;
+}
+
+/* article list >>> */
+.article-list dd {
+  border-bottom: 1px solid #bbb;
+	margin-left: 0;
+}
+
+.article-list dd:hover {
+	border-bottom-color: transparent;
+	background-color: #cdd;
+	cursor: pointer;
+}
+
+.article-list h2 {
+	padding-top: 20px;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.article-list em {
+	display: block;
+	font-size: 12px;
+	text-align: center;
+	color: #999;
+}
+/* <<< article list*/
+/* article content >>> */
+article p {
+	line-height: 1.7;
+	text-indent: 2em;
+	color: #666;
+}
+
+blockquote p {
+	text-indent: inherit;
+}
+/* <<< article content */
+
+/* <<< content */
+
+/* more >>> */
+.more {
+	float: left;
+	position: relative;
+	width: 5%;
+	height: 100%;
+	text-align: center;
 	color: #fff;
+	background-color: #333;
 }
-/* header end */
+
+/* footer >>> */
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+/* >>> footer */
+/* >>> more */
