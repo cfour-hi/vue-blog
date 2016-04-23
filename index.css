@@ -22,6 +22,30 @@ blockquote {
   border-left: solid 3px #e73;
 }
 
+blockquote p {
+	text-indent: inherit !important;
+}
+
+.create-time {
+	display: block;
+  font-size: 12px;
+  text-align: center;
+  color: #999;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+
 /* header >>> */
 header {
 	position: relative;
@@ -79,30 +103,30 @@ header .header-overlay {
 /* <<< header */
 
 /* content >>> */
-.content {
+#content {
 	float: left;
 	box-sizing: border-box;
-	width: 70%;
+	width: 75%;
 	height: 100%;
 	padding: 2% 5%;
 	overflow: auto;
 }
 
-.content > * {
+#content > * {
 	max-width: calc(100% - 7px);
 }
 
-.content::-webkit-scrollbar {
-	width: 7px;
+#content::-webkit-scrollbar {
+	width: 5px;
 }
 
-.content::-webkit-scrollbar-thumb {
-	background-color: #999;
+#content::-webkit-scrollbar-thumb {
+	background-color: #8be;
 }
 
 /* article list >>> */
 .article-list dd {
-  border-bottom: 1px solid #bbb;
+  border-bottom: 1px solid #eee;
 	margin-left: 0;
 }
 
@@ -117,38 +141,16 @@ header .header-overlay {
 	margin-top: 0;
 	margin-bottom: 10px;
 }
-
-.article-list em {
-	display: block;
-	font-size: 12px;
-	text-align: center;
-	color: #999;
-}
 /* <<< article list*/
 /* article content >>> */
 article p {
 	line-height: 1.7;
+	font-size: 14px;
 	text-indent: 2em;
 	color: #666;
 }
-
-blockquote p {
-	text-indent: inherit;
-}
 /* <<< article content */
-
 /* <<< content */
-
-/* more >>> */
-.more {
-	float: left;
-	position: relative;
-	width: 5%;
-	height: 100%;
-	text-align: center;
-	color: #fff;
-	background-color: #333;
-}
 
 /* footer >>> */
 footer {
@@ -157,4 +159,3 @@ footer {
 	width: 100%;
 }
 /* >>> footer */
-/* >>> more */

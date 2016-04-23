@@ -1,3 +1,8 @@
+/**
+ * 需要考虑的问题：
+ * 1. 因为默认情况下是匿名权限访问 github 接口的，每小时只提供最多 60 次请求。当然也是可以在 github 上解除这个限制的，不过我TM就是想把文章数据内容缓存起来，只有当我更新了内容才取重新请求最新数据。咋整？
+ */
+
 ;(function(window, document, $, undefined) {
 
 	var _config = {
@@ -6,7 +11,7 @@
 		per_page: 15
 	}
 
-	var _articleList = [
+	var ARTICLELIST = [
 	  {
 	    "url": "https://api.github.com/repos/Monine/study/issues/6",
 	    "repository_url": "https://api.github.com/repos/Monine/study",
@@ -261,20 +266,16 @@
 	  }
 	];
 
-	// $.ajax({
-	// 	type: 'GET',
-	// 	url: 'https://api.github.com/repos/' + _config.owner + '/' + _config.repo + '/issues?filter=created&page=1&per_page=' + _config.per_page,
-	// 	error: function() {
+	/*$.ajax({
+		type: 'GET',
+		url: 'https://api.github.com/repos/' + _config.owner + '/' + _config.repo + '/issues?filter=created&page=1&per_page=' + _config.per_page,
+		error: function() {
 
-	// 	},
-	// 	success: function(result) {
+		},
+		success: function(result) {
 
-	// 		$('.content').html(getArticleListTpl(result));
-	// 	}
-	// });
-
-
-	$('.content').html(getArticleListTpl(_articleList));
+		}
+	});
 
 	$('.article-list').on('click', 'dd', function() {
 
@@ -282,11 +283,15 @@
 
 		var number = parseInt($(_this).attr('data-number'), 10);
 
-		_articleList.forEach(function(item, index, list) {
-			if (item.number === number) {
-				$('.content').html('<article><h2>' + item.title + '</h2>' + marked(item.body) + '</article>');
+		for (var i = 0, len = _articleList.length; i < len; i++) {
+			if (_articleList[i].number === number) {
+				var time = getParseTime(_articleList[i].created_at);
+
+				$('.content').html('<article><h2>' + _articleList[i].title + '</h2><em class="create-time">' + time + '</em>' + marked(_articleList[i].body) + '</article>');
+
+				break;
 			}
-		});
+		}
 	});
 
 	function getArticleListTpl(list) {
@@ -295,20 +300,119 @@
 		
 		list.forEach(function(item, index, list) {
 
-			var date = new Date(Date.parse(item.created_at));
-			var time = date.getFullYear() + ' - ' + (date.getMonth() + 1) + ' - ' + date.getDate();
+			var time = getParseTime(item.created_at);
 
 			var quote = marked(item.body).split('</blockquote>')[0].split('<blockquote>')[1];
-			quote? quote = '<blockquote>' + quote.trim() + '</blockquote>' : quote = '<blockquote>这家伙居然没写引言！</blockquote>';
+			quote? quote = '<blockquote>' + quote.trim() + '</blockquote>' : quote = '<blockquote><p>这家伙居然没写引言！</p></blockquote>';
 
 			template += '<dd data-number=' + item.number + '>'
 						+ '<h2>' + item.title + '</h2>'
-						+ '<em>' + time + '</em>'
+						+ '<em class="create-time">' + time + '</em>'
 						+ quote
 						+ '</dd>';
 		});
 
 		return template += '</dl>';
+	}*/
+
+	// 获取解析后的文章发布时间
+	function getArticleTime(time) {
+		var date = new Date(Date.parse(time));
+
+		return date.getFullYear() + ' - ' + (date.getMonth() + 1) + ' - ' + date.getDate();
 	}
+
+	// 获取文章引言
+	function getArticleQuote(body) {
+		var quote = marked(body);
+
+		if (quote.indexOf('<blockquote>') !== -1) {
+			quote = quote.split('</blockquote>')[0].split('<blockquote>')[1].split('</p>')[0].split('<p>')[1];
+		} else {
+			quote = '这家伙居然没写引言！';
+		}
+
+		return quote;
+	}
+
+	// 获取文章所需数据
+	function getArticleData(data) {
+		var articleList = [];
+
+		data.forEach(function(item, index, arr) {
+			articleList.push({
+				title: item.title,
+				time: getArticleTime(item.created_at),
+				quote: getArticleQuote(item.body),
+				id: item.id
+			});
+		});
+
+		return articleList;
+	}
+
+	// 获取当前文章内容
+	function getCurrentArticle(tag) {
+		var mark = tag.split('-');
+		var article = ARTICLELIST[mark[1]];
+
+		return {
+			title: article.title,
+			time: getArticleTime(article.created_at),
+			content: marked(article.body)
+		};
+	}
+
+	var router = new VueRouter();
+
+	var ArticleList = Vue.extend({
+		data: function() {
+			return {
+				articleList: getArticleData(ARTICLELIST)
+			}
+		},
+		replace: false,
+		template: '<dl class="article-list">\
+								<dd v-for="article in articleList" v-on:click="goArticle(article.id, $index)">\
+									<h2>{{ article.title }}</h2>\
+									<em class="create-time">{{ article.time }}</em>\
+									<blockquote>\
+										<p>{{ article.quote }}</p>\
+									</blockquote>\
+								</dd>\
+							</dl>',
+		methods: {
+			goArticle: function(id, index) {
+				router.go({
+					name: 'article',
+					params: {
+						articleTag: id + '-' + index,
+					}
+				})
+			}
+		}
+	});
+
+	var ArticleContent = Vue.extend({
+		data: function() {
+			return {
+				curArticle: getCurrentArticle($route.params.articleTag)
+			};
+		},
+		template: '<article>\
+								<h2>{{ curArticle.title }}</h2>\
+								<em class="create-time">{{ curArticle.time }}</em>\
+								{{ curArticle.content }}\
+							</article>'
+	})
+
+	router.map({
+		'/:articleTag': {
+			name: 'article',
+			component: ArticleContent
+		}
+	});
+
+	router.start(ArticleList, '#content');
 
 })(window, document, jQuery);

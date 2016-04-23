@@ -15,7 +15,7 @@
 	<meta name="robots" content="index, follow">
 	<link rel="stylesheet" href="index.css">
 </head>
-<body>
+<body id="body">
 	<header>
 		<div class="header-content">
 			<img class="headimg" src="res/headimg.jpg" alt="head portrait">
@@ -33,13 +33,12 @@
 		</div>
 		<div class="header-overlay"></div>
 	</header>
-	<section class="content"></section>
-	<section class="more">
-		<footer>
-			<p>&#169; 2016 </p>
-		</footer>
+	<section id="content">
+		<router-view></router-view>
 	</section>
 	<script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+	<script src="http://cdn.bootcss.com/vue/1.0.17/vue.min.js"></script>
+	<script src="http://cdn.bootcss.com/vue-router/0.7.11/vue-router.min.js"></script>
 	<script src="http://cdn.bootcss.com/marked/0.3.5/marked.min.js"></script>
 	<script src="index.js"></script>
 </body>
