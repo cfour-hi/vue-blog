@@ -3,7 +3,7 @@
  * 1. 因为默认情况下是匿名权限访问 github 接口的，每小时只提供最多 60 次请求。当然也是可以在 github 上解除这个限制的，不过我TM就是想把文章数据内容缓存起来，只有当我更新了内容才取重新请求最新数据。咋整？
  */
 
-;(function(window, document, $, undefined) {
+;(function(window, document, undefined) {
 
 	var _config = {
 		owner: 'monine',
@@ -415,4 +415,4 @@
 
 	router.start(ArticleList, '#content');
 
-})(window, document, jQuery);
+})(window, document);
