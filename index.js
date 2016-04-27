@@ -330,7 +330,7 @@
 		template: '<header>'
 						+		'<div class="header-content">'
 						+			'<img class="headimg" src="res/img/headimg.jpg" alt="head portrait">'
-						+			'<h1>Monine</h1>'
+						+			'<h1 v-link="{ path: \'/\' }">Monine</h1>'
 						+			'<p><strong>Be better</strong></p>'
 						+			'<a class="path-link" v-link="{ path: \'/me\' }">Blog</a>'
 						+		'</div>'
@@ -342,23 +342,39 @@
 	});
 
 	var Me = Vue.extend({
+		data: function() {
+			return {
+				nav: [{
+					name: 'ME',
+					path: '/me'
+				}, {
+					name: 'STUDY',
+					path: '/me/study'
+				}],
+				active: 'ME'
+			}
+		},
 		template: '<nav class="blog-nav">'
 						+		'<ul>'
-						+			'<li class="active">ME</li>'
-						+			'<li>STUDY</li>'
+						+			'<li v-for="item in nav" v-bind:class="{ \'active\': active === item.name }" v-on:click="switchNav(item.name)" v-link="{ path: item.path }">{{ item.name }}</li>'
 						+		'</ul>'
 						+	'</nav>'
-						+	'<router-view></router-view>'
-						+ '<footer>2016</footer>'
+						+ '<div class="content-body">'
+						+		'<router-view></router-view>'
+						+	'</div>'
+						+ '<footer>2016</footer>',
+		methods: {
+			switchNav: function(str) {
+				this.active = str;
+			}
+		}
 	});
 
 	var AboutMe = Vue.extend({
-		template: '<div class="content-body">'
-						+		'<h2>Lorem</h2>'
+		template: '<h2>Lorem</h2>'
 						+			'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad dolores sed qui asperiores sequi harum vel, id minima magni perspiciatis, mollitia adipisci vero, praesentium ea voluptatibus delectus ipsam quod explicabo.</p>'
 						+			'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad dolores sed qui asperiores sequi harum vel, id minima magni perspiciatis, mollitia adipisci vero, praesentium ea voluptatibus delectus ipsam quod explicabo.</p>'
 						+			'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad dolores sed qui asperiores sequi harum vel, id minima magni perspiciatis, mollitia adipisci vero, praesentium ea voluptatibus delectus ipsam quod explicabo.</p>'
-						+	'</div>'
 	});
 
 	var StudyComp = Vue.extend({
@@ -397,12 +413,12 @@
 			subRoutes: {
 				'/': {
 					component: AboutMe
+				},
+				'/study': {
+					component: StudyComp
 				}
 			}
-		},
-		// '/study': {
-		// 	component: StudyComp
-		// },
+		}
 		// '/study/:articleTag': {
 		// 	component: ArticleComp
 		// }
@@ -420,6 +436,8 @@
 			$('h1').addClass('side-h1');
 
 			transition.next();
+		} else {
+			transition.next();
 		}
 	});
 
@@ -430,6 +448,8 @@
 			setTimeout(function() {
 				$('.blog-nav').addClass('side-blog-nav');
 			}, 444);
+		} else {
+
 		}
 	});
 
