@@ -1,4 +1,12 @@
-# vue-blog
+# 基于 Github issues 的单页面博客
+
+## 参考：[wuhaoworld - 基于 Github issues 的单页面静态博客][https://github.com/wuhaoworld/github-issues-blog]
+
+我跟 wuhaoworld 同学的博客主要区别在于所使用的JS框架上
+
+他使用 `ractive` 生成页面组件、`director` 来管理路由
+
+而我则对应使用的是 `vue` 和 `vue-router`
 
 > A Vue.js project
 
@@ -23,5 +31,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

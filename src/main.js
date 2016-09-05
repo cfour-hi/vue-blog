@@ -9,9 +9,7 @@ import ArticleContent from './components/Article-Content.vue'
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
-const router = new VueRouter({
-  history: true
-})
+const router = new VueRouter()
 
 router.map({
   // '/': {
