@@ -50,8 +50,8 @@
           params: {
             filter: 'created',
             page: this.nextPage,
-            per_page: prePage,
-            access_token: app.access_token
+            per_page: prePage
+            // access_token: app.access_token
           }
         }).then((response) => {
           if (!response.data.length) return _this.$dispatch('update-has-more-article', false)

@@ -29,7 +29,7 @@
       // 获取单个 issues 内容，标识为 api 返回内容的 number 属性。
       this.$http.get(app['host'] + 'repos/' + app['owner'] + '/' + app['repo'] + '/issues/' + articleNum, {
         params: {
-          access_token: app['access_token']
+          // access_token: app['access_token']
         }
       }).then((response) => {
         // 添加文章内容所需属性
