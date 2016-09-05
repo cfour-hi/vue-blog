@@ -164,10 +164,6 @@
     box-sizing: border-box;
   }
   .la-ball-clip-rotate {
-    display: block;
-    top: 1rem;
-    width: 100%;
-    font-size: 0;
     text-align: center;
     color: #0097da;
   }
@@ -335,27 +331,27 @@
     from {opacity: 1;}
     to {
       opacity: 0;
-      -webkit-transform: translate3d(0, 100%, 0);
-      transform: translate3d(0, 100%, 0);
+      -webkit-transform: translate(0, 100%);
+      transform: translate(0, 100%);
     }
   }
   @keyframes fadeOutDown {
     from {opacity: 1;}
     to {
       opacity: 0;
-      -webkit-transform: translate3d(0, 100%, 0);
-      transform: translate3d(0, 100%, 0);
+      -webkit-transform: translate(0, 100%);
+      transform: translate(0, 100%);
     }
   }
   .fadeupdown-transition {
     
   }
   .fadeupdown-enter {
-    -webkit-animation: fadeInUp 1s;
-    animation: fadeInUp 1s;
+    -webkit-animation: fadeInUp .5s;
+    animation: fadeInUp .5s;
   }
   .fadeupdown-leave {
-    -webkit-animation: fadeOutDown 1s;
-    animation: fadeOutDown 1s;
+    -webkit-animation: fadeOutDown .3s;
+    animation: fadeOutDown .3s;
   }
 </style>
