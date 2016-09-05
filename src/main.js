@@ -16,12 +16,17 @@ router.map({
   //   component: Article
   // },
   '/article': {
+    name: 'article-list',
     component: Article
   },
   '/article/:num': {
     name: 'article-content',
     component: ArticleContent
   }
+})
+
+router.beforeEach((transition) => {
+  transition.next()
 })
 
 router.afterEach((transition) => {

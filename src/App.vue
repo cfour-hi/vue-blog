@@ -8,7 +8,8 @@
       </nav>
     </header>
     <div id="app-container" class="app-container">
-      <router-view :next-page="nextPage" :has-more-article="hasMoreArticle" :article-num="$route.params.num" @update-next-page="updateNextPage" @update-has-more-article="updateHasMoreArticle"></router-view>
+      <router-view :loading="loading" :next-page="nextPage" :has-more-article="hasMoreArticle" :article-num="$route.params.num" @update-loading="updateLoading" @update-next-page="updateNextPage" @update-has-more-article="updateHasMoreArticle"></router-view>
+      <div class="la-ball-clip-rotate" v-show="loading"><div></div></div>
     </div>
     <footer id="app-footer" class="app-footer">
       <p>© 2016 Monine</p>
@@ -20,11 +21,15 @@
   export default {
     data () {
       return {
+        loading: false,
         nextPage: 1,
         hasMoreArticle: true
       }
     },
     methods: {
+      updateLoading (bool) {
+        this.loading = bool
+      },
       updateNextPage () {
         this.nextPage += 1
       },
@@ -35,7 +40,74 @@
   }
 </script>
 
-<style scoped>
+<style>
+  /* base start */
+  html {
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 100px;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  body {
+    position: relative;
+    height: 100%;
+    margin-left: calc(100vw - 100%);
+    font: 16px/1.5 "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,sans-serif;
+  }
+  a {
+    color: #333;
+    text-decoration: none;
+  }
+  button {
+    outline: none;
+  }
+  blockquote {
+    padding: 0 10px;
+    margin: 0;
+    border-left: 5px solid #ccc;
+    font-size: 14px;
+    color: #333;
+    line-height: 2;
+  }
+  pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 12px;
+    background-color: #f7f7f7;
+    border-radius: 3px;
+    word-wrap: break-word;
+  }
+  code {
+    padding: 0.2em 0.5em;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 3px;
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  }
+  pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+  .hljs-built_in, .hljs-params, .hljs-number, .hljs-literal {
+    color: #0086b3
+  }
+  .hljs-string {
+    color: #183691;
+  }
+  .hljs-keyword, .hljs-meta, .hljs-name {
+    color: #a71d5d;
+  }
+  .hljs-title {
+    color: #795da3;
+  }
+  .hljs-comment {
+    color: #969896;
+  }
+  .hljs-regexp {
+    color: #183691;
+  }
   .app-wrapper {
     display: -webkit-flex;
     display: flex;
@@ -45,6 +117,7 @@
     height: 100%;
     margin: auto;
   }
+  /* base end */
   .app-header {
     -webkit-flex: 0 0 auto;
     flex: 0 0 auto;
@@ -77,5 +150,212 @@
     text-align: center;
     font-size: 12px;
     color: #999;
+  }
+  /*!
+   * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+   * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+   * Licensed under MIT
+   */
+  .la-ball-clip-rotate,
+  .la-ball-clip-rotate > div {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .la-ball-clip-rotate {
+    display: block;
+    top: 1rem;
+    width: 100%;
+    font-size: 0;
+    text-align: center;
+    color: #0097da;
+  }
+  .la-ball-clip-rotate.la-dark {
+    color: #333;
+  }
+  .la-ball-clip-rotate > div {
+    display: inline-block;
+    float: none;
+    background-color: currentColor;
+    border: 0 solid currentColor;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border-width: 2px;
+    border-bottom-color: transparent;
+    border-radius: 100%;
+    -webkit-animation: ball-clip-rotate .75s linear infinite;
+    -moz-animation: ball-clip-rotate .75s linear infinite;
+    -o-animation: ball-clip-rotate .75s linear infinite;
+    animation: ball-clip-rotate .75s linear infinite;
+  }
+  .la-ball-clip-rotate.la-sm {
+    width: 16px;
+    height: 16px;
+  }
+  .la-ball-clip-rotate.la-sm > div {
+    width: 16px;
+    height: 16px;
+    border-width: 1px;
+  }
+  .la-ball-clip-rotate.la-2x {
+    width: 64px;
+    height: 64px;
+  }
+  .la-ball-clip-rotate.la-2x > div {
+    width: 64px;
+    height: 64px;
+    border-width: 4px;
+  }
+  .la-ball-clip-rotate.la-3x {
+    width: 96px;
+    height: 96px;
+  }
+  .la-ball-clip-rotate.la-3x > div {
+    width: 96px;
+    height: 96px;
+    border-width: 6px;
+  }
+  /*
+  * Animation
+  */
+  @-webkit-keyframes ball-clip-rotate {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    50% {
+      -webkit-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @-moz-keyframes ball-clip-rotate {
+    0% {
+      -moz-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    50% {
+      -moz-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+    100% {
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes ball-clip-rotate {
+    0% {
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    50% {
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+    100% {
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes ball-clip-rotate {
+    0% {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    50% {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  /* Load Awesome end */
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  @-webkit-keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
+  @keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
+  .fade-enter {
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+  .fade-leave {
+    -webkit-animation: fadeOut 1s;
+    animation: fadeOut 1s;
+  }
+  @-webkit-keyframes fadeInUp {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
+  }
+  @-webkit-keyframes fadeOutDown {
+    from {opacity: 1;}
+    to {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+  @keyframes fadeOutDown {
+    from {opacity: 1;}
+    to {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+  .fadeupdown-transition {
+    
+  }
+  .fadeupdown-enter {
+    -webkit-animation: fadeInUp 1s;
+    animation: fadeInUp 1s;
+  }
+  .fadeupdown-leave {
+    -webkit-animation: fadeOutDown 1s;
+    animation: fadeOutDown 1s;
   }
 </style>

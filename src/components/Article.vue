@@ -1,7 +1,7 @@
 <template>
   <section class="article-list-page">
-    <ul class="article-list">
-      <li class="article-list__item-li" v-for="article in articleListInfo">
+    <ul class="article-list" v-if="$route.name === 'article-list' && articleListInfo.length" transition="fade">
+      <li class="article-list__item-li" v-for="article in articleListInfo" track-by="id">
         <h2 class="article-list__item-title">
           <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
         </h2>
@@ -14,8 +14,10 @@
         </p>
       </li>
     </ul>
-    <button class="article-list__more article-list__read-btn" type="button" v-if="articleListInfo.length && hasMoreArticle" @click="moreArticle">MORE</button>
-    <p class="article-list__no-more" v-if="articleListInfo.length && !hasMoreArticle">没有更多的文章</p>
+    <p class="article-list__more-wrap" v-if="articleListInfo.length && hasMoreArticle" transition="fadeupdown">
+      <button class="article-list__more article-list__read-btn" type="button" @click="moreArticle">MORE</button>
+    </p>
+    <p class="article-list__no-more" v-if="articleListInfo.length && !hasMoreArticle" transition="fadeupdown">没有更多的文章</p>
   </section>
 </template>
 
@@ -27,11 +29,15 @@
 
   export default {
     ready () {
-      if (cacheArticleList.length) return (this.articleListInfo = cacheArticleList)
+      if (cacheArticleList.length) {
+        return (this.articleListInfo = cacheArticleList)
+      } else {
+        this.$dispatch('update-loading', true)
+      }
 
       this.getArticleList()
     },
-    props: ['nextPage', 'hasMoreArticle'],
+    props: ['loading', 'nextPage', 'hasMoreArticle'],
     data () {
       return {
         articleListInfo: []
@@ -39,7 +45,7 @@
     },
     methods: {
       moreArticle () {
-        if (!this.hasMoreArticle) return
+        this.$dispatch('update-loading', true)
 
         this.getArticleList()
       },
@@ -54,6 +60,8 @@
             // access_token: app.access_token
           }
         }).then((response) => {
+          if (this.loading) this.$dispatch('update-loading', false)
+
           if (!response.data.length) return _this.$dispatch('update-has-more-article', false)
 
           // 添加文章内容所需属性
@@ -72,9 +80,6 @@
 </script>
 
 <style>
-  .article-list-page {
-    padding: 0.3rem 0;
-  }
   .article-list {
     padding: 0;
   }
@@ -97,19 +102,6 @@
     font-size: 12px;
     color: #999;
   }
-  .article-list__item-li .article-list__read {
-    display: inline-block;
-    margin: 0.1rem 0;
-    border: 1px solid #0097da;
-    color: #0097da;
-  }
-  .article-list__item-li .article-list__read:hover {
-    color: #fff;
-    background-color: #33ace1;
-  }
-  .article-list__item-li .article-list__read:active {
-    background-color: #008fcf;
-  }
   .article-list__item-li .article-list__item-tags {
     font-size: 12px;
     color: #f60;
@@ -125,6 +117,26 @@
   .article-list__item-li .article-info__label:active {
     color: #f26100;
   }
+  .article-list__item-li .article-list__read {
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    margin: 0.1rem 0;
+    border: 1px solid #0097da;
+    color: #0097da;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+  .article-list__item-li .article-list__read:hover {
+    color: #fff;
+    background-color: #33ace1;
+  }
+  .article-list__item-li .article-list__read:active {
+    background-color: #008fcf;
+  }
+  .article-list__more-wrap {
+    text-align: center;
+  }
   .article-list__more {
     border: 1px solid #f60;
     color: #f60;
@@ -139,17 +151,13 @@
     background-color: #f26100;
   }
   .article-list__read-btn {
-    position: relative;
-    left: 50%;
     padding: 0.05rem 0.1rem;
     border-radius: 3px;
     font-size: 12px;
     -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
+            transition-property: color, background-color;
     -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+            transition-duration: 0.3s;
   }
   .article-list__no-more {
     font-size: 12px;

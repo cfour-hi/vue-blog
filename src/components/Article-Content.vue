@@ -1,6 +1,6 @@
 <template>
   <section class="article-content-page">
-    <article class="article-content">
+    <article class="article-content" v-if="$route.name === 'article-content' && articleInfo.id" transition="fade">
       <header><h2 class="article-content__title">{{ articleInfo.title }}</h2></header>
       <p class="article-content__time" v-show="articleInfo._createdAt"><em>Create at {{ articleInfo._createdAt }} && Update at {{ articleInfo._updatedAt }}</em></p>
       <section class="article-content__body">{{{ articleInfo._body }}}</section>
