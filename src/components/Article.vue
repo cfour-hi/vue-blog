@@ -5,7 +5,7 @@
         <h2 class="article-list__item-title">
           <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
         </h2>
-        <em class="article-list__item-time">- Create at {{ article._createdAt }} && Update at {{ article._updatedAt }}</em>
+        <em class="article-list__item-time">- Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</em>
         {{{ article._quote }}}
         <a class="article-list__read article-list__read-btn" v-link="{ name: 'article-content', params: { num: article.number }}">READ</a>
         <p class="article-list__item-tags">
@@ -20,7 +20,6 @@
       </p>
       <p class="article-list__no-more" v-if="articleListInfo.length && !hasMoreArticle" transition="fadeupdown">没有更多的文章</p>
     </div>
-    
   </section>
 </template>
 
@@ -28,7 +27,7 @@
   import app, {cacheArticleList, pushCacheArticleList, addPrivateArticleAttr} from '../app.js'
   // cacheArticleList is read-only
 
-  const prePage = 3
+  const prePage = 5
 
   export default {
     ready () {
@@ -83,6 +82,9 @@
 </script>
 
 <style>
+  .article-list-page {
+    /*position: absolute;*/
+  }
   .article-list {
     padding: 0;
   }

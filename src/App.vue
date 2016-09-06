@@ -60,6 +60,15 @@
     color: #333;
     text-decoration: none;
   }
+  .link {
+    color: #0097da;
+  }
+  .link:hover {
+    color: #33ace1;
+  }
+  .link:active {
+    color: #008fcf;
+  }
   button {
     outline: none;
   }
@@ -118,11 +127,23 @@
     margin: auto;
   }
   /* base end */
+
+  /* tool start */
+  .position-vertical-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+  }
+  /* tool end */
+
+  /* app start */
   .app-header {
     -webkit-flex: 0 0 auto;
     flex: 0 0 auto;
     position: relative;
-    padding-bottom: 0.2rem;
+    padding: 0.2rem 0;
     border-bottom: 1px solid #999;
   }
   .app-header nav {
@@ -140,8 +161,9 @@
   .app-container {
     -webkit-flex: 1 0 auto;
     flex: 1 0 auto;
+    position: relative;
     width: 100%;
-    margin: auto;
+    min-height: 6rem;
   }
   .app-footer {
     -webkit-flex: 0 0 auto;
@@ -151,6 +173,8 @@
     font-size: 12px;
     color: #999;
   }
+  /* app start */
+
   /*!
    * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
    * Copyright 2015 Daniel Cardoso <@DanielCardoso>
@@ -158,12 +182,14 @@
    */
   .la-ball-clip-rotate,
   .la-ball-clip-rotate > div {
-    position: relative;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
   .la-ball-clip-rotate {
+    position: absolute;
+    top: 0.5rem;
+    left: 3.34rem;
     text-align: center;
     color: #0097da;
   }
@@ -171,6 +197,7 @@
     color: #333;
   }
   .la-ball-clip-rotate > div {
+    position: relative;
     display: inline-block;
     float: none;
     background-color: currentColor;
@@ -279,6 +306,8 @@
     }
   }
   /* Load Awesome end */
+
+  /* trannsition animation start */
   @-webkit-keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 1;}
@@ -343,15 +372,13 @@
       transform: translate(0, 100%);
     }
   }
-  .fadeupdown-transition {
-    
-  }
   .fadeupdown-enter {
-    -webkit-animation: fadeInUp .5s;
-    animation: fadeInUp .5s;
+    -webkit-animation: fadeInUp .3s;
+    animation: fadeInUp .3s;
   }
   .fadeupdown-leave {
     -webkit-animation: fadeOutDown .3s;
     animation: fadeOutDown .3s;
   }
+  /* trannsition animation end */
 </style>

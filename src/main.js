@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
 import App from './App.vue'
+import Card from './components/Card.vue'
 import Article from './components/Article.vue'
 import ArticleContent from './components/Article-Content.vue'
 
@@ -12,9 +13,9 @@ Vue.use(VueResource)
 const router = new VueRouter()
 
 router.map({
-  // '/': {
-  //   component: Article
-  // },
+  '/': {
+    component: Card
+  },
   '/article': {
     name: 'article-list',
     component: Article
@@ -25,9 +26,9 @@ router.map({
   }
 })
 
-router.beforeEach((transition) => {
-  transition.next()
-})
+// router.beforeEach((transition) => {
+//   transition.next()
+// })
 
 router.afterEach((transition) => {
   window.scrollTo(0, 0)

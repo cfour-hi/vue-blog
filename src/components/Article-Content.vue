@@ -1,8 +1,12 @@
 <template>
   <section class="article-content-page">
     <article class="article-content" v-if="$route.name === 'article-content' && articleInfo.id" transition="fade">
-      <header><h2 class="article-content__title">{{ articleInfo.title }}</h2></header>
-      <p class="article-content__time" v-show="articleInfo._createdAt"><em>Create at {{ articleInfo._createdAt }} && Update at {{ articleInfo._updatedAt }}</em></p>
+      <header>
+        <h2 class="article-content__title">{{ articleInfo.title }}</h2>
+      </header>
+      <p class="article-content__time" v-show="articleInfo._createdAt">
+        <em>Create at {{ articleInfo._createdAt }} && Update at {{ articleInfo._updatedAt }}</em>
+      </p>
       <section class="article-content__body">{{{ articleInfo._body }}}</section>
     </article>
   </section>
@@ -26,14 +30,18 @@
         }
       }
 
+      this.$dispatch('update-loading', true)
+
       // 获取单个 issues 内容，标识为 api 返回内容的 number 属性。
-      this.$http.get(app['host'] + 'repos/' + app['owner'] + '/' + app['repo'] + '/issues/' + articleNum, {
+      this.$http.get(app.host + 'repos/' + app.owner + '/' + app.repo + '/issues/' + articleNum, {
         params: {
-          // access_token: app['access_token']
+          access_token: app.access_token
         }
       }).then((response) => {
         // 添加文章内容所需属性
         _this.articleInfo = addPrivateArticleAttr(response.data)
+
+        this.$dispatch('update-loading', false)
       })
     },
     props: ['articleNum'],
