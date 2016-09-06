@@ -43,7 +43,7 @@ github api 在未认证（匿名访问）的情况是有限流机制的，就是
 
 wuhaoworld 同学在 config.js 配置 access_token 的地方有段注释：
 
-// access_token: 'abcde' + 'fghijk' // 请求量大时需要在 github 后台单独设置一个读取公开库的 token, 注意将token 拆成两个字符串，否则会被系统自动删除掉
+`// access_token: 'abcde' + 'fghijk' // 请求量大时需要在 github 后台单独设置一个读取公开库的 token, 注意将token 拆成两个字符串，否则会被系统自动删除掉`
 
 没错，经过我多次试验如果 token 没有拆成两个字符串，调用 api 就会提示 401 错误。
 
