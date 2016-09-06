@@ -35,6 +35,25 @@
 
   Highlight.js is a syntax highlighter written in JavaScript. It works in the browser as well as on the server. It works with pretty much any markup, doesn’t depend on any framework and has automatic language detection.
 
+## 注意
+
+github api 在未认证（匿名访问）的情况是有限流机制的，就是说你在一定的时间内只能调用固定的次数，目前默认配额是 60 此请求。
+
+如需认证提高 api 调用次数配额请参考 [wuhaoworld 同学写的教程](https://github.com/wuhaoworld/github-issues-blog#3-提高-api-访问次数的配额)
+
+wuhaoworld 同学在 config.js 配置 access_token 的地方有段注释：
+
+// access_token: 'abcde' + 'fghijk'
+// 请求量大时需要在 github 后台单独设置一个读取公开库的 token, 注意将token 拆成两个字符串，否则会被系统自动删除掉
+
+没错，经过我多次试验如果 token 没有拆成两个字符串，调用 api 就会提示 401 错误。
+
+这里我还要再加上一点很容易被忽略的地方！！！
+
+打包工具（grunt、gulp、webpack）对 js 代码 uglify 之后 token 就没有再被拆成两个的字符串啦，而是一个完整的 token。
+
+So... 我们这个项目就需要在 webpack build 之后再去把 dist 文件内 access_token 所在 js 文件内的值拆成两个字符串。
+
 ---
 
 ## vue-blog
