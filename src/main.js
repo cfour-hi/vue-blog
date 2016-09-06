@@ -26,10 +26,6 @@ router.map({
   }
 })
 
-// router.beforeEach((transition) => {
-//   transition.next()
-// })
-
 router.afterEach((transition) => {
   window.scrollTo(0, 0)
 })

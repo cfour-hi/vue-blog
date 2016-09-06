@@ -1,6 +1,6 @@
 <template>
   <section class="article-list-page">
-    <ul class="article-list">
+    <ul style="padding: 0;">
       <li class="article-list__item-li" v-for="article in articleListInfo" track-by="id"  v-if="$route.name === 'article-list' && articleListInfo.length" transition="fade">
         <h2 class="article-list__item-title">
           <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
@@ -15,10 +15,10 @@
       </li>
     </ul>
     <div class="article-list__more-wrap">
-      <p class="article-list__more" v-if="articleListInfo.length && hasMoreArticle && showMoreBtn" transition="fadeupdown">
-        <button class="article-list__more-btn article-list__read-btn" type="button" @click="moreArticle">MORE</button>
+      <p v-show="articleListInfo.length && hasMoreArticle && showMoreBtn" transition="fadeupdown">
+        <button class="article-list__more article-list__read-btn" type="button" @click="moreArticle">MORE</button>
       </p>
-      <p class="article-list__no-more" v-if="articleListInfo.length && !hasMoreArticle" transition="fadeupdown">没有更多的文章</p>
+      <p class="article-list__no-more" v-show="articleListInfo.length && !hasMoreArticle" transition="fadeupdown">没有更多的文章</p>
     </div>
   </section>
 </template>
@@ -82,23 +82,15 @@
 </script>
 
 <style>
-  .article-list-page {
-    /*position: absolute;*/
-  }
-  .article-list {
-    padding: 0;
-  }
   .article-list__item-li {
-    margin: 0.3rem 0;
+    padding-top: 0.2rem;
     border-bottom: 1px dashed #ccc;
     font-size: 14px;
     list-style: none;
   }
   .article-list__item-li .article-list__item-title {
+    margin-top: 0;
     margin-bottom: 0.05rem;
-  }
-  .article-list__item-li .article-list__item-title a {
-    padding-bottom: 3px;
   }
   .article-list__item-li .article-list__item-title a:hover {
     border-bottom: 2px solid #333;
@@ -126,7 +118,7 @@
     display: inline-block;
     position: relative;
     left: 50%;
-    margin: 0.1rem 0;
+    margin-top: 0.1rem;
     border: 1px solid #0097da;
     color: #0097da;
     -webkit-transform: translateX(-50%);
@@ -140,25 +132,20 @@
     background-color: #008fcf;
   }
   .article-list__more-wrap {
-    position: relative;
-    height: 1rem;
+    height: 0.5rem;
     text-align: center;
   }
   .article-list__more {
-    position: absolute;
-    width: 100%;
-  }
-  .article-list__more-btn {
     border: 1px solid #f60;
     color: #f60;
     background-color: transparent;
     cursor: pointer;
   }
-  .article-list__more-btn:hover {
+  .article-list__more:hover {
     color: #fff;
     background-color: #ff8533;
   }
-  .article-list__more-btn:active {
+  .article-list__more:active {
     background-color: #f26100;
   }
   .article-list__no-more {

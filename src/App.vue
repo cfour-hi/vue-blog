@@ -3,6 +3,7 @@
     <header id="app-header" class="app-header">
       <h1><a v-link="{ path: '/' }">Monine</a></h1>
       <nav>
+        <a v-link="{ path: '/', exact: true }">名片</a>
         <a v-link="{ path: '/article' }">文章</a>
         <!-- <a v-link="{ path: '/' }">关于我</a> -->
       </nav>
@@ -46,6 +47,8 @@
     height: 100%;
     box-sizing: border-box;
     font-size: 100px;
+    overflow-x: hidden;
+
   }
   *, *:before, *:after {
     box-sizing: inherit;
@@ -117,15 +120,6 @@
   .hljs-regexp {
     color: #183691;
   }
-  .app-wrapper {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    width: 7rem;
-    height: 100%;
-    margin: auto;
-  }
   /* base end */
 
   /* tool start */
@@ -139,18 +133,30 @@
   /* tool end */
 
   /* app start */
+  .app-wrapper {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 7rem;
+    height: 100%;
+    margin: 0 auto;
+  }
   .app-header {
     -webkit-flex: 0 0 auto;
     flex: 0 0 auto;
     position: relative;
-    padding: 0.2rem 0;
     border-bottom: 1px solid #999;
   }
   .app-header nav {
+    position: relative;
+    top: 2px;
     font-size: 14px;
   }
   .app-header nav a {
-    padding: 3px;
+    display: table-cell;
+    width: 0.5rem;
+    text-align: center;
   }
   .app-header nav .v-link-active {
     border-bottom: 2px solid #0097da;
@@ -162,8 +168,6 @@
     -webkit-flex: 1 0 auto;
     flex: 1 0 auto;
     position: relative;
-    width: 100%;
-    min-height: 6rem;
   }
   .app-footer {
     -webkit-flex: 0 0 auto;
@@ -188,7 +192,7 @@
   }
   .la-ball-clip-rotate {
     position: absolute;
-    top: 0.5rem;
+    top: 0.2rem;
     left: 3.34rem;
     text-align: center;
     color: #0097da;
@@ -325,18 +329,18 @@
     to {opacity: 0;}
   }
   .fade-enter {
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
+    -webkit-animation: fadeIn .5s;
+    animation: fadeIn .5s;
   }
   .fade-leave {
-    -webkit-animation: fadeOut 1s;
-    animation: fadeOut 1s;
+    -webkit-animation: fadeOut .5s;
+    animation: fadeOut .5s;
   }
   @-webkit-keyframes fadeInUp {
     from {
       opacity: 0;
-      -webkit-transform: translate3d(0, 100%, 0);
-      transform: translate3d(0, 100%, 0);
+      -webkit-transform: translate(0, 100%);
+      transform: translate(0, 100%);
     }
     to {
       opacity: 1;
@@ -347,8 +351,8 @@
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      -webkit-transform: translate3d(0, 100%, 0);
-      transform: translate3d(0, 100%, 0);
+      -webkit-transform: translate(0, 100%);
+      transform: translate(0, 100%);
     }
     to {
       opacity: 1;

@@ -54,7 +54,11 @@
 </script>
 
 <style>
+  .article-content {
+    padding: 0.3rem 0;
+  }
   .article-content__title {
+    margin: 0;
     text-align: center;
     font-size: 24px;
   }
@@ -64,7 +68,6 @@
     color: #999;
   }
   .article-content__body {
-    margin: 0.5rem 0;
     font-size: 14px;
   }
   .article-content__body h2 {
