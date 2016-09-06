@@ -55,10 +55,6 @@ So... 我们这个项目就需要在 webpack build 之后再去把 dist 文件�
 
 ---
 
-## vue-blog
-
-> A Vue.js project
-
 ## Build Setup
 
 ``` bash
