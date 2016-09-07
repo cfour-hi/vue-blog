@@ -21,6 +21,8 @@ var token = buf.slice(index, index + sMark.length + 42)
 
 token = token.toString().split('"')[1]
 
+if (token.length !== 40) return console.log('modify token fail... Please check the code...')
+
 var a = token.slice(0, 20)
 var b = token.slice(20)
 
