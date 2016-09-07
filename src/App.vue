@@ -3,13 +3,13 @@
     <header id="app-header" class="app-header">
       <h1><a v-link="{ path: '/' }">Monine</a></h1>
       <nav>
-        <a v-link="{ path: '/', exact: true }">名片</a>
-        <a v-link="{ path: '/article' }">文章</a>
-        <!-- <a v-link="{ path: '/' }">关于我</a> -->
+        <a v-link="{ path: '/', exact: true }">名&nbsp;片</a>
+        <a v-link="{ path: '/article' }">文&nbsp;章</a>
+        <a v-link="{ path: '/worklog' }">工作日志</a>
       </nav>
     </header>
     <div id="app-container" class="app-container">
-      <router-view :loading="loading" :next-page="nextPage" :has-more-article="hasMoreArticle" :article-num="$route.params.num" @update-loading="updateLoading" @update-next-page="updateNextPage" @update-has-more-article="updateHasMoreArticle"></router-view>
+      <router-view :loading="loading" :next-page="nextPage" :has-more-article="hasMoreArticle" :issues-num="$route.params.num" @update-loading="updateLoading" @update-next-page="updateNextPage" @update-has-more-article="updateHasMoreArticle"></router-view>
       <div class="la-ball-clip-rotate" v-show="loading"><div></div></div>
     </div>
     <footer id="app-footer" class="app-footer">
@@ -155,13 +155,13 @@
   }
   .app-header nav a {
     display: table-cell;
-    width: 0.5rem;
+    width: 0.7rem;
     text-align: center;
   }
-  .app-header nav .v-link-active {
+  .app-header nav a:hover {
     border-bottom: 2px solid #0097da;
   }
-  .app-header nav a:hover {
+  .app-header nav .v-link-active {
     border-bottom: 2px solid #0097da;
   }
   .app-container {

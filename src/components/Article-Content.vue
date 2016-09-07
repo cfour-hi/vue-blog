@@ -17,8 +17,7 @@
 
   export default {
     ready () {
-      let _this = this
-      let articleNum = +(this.articleNum)
+      let articleNum = +(this.issuesNum)
 
       // 如果已经有缓存过文章数据则从文章数据内取出内容
       if (cacheArticleList.length) {
@@ -33,18 +32,18 @@
       this.$dispatch('update-loading', true)
 
       // 获取单个 issues 内容，标识为 api 返回内容的 number 属性。
-      this.$http.get(app.host + 'repos/' + app.owner + '/' + app.repo + '/issues/' + articleNum, {
+      this.$http.get(app.host + 'repos/' + app.owner + '/' + app.studyRepo + '/issues/' + articleNum, {
         params: {
           access_token: app.access_token
         }
       }).then((response) => {
         // 添加文章内容所需属性
-        _this.articleInfo = addPrivateArticleAttr(response.data)
+        this.articleInfo = addPrivateArticleAttr(response.data)
 
         this.$dispatch('update-loading', false)
       })
     },
-    props: ['articleNum'],
+    props: ['issuesNum'],
     data () {
       return {
         articleInfo: {}

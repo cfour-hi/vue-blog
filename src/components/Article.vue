@@ -1,7 +1,7 @@
 <template>
   <section class="article-list-page">
     <ul style="padding: 0;">
-      <li class="article-list__item-li" v-for="article in articleListInfo" track-by="id"  v-if="$route.name === 'article-list' && articleListInfo.length" transition="fade">
+      <li class="article-list__item-li" v-for="article in articleListInfo" track-by="id" v-if="$route.name === 'article' && articleListInfo.length" transition="fade">
         <h2 class="article-list__item-title">
           <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
         </h2>
@@ -52,7 +52,7 @@
         this.getArticleList()
       },
       getArticleList () {
-        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.repo + '/issues', {
+        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.studyRepo + '/issues', {
           params: {
             filter: 'created',
             page: this.nextPage,
@@ -66,9 +66,7 @@
 
           // 添加文章内容所需属性
           // 添加文章列表缓存数据
-          pushCacheArticleList(addPrivateArticleAttr(response.data))
-
-          this.articleListInfo = cacheArticleList
+          this.articleListInfo = pushCacheArticleList(addPrivateArticleAttr(response.data))
 
           if (response.data.length < prePage) this.$dispatch('update-has-more-article', false)
 
