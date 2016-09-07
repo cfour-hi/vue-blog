@@ -11,7 +11,7 @@ const _config = {
   owner: 'monine',
   repo: 'study',
   host: 'https://api.github.com/',
-  access_token: 'bed98d5cd99be01002e7' + 'efa2e698c4dfb9b8a3c3'
+  access_token: '45b2a12600ba7b61987f' + '9c2600ad46a0822b88cc'
 }
 
 // 文章列表缓存
