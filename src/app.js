@@ -26,13 +26,18 @@ let cacheWorklogList = []
 
 // 添加文章列表缓存
 // 往 cacheArticleList 内添加当前获取到的文章列表数据
-let pushCacheArticleList = (list) => (cacheArticleList = cacheArticleList.concat(list))
+// let pushCacheArticleList = (list) => (cacheArticleList = cacheArticleList.concat(list))
 
 // 添加工作日志列表缓存
 // 往 cacheWorklogList 内添加当前获取到的工作日志列表数据
-let pushCacheWorklogList = (log) => {
-  cacheWorklogList.push(log)
-  return cacheWorklogList
+// let pushCacheWorklogList = (log) => cacheWorklogList.push(log)
+
+let pushCacheList = (respName, cache) => {
+  if (respName === _config.studyRepo) {
+    cacheArticleList = cacheArticleList.concat(cache)
+  } else if (respName === _config.worklogRepo) {
+    cacheWorklogList.push(cache)
+  }
 }
 
 // 添加文章内容所需属性
@@ -57,4 +62,4 @@ let addPrivateArticleAttr = (articleInfo) => {
 // 默认输出配置信息
 export default _config
 
-export {cacheArticleList, cacheWorklogList, pushCacheArticleList, pushCacheWorklogList, addPrivateArticleAttr}
+export {cacheArticleList, cacheWorklogList, pushCacheList, addPrivateArticleAttr}

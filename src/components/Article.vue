@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import app, {cacheArticleList, pushCacheArticleList, addPrivateArticleAttr} from '../app.js'
+  import app, {cacheArticleList, pushCacheList, addPrivateArticleAttr} from '../app.js'
   // cacheArticleList is read-only
 
   const prePage = 5
@@ -43,7 +43,7 @@
     data () {
       return {
         articleListInfo: [],
-        showMoreBtn: true
+        showMoreBtn: true    // 用来触发 more 按钮隐藏动画
       }
     },
     methods: {
@@ -66,7 +66,8 @@
 
           // 添加文章内容所需属性
           // 添加文章列表缓存数据
-          this.articleListInfo = pushCacheArticleList(addPrivateArticleAttr(response.data))
+          pushCacheList(app.studyRepo, addPrivateArticleAttr(response.data))
+          this.articleListInfo = cacheArticleList
 
           if (response.data.length < prePage) this.$dispatch('update-has-more-article', false)
 

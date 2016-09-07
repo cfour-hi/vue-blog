@@ -14,6 +14,7 @@
 
 <script>
   import app, {cacheWorklogList, pushCacheWorklogList, addPrivateArticleAttr} from '../app.js'
+  // cacheWorklogList is read-only
 
   export default {
     ready () {

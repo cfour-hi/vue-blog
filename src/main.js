@@ -37,8 +37,4 @@ router.map({
   }
 })
 
-router.afterEach((transition) => {
-  window.scrollTo(0, 0)
-})
-
 router.start(App, '#app')

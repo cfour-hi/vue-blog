@@ -23,8 +23,7 @@
       if (cacheArticleList.length) {
         for (let i = cacheArticleList.length - 1; i >= 0; i--) {
           if (cacheArticleList[i].number === articleNum) {
-            this.articleInfo = cacheArticleList[i]
-            return
+            return (this.articleInfo = cacheArticleList[i])
           }
         }
       }
