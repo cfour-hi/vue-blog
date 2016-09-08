@@ -47,15 +47,17 @@ wuhaoworld 同学在 config.js 配置 access_token 的地方有段注释：
 
 没错，经过我多次试验如果 token 没有拆成两个字符串，调用 api 就会提示 401 错误。
 
+Why?
+
+因为代码提交到 github 仓库的时候，github 会扫描一次你提交的代码，如果发现有匹配 token 的内容的话，那这个 token 就立即失效啦！
+
 **这里我还要再加上一点很容易被忽略的地方！！！**
 
 打包工具（grunt、gulp、webpack）对 js 代码 uglify 之后 token 就没有再被拆成两个的字符串啦，而是一个完整的 token。
 
 So... 我们这个项目就需要在 webpack build 之后再去把 dist 文件内 access_token 所在 js 文件内的值拆成两个字符串。
 
-**为什么呢？**
-
-因为代码提交到 github 仓库的时候，github 会扫描一次你提交的代码，如果发现有匹配 token 的内容的话，那这个 token 就立即失效啦！
+modify-token.js 文件就是对打包之后的 dist 文件内的 `access_token` 所在 js 文件进行 token 拆分的简单 node 脚本
 
 ---
 
