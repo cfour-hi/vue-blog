@@ -1,21 +1,48 @@
 <template>
   <section class="worklog-list-page">
-    <div class="worklog-list__year-card" v-for="year in years" v-if="$route.name === 'worklog'" transition="fade">
-      <p class="year-card__cur-year">{{ year }}</p>
-      <div class="year-card__month-list">
-        <a v-link="{ name: 'worklog-content', params: { num: 1}}" class="year-card__month-item" v-for="month in months">{{ month }}</a>
-        <!-- <a class="year-card__month-item" href="#" v-for="month in months">{{ month }}</a> -->
-      </div>
-    </div>
+    <ul class="worklog-list">
+      <li class="worklog-list__item" v-for="worklog in worklogListInfo"><a v-link="{ name: 'worklog-content', params: { num: worklog.number } }">{{ worklog.title }}</a></li>
+    </ul>
   </section>
 </template>
 
 <script>
+  import app, {cacheWorklogList, pushCacheList, addPrivateArticleAttr} from '../app.js'
+
+  let prePage = 60
+
   export default {
+    ready () {
+      if (cacheWorklogList.length) {
+        this.$dispatch('update-loading', false)
+        return (this.worklogListInfo = cacheWorklogList)
+      }
+
+      this.$dispatch('update-loading', true)
+
+      this.getWorklogList()
+    },
+    props: ['loading'],
     data () {
       return {
-        years: [2016],
-        months: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
+        worklogListInfo: []
+      }
+    },
+    methods: {
+      getWorklogList () {
+        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.worklogRepo + '/issues', {
+          params: {
+            filter: 'created',
+            page: this.nextPage,
+            per_page: prePage,
+            access_token: app.access_token
+          }
+        }).then((response) => {
+          if (this.loading) this.$dispatch('update-loading', false)
+
+          pushCacheList(app.worklogRepo, addPrivateArticleAttr(response.data))
+          this.worklogListInfo = cacheWorklogList
+        })
       }
     }
   }
@@ -23,44 +50,42 @@
 
 <style>
   .worklog-list-page,
-  .worklog-list__year-card,
-  .year-card__month-list {
+  .worklog-list,
+  .worklog-list__item {
     -webkit-display: flex;
             display: flex;
   }
   .worklog-list-page {
     padding: 0.3rem 0.15rem;
   }
-  .worklog-list__year-card {
-    flex-direction: column;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    text-align: center;
-  }
-  .year-card__cur-year {
-    position: relative;
-    left: -1px;
-    width: 101%;
-    margin: 0;
-    border-radius: 5px 5px 0 0;
-    font-size: 18px;
-    line-height: 2;
-    color: #fff;
-    background-color: #f60;
-  }
-  .year-card__month-list {
+  .worklog-list {
     flex-wrap: wrap;
-    margin: 1px;
+    width: 100%;
+    padding: 0;
   }
-  .year-card__month-item {
-    width: 33.3%;
-    font-size: 14px;
-    line-height: 2.5;
+  .worklog-list__item {
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 0.6rem;
+    list-style: none;
   }
-  .year-card__month-item:hover {
-    color: #f60;
+  .worklog-list__item a {
+    position: relative;
+    padding: 0.05rem 0.2rem;
     border-radius: 3px;
-    -webkit-box-shadow: 0 0 3px #f60;
-            box-shadow: 0 0 3px #f60;
+    border-top: 1px solid #eee;
+    color: #666;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  }
+  .worklog-list__item a:hover {
+    bottom: 2px;
+    color: #999;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  }
+  .worklog-list__item a:active {
+    bottom: -1px;
+    color: #333;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
   }
 </style>

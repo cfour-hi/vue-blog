@@ -32,7 +32,7 @@ let pushCacheList = (respName, cache) => {
   } else if (respName === _config.worklogRepo) {
     // 添加工作日志列表缓存
     // 往 cacheWorklogList 内添加当前获取到的工作日志数据
-    cacheWorklogList.push(cache)
+    cacheWorklogList = cacheWorklogList.concat(cache)
   }
 }
 

@@ -32,10 +32,11 @@
   export default {
     ready () {
       if (cacheArticleList.length) {
+        this.$dispatch('update-loading', false)
         return (this.articleListInfo = cacheArticleList)
-      } else {
-        this.$dispatch('update-loading', true)
       }
+
+      this.$dispatch('update-loading', true)
 
       this.getArticleList()
     },

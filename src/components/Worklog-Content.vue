@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import app, {cacheWorklogList, pushCacheWorklogList, addPrivateArticleAttr} from '../app.js'
+  import app, {cacheWorklogList, addPrivateArticleAttr} from '../app.js'
   // cacheWorklogList is read-only
 
   export default {
@@ -28,13 +28,16 @@
         }
       }
 
+      this.$dispatch('update-loading', true)
+
       this.$http.get(app.host + 'repos/' + app.owner + '/' + app.worklogRepo + '/issues/' + articleNum, {
         params: {
           access_token: app.access_token
         }
       }).then((response) => {
         this.worklogInfo = addPrivateArticleAttr(response.data)
-        pushCacheWorklogList(addPrivateArticleAttr(this.worklogInfo))
+
+        this.$dispatch('update-loading', false)
       })
     },
     props: ['issuesNum'],

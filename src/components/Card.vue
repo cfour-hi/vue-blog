@@ -32,6 +32,14 @@
   </div>
 </template>
 
+<script>
+  export default {
+    ready () {
+      this.$dispatch('update-loading', false)
+    }
+  }
+</script>
+
 <style>
 .user-info__card {
   position: absolute;

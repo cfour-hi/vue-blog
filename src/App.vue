@@ -135,6 +135,9 @@
     color: #333;
     line-height: 2;
   }
+  hr {
+    border: 1px solid #eee;
+  }
   pre {
     padding: 16px;
     overflow: auto;
@@ -203,19 +206,36 @@
   }
   .app-header nav {
     position: relative;
-    top: 2px;
     font-size: 14px;
   }
   .app-header nav a {
+    position: relative;
     display: table-cell;
     width: 0.7rem;
     text-align: center;
+    line-height: 2;
   }
-  .app-header nav a:hover {
-    border-bottom: 2px solid #0097da;
-  }
+  .app-header nav a:hover,
   .app-header nav .v-link-active {
-    border-bottom: 2px solid #0097da;
+    color: #0097da;
+  }
+  .app-header nav a:before {
+    position: absolute;
+    width: 100%;
+    height: 0;
+    left: 0;
+    bottom: -1px;
+    content: '';
+    border-bottom: 3px solid #33ace1;
+    -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+    -webkit-transition: -webkit-transform .3s ease;
+            transition: transform .3s ease;
+  }
+  .app-header nav a:hover:before,
+  .app-header nav .v-link-active:before {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
   }
   .app-container {
     -webkit-flex: 1 0 auto;
@@ -433,16 +453,16 @@
     from {opacity: 1;}
     to {
       opacity: 0;
-      -webkit-transform: translate(0, 100%);
-      transform: translate(0, 100%);
+      -webkit-transform: translate(0, 150%);
+      transform: translate(0, 150%);
     }
   }
   @keyframes fadeOutDown {
     from {opacity: 1;}
     to {
       opacity: 0;
-      -webkit-transform: translate(0, 100%);
-      transform: translate(0, 100%);
+      -webkit-transform: translate(0, 150%);
+      transform: translate(0, 150%);
     }
   }
   .fadeupdown-enter {
