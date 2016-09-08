@@ -1,7 +1,7 @@
 {
   "name": "vue-blog",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A Vue.js project: Based on github issues of SPA blog",
   "author": "Monine <bob.zhouxiang@gmail.com>",
   "private": true,
   "scripts": {

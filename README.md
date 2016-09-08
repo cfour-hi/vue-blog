@@ -1,4 +1,4 @@
-# 基于 Github issues 的单页面博客 (SPA blog for github issues)
+# 基于 Github issues 的单页面博客
 
 ## 参考
 [wuhaoworld - 基于 Github issues 的单页面静态博客](https://github.com/wuhaoworld/github-issues-blog)
