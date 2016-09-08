@@ -4,10 +4,13 @@ var files = fs.readdirSync('./dist/static/js')
 
 var appFileName = null
 for (var i = files.length - 1; i >= 0; i--) {
-  if (files[i].indexOf('app') !== -1) {
+  if (/^app\.\w+\.js$/.test(files[i])) {
     appFileName = files[i]
+    break
   }
 }
+
+if (!appFileName) return console.log('no file match...')
 
 appFileName = './dist/static/js/' + appFileName
 
@@ -21,7 +24,7 @@ var token = buf.slice(index, index + sMark.length + 42)
 
 token = token.toString().split('"')[1]
 
-if (token.length !== 40) return console.log('modify token fail... Please check the code...')
+if (token.length !== 40) return console.log('modify token fail... Please check the access_token...')
 
 var a = token.slice(0, 20)
 var b = token.slice(20)
