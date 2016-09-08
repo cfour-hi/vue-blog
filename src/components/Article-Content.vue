@@ -1,13 +1,13 @@
 <template>
   <section class="article-content-page">
-    <article class="article-content" v-if="$route.name === 'article-content' && articleInfo.id" transition="fade">
+    <article class="issues-content" v-if="$route.name === 'article-content' && articleInfo.id" transition="fade">
       <header>
-        <h2 class="article-content__title">{{ articleInfo.title }}</h2>
+        <h2 class="issues-content__title">{{ articleInfo.title }}</h2>
       </header>
-      <p class="article-content__time" v-show="articleInfo._createdAt">
+      <p class="issues-content__time" v-show="articleInfo._createdAt">
         <em>Create at {{ articleInfo._createdAt }} && Update at {{ articleInfo._updatedAt }}</em>
       </p>
-      <section class="article-content__body">{{{ articleInfo._body }}}</section>
+      <section class="issues-content__body">{{{ articleInfo._body }}}</section>
     </article>
   </section>
 </template>
@@ -52,34 +52,3 @@
     }
   }
 </script>
-
-<style>
-  .article-content {
-    padding: 0.3rem 0;
-  }
-  .article-content__title {
-    margin: 0;
-    text-align: center;
-    font-size: 24px;
-  }
-  .article-content__time {
-    font-size: 14px;
-    text-align: center;
-    color: #999;
-  }
-  .article-content__body {
-    font-size: 14px;
-  }
-  .article-content__body h2 {
-    font-weight: 400;
-  }
-  .article-content__body a {
-    color: #0097da;
-  }
-  .article-content__body a:hover {
-    color: #33ace1;
-  }
-  .article-content__body a:active {
-    color: #008fcf;
-  }
-</style>

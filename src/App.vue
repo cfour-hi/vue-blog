@@ -37,6 +37,26 @@
     window.requestAnimationFrame(scroll2TopEase)
   }
 
+  // 切换元素 className 和 显示/隐藏
+  let toggleElementDisplay = (elem, addClass, removeClass, display, delay) => {
+    elem.className = elem.className.split(' ' + removeClass)[0]
+    elem.className += (' ' + addClass)
+
+    setTimeout(() => {
+      elem.style.display = display
+    }, delay)
+  }
+
+  window.onscroll = () => {
+    if (document.scrollingElement.scrollTop <= 0) {
+      toggleElementDisplay(tool4Top, 'fadeupdown-leave', 'fadeupdown-enter', 'none', 200)
+    } else {
+      if (tool4Top.className.indexOf('fadeupdown-enter') !== -1) return
+
+      toggleElementDisplay(tool4Top, 'fadeupdown-enter', 'fadeupdown-leave', 'block', 200)
+    }
+  }
+
   export default {
     ready () {
       tool4Top = document.querySelector('.app-tool__top')
@@ -69,26 +89,6 @@
         scrollDistance = document.scrollingElement.scrollTop / 18
         window.requestAnimationFrame(scroll2TopEase)
       }
-    }
-  }
-
-  window.onscroll = () => {
-    if (document.scrollingElement.scrollTop <= 0) {
-      tool4Top.className = tool4Top.className.split(' fadeupdown-enter')[0]
-      tool4Top.className += ' fadeupdown-leave'
-
-      setTimeout(() => {
-        tool4Top.style.display = 'none'
-      }, 200)
-    } else {
-      if (tool4Top.className.indexOf('fadeupdown-enter') !== -1) return
-
-      tool4Top.className = tool4Top.className.split(' fadeupdown-leave')[0]
-      tool4Top.className += ' fadeupdown-enter'
-
-      setTimeout(() => {
-        tool4Top.style.display = 'block'
-      }, 200)
     }
   }
 </script>
@@ -174,6 +174,34 @@
   }
   .hljs-regexp {
     color: #183691;
+  }
+  .issues-content {
+    padding: 0.3rem 0;
+  }
+  .issues-content__title {
+    margin: 0;
+    text-align: center;
+    font-size: 24px;
+  }
+  .issues-content__time {
+    font-size: 12px;
+    text-align: center;
+    color: #999;
+  }
+  .issues-content__body {
+    font-size: 14px;
+  }
+  .issues-content__body h2 {
+    font-weight: 400;
+  }
+  .issues-content__body a {
+    color: #0097da;
+  }
+  .issues-content__body a:hover {
+    color: #33ace1;
+  }
+  .issues-content__body a:active {
+    color: #008fcf;
   }
   /* base end */
 

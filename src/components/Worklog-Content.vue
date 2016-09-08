@@ -1,13 +1,13 @@
 <template>
   <section class="worklog-content-page">
-    <article class="article-content" v-if="$route.name === 'worklog-content' && worklogInfo.id" transition="fade">
+    <article class="issues-content" v-if="$route.name === 'worklog-content' && worklogInfo.id" transition="fade">
       <header>
-        <h2 class="article-content__title">{{ worklogInfo.title }}</h2>
+        <h2 class="issues-content__title">{{ worklogInfo.title }}</h2>
       </header>
-      <p class="article-content__time" v-show="worklogInfo._createdAt">
+      <p class="issues-content__time" v-show="worklogInfo._createdAt">
         <em>Create at {{ worklogInfo._createdAt }} && Update at {{ worklogInfo._updatedAt }}</em>
       </p>
-      <section class="article-content__body">{{{ worklogInfo._body }}}</section>
+      <section class="issues-content__body">{{{ worklogInfo._body }}}</section>
     </article>
   </section>
 </template>

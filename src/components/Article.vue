@@ -5,7 +5,7 @@
         <h2 class="article-list__item-title">
           <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
         </h2>
-        <em class="article-list__item-time">- Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</em>
+        <em class="issues-content__time">- Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</em>
         {{{ article._quote }}}
         <a class="article-list__read article-list__read-btn" v-link="{ name: 'article-content', params: { num: article.number }}">READ</a>
         <p class="article-list__item-tags">
@@ -94,10 +94,6 @@
   }
   .article-list__item-li .article-list__item-title a:hover {
     border-bottom: 2px solid #333;
-  }
-  .article-list__item-li .article-list__item-time {
-    font-size: 12px;
-    color: #999;
   }
   .article-list__item-li .article-list__item-tags {
     font-size: 12px;

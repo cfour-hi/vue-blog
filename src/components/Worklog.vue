@@ -59,13 +59,16 @@
     padding: 0.3rem 0.15rem;
   }
   .worklog-list {
-    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
     width: 100%;
     padding: 0;
   }
   .worklog-list__item {
-    justify-content: center;
-    align-items: center;
+    -webkit-justify-content: center;
+            justify-content: center;
+    -webkit-align-items: center;
+            align-items: center;
     width: 25%;
     height: 0.6rem;
     list-style: none;
