@@ -17,6 +17,8 @@
 
   export default {
     ready () {
+      window.scrollTo(0, 0)
+
       let articleNum = +(this.issuesNum)
 
       // 如果已经有缓存过文章数据则从文章数据内取出内容

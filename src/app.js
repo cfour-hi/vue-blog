@@ -24,23 +24,20 @@ let cacheArticleList = []
 // 跟文章列表缓存一个意思
 let cacheWorklogList = []
 
-// 添加文章列表缓存
-// 往 cacheArticleList 内添加当前获取到的文章列表数据
-// let pushCacheArticleList = (list) => (cacheArticleList = cacheArticleList.concat(list))
-
-// 添加工作日志列表缓存
-// 往 cacheWorklogList 内添加当前获取到的工作日志列表数据
-// let pushCacheWorklogList = (log) => cacheWorklogList.push(log)
-
 let pushCacheList = (respName, cache) => {
   if (respName === _config.studyRepo) {
+    // 添加文章列表缓存
+    // 往 cacheArticleList 内添加当前获取到的文章列表数据
     cacheArticleList = cacheArticleList.concat(cache)
   } else if (respName === _config.worklogRepo) {
+    // 添加工作日志列表缓存
+    // 往 cacheWorklogList 内添加当前获取到的工作日志数据
     cacheWorklogList.push(cache)
   }
 }
 
 // 添加文章内容所需属性
+// 参数 articleInfo 可以是 Array 或者 Object，传入什么类型则返回什么类型。
 let addPrivateArticleAttr = (articleInfo) => {
   let _articleInfo = []
   let _isArray
@@ -49,6 +46,8 @@ let addPrivateArticleAttr = (articleInfo) => {
 
   _isArray ? (_articleInfo = _articleInfo.concat(articleInfo)) : _articleInfo.push(articleInfo)
 
+  // 把 github issues 返回的数据内容解析转换为 blog 显示需显示的内容
+  // 解析转换后的内容的 key 以 _ 开头作为私有标识区分 github issues 所返回的内容
   for (let i = _articleInfo.length - 1; i >= 0; i--) {
     _articleInfo[i]._createdAt = _articleInfo[i].created_at.split('T')[0]
     _articleInfo[i]._updatedAt = _articleInfo[i].updated_at.split('T')[0]
