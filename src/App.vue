@@ -79,7 +79,7 @@
 
       setTimeout(() => {
         tool4Top.style.display = 'none'
-      }, 300)
+      }, 200)
     } else {
       if (tool4Top.className.indexOf('fadeupdown-enter') !== -1) return
 
@@ -88,7 +88,7 @@
 
       setTimeout(() => {
         tool4Top.style.display = 'block'
-      }, 300)
+      }, 200)
     }
   }
 </script>
