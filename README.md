@@ -59,6 +59,8 @@ So... 我们这个项目就需要在 webpack build 之后再去把 dist 文件�
 
 modify-token.js 文件就是对打包之后的 dist 文件内的 `access_token` 所在 js 文件进行 token 拆分的简单 node 脚本
 
+每次 `npm run build` 之后再执行一次 `node modify-token`
+
 ---
 
 ## Build Setup
