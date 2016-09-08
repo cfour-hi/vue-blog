@@ -39,7 +39,7 @@
 
 github api 在未认证（匿名访问）的情况是有限流机制的，就是说你在一定的时间内只能调用固定的次数，目前默认配额是 60 次请求。
 
-如需认证提高 api 调用次数配额请参考 [wuhaoworld 同学写的教程](https://github.com/wuhaoworld/github-issues-blog#3-提高-api-访问次数的配额)
+如需认证提高 api 调用次数配额请参考 [wuhaoworld 同学写的介绍](https://github.com/wuhaoworld/github-issues-blog#3-提高-api-访问次数的配额)
 
 wuhaoworld 同学在 config.js 配置 access_token 的地方有段注释：
 
