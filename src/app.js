@@ -15,6 +15,11 @@ const _config = {
   access_token: '45b2a12600ba7b61987f' + '9c2600ad46a0822b88cc'
 }
 
+const _labels = {
+  'enhancement': 'Technology',
+  'help wanted': 'Tool'
+}
+
 // 文章列表缓存
 // 可以看作是一个全局变量
 // 每次获取到文章列表数据之后都会使用 pushCacheArticleList 方法添加新内容
@@ -53,6 +58,12 @@ let addPrivateArticleAttr = (articleInfo) => {
     _articleInfo[i]._updatedAt = _articleInfo[i].updated_at.split('T')[0]
     _articleInfo[i]._body = marked(_articleInfo[i].body)
     _articleInfo[i]._quote = _articleInfo[i]._body.split('<!-- more -->')[0].trim()
+
+    let labelName
+    for (let j = _articleInfo[i].labels.length - 1; j >= 0; j--) {
+      labelName = _articleInfo[i].labels[j].name
+      _articleInfo[i].labels[j]._name = _labels[labelName]
+    }
   }
 
   return _isArray ? _articleInfo : _articleInfo[0]

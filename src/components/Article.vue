@@ -1,16 +1,16 @@
 <template>
   <section class="article-list-page">
-    <ul style="padding: 0;">
-      <li class="article-list__item-li" v-for="article in articleListInfo" track-by="id" v-if="$route.name === 'article' && articleListInfo.length" transition="fade">
-        <h2 class="article-list__item-title">
+    <ul style="padding: 0;" v-if="$route.name === 'article' && articleListInfo.length" transition="fade">
+      <li class="article-list__item" v-for="article in articleListInfo" track-by="id">
+        <h2 class="article-list__title">
           <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
         </h2>
-        <em class="issues-content__time">- Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</em>
-        {{{ article._quote }}}
+        <p class="issues-content__time">Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</p>
+        <article>{{{ article._quote }}}</article>
         <a class="article-list__read article-list__read-btn" v-link="{ name: 'article-content', params: { num: article.number }}">READ</a>
-        <p class="article-list__item-tags">
-          <em>- Tags:</em>
-          <a href="#" class="article-info__label" v-for="label in article.labels">{{ label.name }}</a>
+        <p class="article-list__labels">
+          <span>Labels:</span>
+          <a href="#" class="article-info__label" v-for="label in article.labels">{{ label._name }}</a>
         </p>
       </li>
     </ul>
@@ -81,36 +81,36 @@
   }
 </script>
 
-<style>
-  .article-list__item-li {
+<style scoped>
+  .article-list__item {
     padding-top: 0.2rem;
     border-bottom: 1px dashed #ccc;
     font-size: 14px;
     list-style: none;
   }
-  .article-list__item-li .article-list__item-title {
+  .article-list__item .article-list__title {
     margin-top: 0;
     margin-bottom: 0.05rem;
   }
-  .article-list__item-li .article-list__item-title a:hover {
+  .article-list__item .article-list__title a:hover {
     border-bottom: 2px solid #333;
   }
-  .article-list__item-li .article-list__item-tags {
+  .article-list__item .article-list__labels {
     font-size: 12px;
     color: #f60;
   }
-  .article-list__item-li .article-info__label {
-    margin-left: 0.05rem;
+  .article-list__item .article-info__label {
+    margin-left: 0.1rem;
     border-bottom: 1px solid #f60;
     color: inherit;
   }
-  .article-list__item-li .article-info__label:hover {
+  .article-list__item .article-info__label:hover {
     color: #ff8533;
   }
-  .article-list__item-li .article-info__label:active {
+  .article-list__item .article-info__label:active {
     color: #f26100;
   }
-  .article-list__item-li .article-list__read {
+  .article-list__item .article-list__read {
     display: inline-block;
     position: relative;
     left: 50%;
@@ -120,11 +120,11 @@
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
   }
-  .article-list__item-li .article-list__read:hover {
+  .article-list__item .article-list__read:hover {
     color: #fff;
     background-color: #33ace1;
   }
-  .article-list__item-li .article-list__read:active {
+  .article-list__item .article-list__read:active {
     background-color: #008fcf;
   }
   .article-list__more-wrap {

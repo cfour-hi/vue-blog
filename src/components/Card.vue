@@ -36,6 +36,9 @@
   export default {
     ready () {
       this.$dispatch('update-loading', false)
+
+      let card = document.querySelector('.user-info__card')
+      card.style.top = ((document.querySelector('.app-container').offsetHeight - card.offsetHeight) / 2) + 'px'
     }
   }
 </script>
@@ -43,12 +46,10 @@
 <style>
 .user-info__card {
   position: absolute;
-  top: 50%;
   width: 5rem;
   height: 3rem;
   padding: 0.3rem 0.4rem;
-  margin-top: -1.5rem;
-  margin-left: 1rem;
+  left: 1rem;
   border-top: 1px solid #eee;
   border-radius: 7px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);

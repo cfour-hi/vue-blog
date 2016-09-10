@@ -1,6 +1,6 @@
 <template>
   <section class="worklog-list-page">
-    <ul class="worklog-list">
+    <ul class="worklog-list" v-if="$route.name === 'worklog' && worklogListInfo.length" transition="fade">
       <li class="worklog-list__item" v-for="worklog in worklogListInfo"><a v-link="{ name: 'worklog-content', params: { num: worklog.number } }">{{ worklog.title }}</a></li>
     </ul>
   </section>
@@ -48,7 +48,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .worklog-list-page,
   .worklog-list,
   .worklog-list__item {

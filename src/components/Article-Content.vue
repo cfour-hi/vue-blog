@@ -4,9 +4,7 @@
       <header>
         <h2 class="issues-content__title">{{ articleInfo.title }}</h2>
       </header>
-      <p class="issues-content__time" v-show="articleInfo._createdAt">
-        <em>Create at {{ articleInfo._createdAt }} && Update at {{ articleInfo._updatedAt }}</em>
-      </p>
+      <p class="issues-content__time" v-show="articleInfo._createdAt" style="text-align: center;">Create at {{ articleInfo._createdAt }} && Update at {{ articleInfo._updatedAt }}</p>
       <section class="issues-content__body">{{{ articleInfo._body }}}</section>
     </article>
   </section>

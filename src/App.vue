@@ -127,7 +127,19 @@
   button {
     outline: none;
   }
-  blockquote {
+  article {
+    font-size: 14px;
+  }
+  article a {
+    color: #0097da;
+  }
+  article a:hover {
+    color: #33ace1;
+  }
+  article a:active {
+    color: #008fcf;
+  }
+  article blockquote {
     padding: 0 10px;
     margin: 0;
     border-left: 5px solid #ccc;
@@ -135,10 +147,10 @@
     color: #333;
     line-height: 2;
   }
-  hr {
+  article hr {
     border: 1px solid #eee;
   }
-  pre {
+  article pre {
     padding: 16px;
     overflow: auto;
     font-size: 12px;
@@ -146,14 +158,14 @@
     border-radius: 3px;
     word-wrap: break-word;
   }
-  code {
+  article  code {
     padding: 0.2em 0.5em;
     margin: 0;
     background-color: rgba(0, 0, 0, 0.04);
     border-radius: 3px;
     font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
   }
-  pre code {
+  article pre code {
     background-color: transparent;
     padding: 0;
   }
@@ -185,23 +197,7 @@
   }
   .issues-content__time {
     font-size: 12px;
-    text-align: center;
     color: #999;
-  }
-  .issues-content__body {
-    font-size: 14px;
-  }
-  .issues-content__body h2 {
-    font-weight: 400;
-  }
-  .issues-content__body a {
-    color: #0097da;
-  }
-  .issues-content__body a:hover {
-    color: #33ace1;
-  }
-  .issues-content__body a:active {
-    color: #008fcf;
   }
   /* base end */
 
