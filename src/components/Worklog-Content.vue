@@ -4,9 +4,7 @@
       <header>
         <h2 class="issues-content__title">{{ worklogInfo.title }}</h2>
       </header>
-      <p class="issues-content__time" v-show="worklogInfo._createdAt">
-        <em>Create at {{ worklogInfo._createdAt }} && Update at {{ worklogInfo._updatedAt }}</em>
-      </p>
+      <p class="issues-content__time" v-show="worklogInfo._createdAt">Create at {{ worklogInfo._createdAt }} && Update at {{ worklogInfo._updatedAt }}</p>
       <section class="issues-content__body">{{{ worklogInfo._body }}}</section>
     </article>
   </section>

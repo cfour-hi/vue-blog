@@ -39,8 +39,8 @@
 
   // 切换元素 className 和 显示/隐藏
   let toggleElementDisplay = (elem, addClass, removeClass, display, delay) => {
-    elem.className = elem.className.split(' ' + removeClass)[0]
-    elem.className += (' ' + addClass)
+    elem.classList.remove(removeClass)
+    elem.classList.add(addClass)
 
     setTimeout(() => {
       elem.style.display = display
@@ -48,12 +48,15 @@
   }
 
   window.onscroll = () => {
-    if (document.scrollingElement.scrollTop <= 0) {
-      toggleElementDisplay(tool4Top, 'fadeupdown-leave', 'fadeupdown-enter', 'none', 200)
-    } else {
-      if (tool4Top.className.indexOf('fadeupdown-enter') !== -1) return
+    let leave = 'fadeupdown-leave'
+    let enter = 'fadeupdown-enter'
 
-      toggleElementDisplay(tool4Top, 'fadeupdown-enter', 'fadeupdown-leave', 'block', 200)
+    if (document.scrollingElement.scrollTop <= 300) {
+      toggleElementDisplay(tool4Top, leave, enter, 'none', 200)
+    } else {
+      if (tool4Top.className.indexOf(enter) !== -1) return
+
+      toggleElementDisplay(tool4Top, enter, leave, 'block', 200)
     }
   }
 
@@ -109,7 +112,7 @@
     position: relative;
     height: 100%;
     margin-left: calc(100vw - 100%);
-    font: 16px/1.5 "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,sans-serif;
+    font: 16px/1.7 "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,sans-serif;
   }
   a {
     color: #333;
@@ -130,6 +133,14 @@
   article {
     font-size: 14px;
   }
+  article h3 {
+    padding: 0.5em 1em;
+    border: 1px solid #ccc;
+    border-radius: 0.7em;
+    font-size: 1.3em;
+    color: #666;
+    background-color: #eee;
+  }
   article a {
     color: #0097da;
   }
@@ -140,10 +151,10 @@
     color: #008fcf;
   }
   article blockquote {
-    padding: 0 10px;
-    margin: 0;
+    padding: 0 1em;
+    margin-left: 1em;
     border-left: 5px solid #ccc;
-    font-size: 14px;
+    font-size: 12px;
     color: #333;
     line-height: 2;
   }
@@ -190,13 +201,27 @@
   .issues-content {
     padding: 0.3rem 0;
   }
+  .issues-content p {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+  .issues-content li p,
+  .issues-content blockquote p {
+    margin-left: 0;
+    margin-right: 0;
+  }
   .issues-content__title {
     margin: 0;
     text-align: center;
     font-size: 24px;
   }
+  .issues-content__title a {
+    color: #333;
+  }
   .issues-content__time {
+    margin-bottom: 2em;
     font-size: 12px;
+    text-align: center;
     color: #999;
   }
   /* base end */

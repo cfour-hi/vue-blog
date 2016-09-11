@@ -2,23 +2,25 @@
   <section class="article-list-page">
     <ul style="padding: 0;" v-if="$route.name === 'article' && articleListInfo.length" transition="fade">
       <li class="article-list__item" v-for="article in articleListInfo" track-by="id">
-        <h2 class="article-list__title">
-          <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
-        </h2>
-        <p class="issues-content__time">Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</p>
-        <article>{{{ article._quote }}}</article>
-        <a class="article-list__read article-list__read-btn" v-link="{ name: 'article-content', params: { num: article.number }}">READ</a>
-        <p class="article-list__labels">
-          <span>Labels:</span>
-          <a href="#" class="article-info__label" v-for="label in article.labels">{{ label._name }}</a>
-        </p>
+        <article>
+          <h2 class="issues-content__title">
+            <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
+          </h2>
+          <p class="issues-content__time">Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</p>
+          {{{ article._quote }}}
+          <a class="article-list__read article-list__read-btn" v-link="{ name: 'article-content', params: { num: article.number }}">READ</a>
+          <p class="article-list__labels">
+            <span>标签：</span>
+            <a href="#" class="article-info__label" v-for="label in article.labels">{{ label.name }}</a>
+          </p>
+        </article>
       </li>
     </ul>
     <div class="article-list__more-wrap">
       <p v-show="articleListInfo.length && hasMoreArticle && showMoreBtn" transition="fadeupdown">
         <button class="article-list__more article-list__read-btn" type="button" @click="moreArticle">MORE</button>
       </p>
-      <p class="article-list__no-more" v-show="articleListInfo.length && !hasMoreArticle" transition="fadeupdown">没有更多的文章</p>
+      <p class="article-list__no-more" v-if="articleListInfo.length && !hasMoreArticle" transition="fadeupdown">没有更多的文章</p>
     </div>
   </section>
 </template>
@@ -88,19 +90,12 @@
     font-size: 14px;
     list-style: none;
   }
-  .article-list__item .article-list__title {
-    margin-top: 0;
-    margin-bottom: 0.05rem;
-  }
-  .article-list__item .article-list__title a:hover {
-    border-bottom: 2px solid #333;
-  }
   .article-list__item .article-list__labels {
     font-size: 12px;
     color: #f60;
   }
   .article-list__item .article-info__label {
-    margin-left: 0.1rem;
+    margin-right: 0.1rem;
     border-bottom: 1px solid #f60;
     color: inherit;
   }
