@@ -163,10 +163,12 @@
   }
   article pre {
     padding: 16px;
+    margin: 1em;
+    border: 2px solid #ddd;
     overflow: auto;
     font-size: 12px;
     background-color: #f7f7f7;
-    border-radius: 3px;
+    border-radius: 1em;
     word-wrap: break-word;
   }
   article  code {

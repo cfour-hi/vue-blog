@@ -51,7 +51,7 @@
   padding: 0.3rem 0.4rem;
   left: 1rem;
   border-top: 1px solid #eee;
-  border-radius: 7px;
+  border-radius: 1em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
   color: #000;
 }
