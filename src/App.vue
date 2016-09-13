@@ -134,44 +134,50 @@
     font-size: 14px;
   }
   article h3 {
-    padding: 0.5em 1em;
-    border: 1px solid #ccc;
-    border-radius: 0.7em;
+    border-bottom: 1px dashed #ccc;
+    font-size: 1.5em;
+    font-weight: 400;
+  }
+  article h4 {
+    margin-bottom: 0;
     font-size: 1.3em;
-    color: #666;
-    background-color: #eee;
+    font-weight: 400;
   }
   article a {
     color: #0097da;
+    padding-bottom: 0.1em;
   }
   article a:hover {
     color: #33ace1;
+    border-bottom: 1px solid currentColor;
   }
   article a:active {
     color: #008fcf;
   }
   article blockquote {
     padding: 0 1em;
-    margin-left: 1em;
+    margin: 0;
     border-left: 5px solid #ccc;
     font-size: 12px;
     color: #333;
     line-height: 2;
+  }
+  article strong {
+    color: #f60;
   }
   article hr {
     border: 1px solid #eee;
   }
   article pre {
     padding: 16px;
-    margin: 1em;
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     overflow: auto;
     font-size: 12px;
     background-color: #f7f7f7;
-    border-radius: 1em;
+    border-radius: 0.5em;
     word-wrap: break-word;
   }
-  article  code {
+  article code {
     padding: 0.2em 0.5em;
     margin: 0;
     background-color: rgba(0, 0, 0, 0.04);
@@ -202,10 +208,6 @@
   }
   .issues-content {
     padding: 0.3rem 0;
-  }
-  .issues-content p {
-    margin-left: 1em;
-    margin-right: 1em;
   }
   .issues-content li p,
   .issues-content blockquote p {
