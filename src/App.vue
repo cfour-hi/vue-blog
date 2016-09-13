@@ -134,6 +134,9 @@
     font-size: 14px;
   }
   article h3 {
+    position: relative;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
     border-bottom: 1px dashed #ccc;
     font-size: 1.5em;
     font-weight: 400;
