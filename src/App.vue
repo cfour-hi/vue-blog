@@ -136,15 +136,25 @@
   article h3 {
     position: relative;
     padding-top: 1em;
-    padding-bottom: 0.5em;
+    padding-bottom: 0.3em;
     border-bottom: 1px dashed #ccc;
     font-size: 1.5em;
     font-weight: 400;
   }
   article h4 {
     margin-bottom: 0;
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: 400;
+    color: #999;
+  }
+  article h4 + p,
+  article h4 + blockquote > p,
+  article h4 + ul {
+    margin-top: 0;
+  }
+  article h4 + ul {
+    padding-left: 0;
+    list-style: none;
   }
   article a {
     color: #0097da;
@@ -166,6 +176,7 @@
     line-height: 2;
   }
   article strong {
+    font-weight: 400;
     color: #f60;
   }
   article hr {

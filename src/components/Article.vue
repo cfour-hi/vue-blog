@@ -55,7 +55,7 @@
         this.getArticleList()
       },
       getArticleList () {
-        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.studyRepo + '/issues', {
+        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.blogRepo + '/issues', {
           params: {
             filter: 'created',
             page: this.nextPage,
@@ -69,7 +69,7 @@
 
           // 添加文章内容所需属性
           // 添加文章列表缓存数据
-          pushCacheList(app.studyRepo, addPrivateArticleAttr(response.data))
+          pushCacheList(app.blogRepo, addPrivateArticleAttr(response.data))
           this.articleListInfo = cacheArticleList
 
           if (response.data.length < prePage) this.$dispatch('update-has-more-article', false)

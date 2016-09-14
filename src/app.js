@@ -9,7 +9,7 @@ marked.setOptions({
 
 const _config = {
   owner: 'monine',
-  studyRepo: 'study',
+  blogRepo: 'monine.github.io',
   worklogRepo: 'worklog',
   host: 'https://api.github.com/',
   access_token: '45b2a12600ba7b61987f' + '9c2600ad46a0822b88cc'
@@ -25,7 +25,7 @@ let cacheArticleList = []
 let cacheWorklogList = []
 
 let pushCacheList = (respName, cache) => {
-  if (respName === _config.studyRepo) {
+  if (respName === _config.blogRepo) {
     // 添加文章列表缓存
     // 往 cacheArticleList 内添加当前获取到的文章列表数据
     cacheArticleList = cacheArticleList.concat(cache)

@@ -29,7 +29,7 @@
       this.$dispatch('update-loading', true)
 
       // 获取单个 issues 内容，标识为 api 返回内容的 number 属性。
-      this.$http.get(app.host + 'repos/' + app.owner + '/' + app.studyRepo + '/issues/' + articleNum, {
+      this.$http.get(app.host + 'repos/' + app.owner + '/' + app.blogRepo + '/issues/' + articleNum, {
         params: {
           access_token: app.access_token
         }
