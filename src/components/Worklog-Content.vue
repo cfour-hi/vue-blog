@@ -1,6 +1,6 @@
 <template>
   <section class="worklog-content-page">
-    <article class="issues-content" v-if="$route.name === 'worklog-content' && worklogInfo.id" transition="fade">
+    <article class="issues-content" v-if="$route.name === 'worklog-content' && worklogInfo.id" transition="fadeInOut">
       <header>
         <h2 class="issues-content__title">{{ worklogInfo.title }}</h2>
       </header>

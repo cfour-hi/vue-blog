@@ -1,6 +1,6 @@
 <template>
   <section class="article-list-page">
-    <ul style="padding: 0;" v-if="$route.name === 'article' && articleListInfo.length" transition="fade">
+    <ul style="padding: 0;" v-if="$route.name === 'article' && articleListInfo.length" transition="fadeInOut">
       <li class="article-list__item" v-for="article in articleListInfo" track-by="id">
         <article>
           <h2 class="issues-content__title">
@@ -17,10 +17,10 @@
       </li>
     </ul>
     <div class="article-list__more-wrap">
-      <p v-show="articleListInfo.length && hasMoreArticle && showMoreBtn" transition="fadeupdown">
+      <p class="article-list__more-box" v-show="articleListInfo.length && hasMoreArticle && showMoreBtn" transition="zoomInOut">
         <button class="article-list__more article-list__read-btn" type="button" @click="moreArticle">MORE</button>
       </p>
-      <p class="article-list__no-more" v-if="articleListInfo.length && !hasMoreArticle" transition="fadeupdown">没有更多的文章</p>
+      <p class="article-list__no-more" v-if="articleListInfo.length && !hasMoreArticle" transition="zoomInOut">没有更多的文章</p>
     </div>
   </section>
 </template>
@@ -123,8 +123,13 @@
     background-color: #008fcf;
   }
   .article-list__more-wrap {
-    height: 0.5rem;
+    position: relative;
+    height: 0.75rem;
     text-align: center;
+  }
+  .article-list__more-box {
+    position: absolute;
+    width: 100%;
   }
   .article-list__more {
     border: 1px solid #f60;
@@ -140,7 +145,10 @@
     background-color: #f26100;
   }
   .article-list__no-more {
+    position: absolute;
+    width: 100%;
     font-size: 12px;
+    line-height: 3;
     color: #999;
   }
   .article-list__read-btn {

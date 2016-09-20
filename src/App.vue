@@ -48,10 +48,10 @@
   }
 
   window.onscroll = () => {
-    let leave = 'fadeupdown-leave'
-    let enter = 'fadeupdown-enter'
+    let leave = 'fadeUpDown-leave'
+    let enter = 'fadeUpDown-enter'
 
-    if (document.scrollingElement.scrollTop <= 300) {
+    if (document.scrollingElement.scrollTop <= 0) {
       toggleElementDisplay(tool4Top, leave, enter, 'none', 200)
     } else {
       if (tool4Top.className.indexOf(enter) !== -1) return
@@ -484,11 +484,11 @@
     from {opacity: 1;}
     to {opacity: 0;}
   }
-  .fade-enter {
+  .fadeInOut-enter {
     -webkit-animation: fadeIn .5s;
     animation: fadeIn .5s;
   }
-  .fade-leave {
+  .fadeInOut-leave {
     -webkit-animation: fadeOut .5s;
     animation: fadeOut .5s;
   }
@@ -532,13 +532,55 @@
       transform: translate(0, 150%);
     }
   }
-  .fadeupdown-enter {
+  .fadeUpDown-enter {
     -webkit-animation: fadeInUp .3s;
     animation: fadeInUp .3s;
   }
-  .fadeupdown-leave {
+  .fadeUpDown-leave {
     -webkit-animation: fadeOutDown .3s;
     animation: fadeOutDown .3s;
+  }
+  @-webkit-keyframes zoomIn {
+    from {
+      opacity: 0;
+      -webkit-transform: scale3d(.3, .3, .3);
+      transform: scale3d(.3, .3, .3);
+    }
+    50% {opacity: 1;}
+  }
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      -webkit-transform: scale3d(.3, .3, .3);
+      transform: scale3d(.3, .3, .3);
+    }
+    50% {opacity: 1;}
+  }
+  @-webkit-keyframes zoomOut {
+    from {opacity: 1;}
+    50% {
+      opacity: 0;
+      -webkit-transform: scale3d(.3, .3, .3);
+      transform: scale3d(.3, .3, .3);
+    }
+    to {opacity: 0;}
+  }
+  @keyframes zoomOut {
+    from {opacity: 1;}
+    50% {
+      opacity: 0;
+      -webkit-transform: scale3d(.3, .3, .3);
+      transform: scale3d(.3, .3, .3);
+    }
+    to {opacity: 0;}
+  }
+  .zoomInOut-enter {
+    -webkit-animation: zoomIn 0.3s;
+    animation: zoomIn 0.3s;
+  }
+  .zoomInOut-leave {
+    -webkit-animation: zoomOut 0.3s;
+    animation: zoomOut 0.3s;
   }
   /* trannsition animation end */
 </style>

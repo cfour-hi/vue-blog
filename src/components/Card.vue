@@ -1,5 +1,5 @@
 <template>
-  <div class="user-info__card" v-show="$route.path === '/'" transition="fadeupdown">
+  <div class="user-info__card" v-show="$route.path === '/'" transition="fadeUpDown">
     <img src="https://avatars3.githubusercontent.com/u/8335856?v=3&s=460" alt="头像">
     <div class="user-info__site">
       <a href="https://github.com/Monine/">
