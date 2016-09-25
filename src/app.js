@@ -20,19 +20,27 @@ const _config = {
 // 每次获取到文章列表数据之后都会使用 pushCacheArticleList 方法添加新内容
 let cacheArticleList = []
 
+// 标签文章列表缓存
+let cacheLableArticeList = {}
+
 // 工作日志缓存
-// 跟文章列表缓存一个意思
 let cacheWorklogList = []
 
-let pushCacheList = (respName, cache) => {
-  if (respName === _config.blogRepo) {
+let pushCacheList = (cacheName, cache) => {
+  if (cacheName === _config.blogRepo) {
     // 添加文章列表缓存
     // 往 cacheArticleList 内添加当前获取到的文章列表数据
     cacheArticleList = cacheArticleList.concat(cache)
-  } else if (respName === _config.worklogRepo) {
+  } else if (cacheName === _config.worklogRepo) {
     // 添加工作日志列表缓存
     // 往 cacheWorklogList 内添加当前获取到的工作日志数据
     cacheWorklogList = cacheWorklogList.concat(cache)
+  } else if (cacheName === 'labelArticleList') {
+    if (cacheLableArticeList[cache.name]) {
+      cacheLableArticeList[cache.name] = cacheLableArticeList[cache.name].concat(cache.list)
+    } else {
+      cacheLableArticeList[cache.name] = [].concat(cache.list)
+    }
   }
 }
 
@@ -61,4 +69,4 @@ let addPrivateArticleAttr = (articleInfo) => {
 // 默认输出配置信息
 export default _config
 
-export {cacheArticleList, cacheWorklogList, pushCacheList, addPrivateArticleAttr}
+export {cacheArticleList, cacheWorklogList, cacheLableArticeList, pushCacheList, addPrivateArticleAttr}

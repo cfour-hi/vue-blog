@@ -9,7 +9,9 @@
       </nav>
     </header>
     <div class="app-container">
-      <router-view :loading="loading" :next-page="nextPage" :has-more-article="hasMoreArticle" :issues-num="$route.params.num" @update-loading="updateLoading" @update-next-page="updateNextPage" @update-has-more-article="updateHasMoreArticle"></router-view>
+      <router-view 
+        :loading="loading" 
+        @update-loading-statu="updateLoadingStatu"></router-view>
       <div class="la-ball-clip-rotate" v-show="loading"><div></div></div>
     </div>
     <footer class="app-footer">
@@ -67,20 +69,12 @@
     },
     data () {
       return {
-        loading: false,
-        nextPage: 1,
-        hasMoreArticle: true
+        loading: false
       }
     },
     methods: {
-      updateLoading (bool) {
+      updateLoadingStatu (bool) {
         this.loading = bool
-      },
-      updateNextPage () {
-        this.nextPage += 1
-      },
-      updateHasMoreArticle (bool) {
-        this.hasMoreArticle = bool
       },
       scroll2TopEase () {
         // 为什么是 18？
@@ -152,9 +146,9 @@
   article h4 + ul {
     margin-top: 0;
   }
-  article h4 + ul {
-    padding-left: 0;
-    list-style: none;
+  article ul,
+  article ol {
+    padding-left: 1.5em;
   }
   article a {
     color: #0097da;

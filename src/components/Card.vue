@@ -35,7 +35,7 @@
 <script>
   export default {
     ready () {
-      this.$dispatch('update-loading', false)
+      this.$dispatch('update-loading-statu', false)
 
       let card = document.querySelector('.user-info__card')
       card.style.top = ((document.querySelector('.app-container').offsetHeight - card.offsetHeight) / 2) + 'px'
