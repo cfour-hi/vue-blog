@@ -22,7 +22,7 @@
       </p>
       <p class="article-list__no-more" v-show="articleListInfo.length && !hasMoreArticle" transition="zoomInOut">没有更多的文章</p>
     </div>
-    <nav class="article-list__labels-nav" style="display: none;">
+    <nav class="article-list__labels-nav">
       <a class="labels-nav__title" href="javascript:void(0);">标签</a>
       <a class="labels-nav__item" v-link="{ name: 'label-article-list', params: { labelName: '技术'}}">技术</a>
       <a class="labels-nav__item" v-link="{ name: 'label-article-list', params: { labelName: '工具'}}">工具</a>
@@ -41,33 +41,30 @@
   let pageType = 'article'
 
   export default {
-    ready () {
-      this.articleListInfo = []
-
-      if (this.labelName) {  // 标签类文章
-        labelName = pageType = this.labelName
-        if (cacheLableArticeList[labelName]) {
-          this.articleListInfo = cacheLableArticeList[labelName]
-        } else {
-          this.$dispatch('add-pagination-type', pageType)
-        }
-      } else {  // 所有文章
-        labelName = null
-        pageType = 'article'
-        if (cacheArticleList.length) this.articleListInfo = cacheArticleList
-      }
-
-      if (!(this.pagination[pageType].hasMoreArticle)) this.hasMoreArticle = false
-
-      if (this.articleListInfo.length) return false
-
-      this.$dispatch('update-loading-statu', true)
-
-      this.getArticleList()
-    },
     route: {
       data (transition) {
-        if (transition.to.name === 'label-article-list') {}
+        this.articleListInfo = []
+
+        if (transition.to.name === 'article-list') {
+          labelName = null
+          pageType = 'article'
+          if (cacheArticleList.length) this.articleListInfo = cacheArticleList
+        } else if (transition.to.name === 'label-article-list') {
+          labelName = pageType = transition.to.params.labelName
+          if (cacheLableArticeList[labelName]) {
+            this.articleListInfo = cacheLableArticeList[labelName]
+          } else {
+            this.$dispatch('add-pagination-type', pageType)
+          }
+        }
+
+        this.pagination[pageType].hasMoreArticle ? this.hasMoreArticle = true : this.hasMoreArticle = false
+
+        if (this.articleListInfo.length) return false
+
+        this.$dispatch('update-loading-statu', true)
+
+        this.getArticleList()
       }
     },
     props: ['loading', 'labelName', 'pagination'],
@@ -85,6 +82,11 @@
       },
       requestArticleList (request) {
         return this.$http.get(request.url, (request.options ? request.options : {}))
+      },
+      hasNoMoreArticle () {
+        this.hasMoreArticle = false
+        if (!this.showMoreBtn) this.showMoreBtn = true
+        this.$dispatch('update-has-more-article-statu', pageType, false)
       },
       getArticleList () {
         let request = {}
@@ -109,10 +111,8 @@
 
           let listLength = 0
           Array.isArray(response.data) ? listLength = response.data.length : listLength = response.data.items.length
-          if (!listLength) {
-            this.hasMoreArticle = false
-            return this.$dispatch('update-has-more-article-statu', pageType, false)
-          }
+
+          if (!listLength) return this.hasNoMoreArticle()
 
           if (labelName) {
             pushCacheList('labelArticleList', {name: labelName, list: addPrivateArticleAttr(response.data.items)})
@@ -122,13 +122,9 @@
             this.articleListInfo = cacheArticleList
           }
 
-          if (listLength < perPage) {
-            this.hasMoreArticle = false
-            return this.$dispatch('update-has-more-article-statu', pageType, false)
-          }
+          if (listLength < perPage) return this.hasNoMoreArticle()
 
           if (!this.showMoreBtn) this.showMoreBtn = true
-
           this.$dispatch('update-pagination', pageType)
         })
       }
