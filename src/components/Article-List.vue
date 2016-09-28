@@ -1,17 +1,17 @@
-<template>
+<template keep-alive>
   <section class="article-list-page">
-    <ul style="padding: 0;" v-if="articleListInfo.length" transition="fadeInOut">
+    <ul style="padding: 0; margin: 0;" v-if="articleListInfo.length" transition="fadeInOut">
       <li class="article-list__item" v-for="article in articleListInfo" track-by="id">
         <article>
           <h2 class="issues-content__title">
-            <a v-link="{ name: 'article-content', params: { num: article.number }}">{{ article.title}}</a>
+            <a v-link="{name: 'article-content', params: { num: article.number}}">{{ article.title}}</a>
           </h2>
           <p class="issues-content__time">Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</p>
           {{{ article._quote }}}
-          <a class="article-list__read article-list__read-btn" v-link="{ name: 'article-content', params: { num: article.number }}">READ</a>
+          <a class="article-list__read article-list__read-btn" v-link="{name: 'article-content', params: { num: article.number}}">READ</a>
           <p class="article-list__labels">
             <span>标签：</span>
-            <a href="#" class="article-info__label" v-for="label in article.labels">{{ label.name }}</a>
+            <a v-link="{name: 'label-article-list', params: {labelName: label.name}}" class="article-info__label" v-for="label in article.labels">{{ label.name }}</a>
           </p>
         </article>
       </li>
@@ -22,20 +22,14 @@
       </p>
       <p class="article-list__no-more" v-show="articleListInfo.length && !hasMoreArticle" transition="zoomInOut">没有更多的文章</p>
     </div>
-    <nav class="article-list__labels-nav">
-      <a class="labels-nav__title" href="javascript:void(0);">标签</a>
-      <a class="labels-nav__item" v-link="{ name: 'label-article-list', params: { labelName: '技术'}}">技术</a>
-      <a class="labels-nav__item" v-link="{ name: 'label-article-list', params: { labelName: '工具'}}">工具</a>
-      <a class="labels-nav__item" v-link="{ name: 'label-article-list', params: { labelName: '读书'}}">读书</a>
-    </nav>
   </section>
 </template>
 
 <script>
-  import app, {cacheArticleList, cacheLableArticeList, pushCacheList, addPrivateArticleAttr} from '../app.js'
+  import app, {cacheArticleList, cacheLableArticeList, cachePagination, pushCacheList, addPrivateArticleAttr, addPaginationProject, updatePaginationInfo} from '../app.js'
   // cacheArticleList is read-only
 
-  const perPage = 2
+  const perPage = 5
 
   let labelName = null
   let pageType = 'article'
@@ -54,11 +48,11 @@
           if (cacheLableArticeList[labelName]) {
             this.articleListInfo = cacheLableArticeList[labelName]
           } else {
-            this.$dispatch('add-pagination-type', pageType)
+            addPaginationProject(labelName)
           }
         }
 
-        this.pagination[pageType].hasMoreArticle ? this.hasMoreArticle = true : this.hasMoreArticle = false
+        cachePagination[pageType].hasMoreArticle ? this.hasMoreArticle = true : this.hasMoreArticle = false
 
         if (this.articleListInfo.length) return false
 
@@ -67,12 +61,12 @@
         this.getArticleList()
       }
     },
-    props: ['loading', 'labelName', 'pagination'],
+    props: ['labelName'],
     data () {
       return {
         articleListInfo: [],
         hasMoreArticle: true,
-        showMoreBtn: true    // 用来触发 more 按钮隐藏动画
+        showMoreBtn: true  // 用来触发 more 按钮隐藏动画
       }
     },
     methods: {
@@ -86,19 +80,17 @@
       hasNoMoreArticle () {
         this.hasMoreArticle = false
         if (!this.showMoreBtn) this.showMoreBtn = true
-        this.$dispatch('update-has-more-article-statu', pageType, false)
+        updatePaginationInfo(pageType, false)
+        // this.$dispatch('update-has-more-article-statu', pageType, false)
       },
       getArticleList () {
-        let request = {}
-
-        if (labelName) {  // 当前 label 类文章 request
-          request.url = app.host + 'search/issues?q=author:' + app.owner + '+label:' + labelName + '+is:open' + '&sort=created&order=' + app.owner + '&page=' + this.pagination[pageType].page + '&per_page=' + perPage + '&access_token=' + app.access_token
-        } else {  // 所有文章 request
-          request.url = app.host + 'repos/' + app.owner + '/' + app.blogRepo + '/issues'
-          request.options = {
+        let request = {
+          url: app.host + 'repos/' + app.owner + '/' + app.blogRepo + '/issues',
+          options: {
             params: {
               filter: 'created',
-              page: this.pagination[pageType].page,
+              labels: labelName,
+              page: cachePagination[pageType].page,
               per_page: perPage,
               access_token: app.access_token
             }
@@ -107,25 +99,20 @@
 
         // 获取文章列表
         this.requestArticleList(request).then((response) => {
-          if (this.loading) this.$dispatch('update-loading-statu', false)
+          this.$dispatch('update-loading-statu', false)
 
-          let listLength = 0
-          Array.isArray(response.data) ? listLength = response.data.length : listLength = response.data.items.length
-
-          if (!listLength) return this.hasNoMoreArticle()
+          if (!response.data.length) return this.hasNoMoreArticle()
 
           if (labelName) {
-            pushCacheList('labelArticleList', {name: labelName, list: addPrivateArticleAttr(response.data.items)})
-            this.articleListInfo = cacheLableArticeList[labelName]
+            this.articleListInfo = pushCacheList('labelArticleList', {name: labelName, list: addPrivateArticleAttr(response.data)})[labelName]
           } else {
-            pushCacheList(app.blogRepo, addPrivateArticleAttr(response.data))
-            this.articleListInfo = cacheArticleList
+            this.articleListInfo = pushCacheList(app.blogRepo, addPrivateArticleAttr(response.data))
           }
 
-          if (listLength < perPage) return this.hasNoMoreArticle()
+          if (response.data.length < perPage) return this.hasNoMoreArticle()
 
           if (!this.showMoreBtn) this.showMoreBtn = true
-          this.$dispatch('update-pagination', pageType)
+          updatePaginationInfo(pageType, (cachePagination[pageType].page += 1))
         })
       }
     }
@@ -133,6 +120,11 @@
 </script>
 
 <style scoped>
+  .article-list-page {
+    position: relative;
+    background: #fff;
+    z-index: 2;
+  }
   .article-list__item {
     padding-top: 0.2rem;
     border-bottom: 1px dashed #ccc;
@@ -208,46 +200,5 @@
             transition-property: color, background-color;
     -webkit-transition-duration: 0.3s;
             transition-duration: 0.3s;
-  }
-  .article-list__labels-nav {
-    position: absolute;
-    top: -1px;
-    right: 100%;
-    font-size: 12px;
-    letter-spacing: 0.5em;
-    text-indent: 1em;
-  }
-  .article-list__labels-nav a {
-    display: block;
-    width: 0.5rem;
-    margin-bottom: 3px;
-    border-radius: 50% 0 0 50%;
-    text-align: center;
-    color: #fff;
-  }
-  .article-list__labels-nav .labels-nav__item {
-    background: #ddd;
-    -webkit-transition-property: width, margin-left;
-            transition-property: width, margin-left;
-    -webkit-transition-duration: 0.3s;
-            transition-duration: 0.3s;
-  }
-  .article-list__labels-nav .labels-nav__item:hover {
-    width: 0.6rem;
-    margin-left: -0.1rem;
-    background: #ccc;
-  }
-  .article-list__labels-nav .labels-nav__item.v-link-active,
-  .article-list__labels-nav .labels-nav__title {
-    width: 0.65rem;
-    margin-left: -0.15rem;
-    font-size: 14px;
-    color: #fff;
-  }
-  .article-list__labels-nav .labels-nav__item.v-link-active {
-    background: #f60;
-  }
-  .article-list__labels-nav .labels-nav__title {
-    background: #0097da;
   }
 </style>

@@ -26,29 +26,51 @@ let cacheLableArticeList = {}
 // 工作日志缓存
 let cacheWorklogList = []
 
+// 文章列表分页信息缓存
+let cachePagination = {
+  article: {
+    page: 1,
+    hasMoreArticle: true
+  }
+}
+
 let pushCacheList = (cacheName, cache) => {
+  let _cache = null
+
   if (cacheName === _config.blogRepo) {
     // 添加文章列表缓存
     // 往 cacheArticleList 内添加当前获取到的文章列表数据
-    cacheArticleList = cacheArticleList.concat(cache)
+    _cache = cacheArticleList = cacheArticleList.concat(cache)
   } else if (cacheName === _config.worklogRepo) {
+    debugger
+    if (cacheWorklogList.length) {
+      for (let i = cache.length - 1; i >= 0; i--) {
+        if (cache[0].id === cacheWorklogList[i].id) return
+      }
+    }
+
     // 添加工作日志列表缓存
     // 往 cacheWorklogList 内添加当前获取到的工作日志数据
-    cacheWorklogList = cacheWorklogList.concat(cache)
+    _cache = cacheWorklogList = cacheWorklogList.concat(cache)
   } else if (cacheName === 'labelArticleList') {
+    // 添加标签文章列表缓存
+    // 往 cacheLableArticeList 内添加当前获取到的文章列表数据
     if (cacheLableArticeList[cache.name]) {
       cacheLableArticeList[cache.name] = cacheLableArticeList[cache.name].concat(cache.list)
     } else {
       cacheLableArticeList[cache.name] = [].concat(cache.list)
     }
+    _cache = cacheLableArticeList
   }
+
+  return _cache
 }
 
 // 添加文章内容所需属性
 // 参数 articleInfo 可以是 Array 或者 Object，传入什么类型则返回什么类型。
 let addPrivateArticleAttr = (articleInfo) => {
   let _articleInfo = []
-  let _isArray
+  let _isArray = null
 
   Array.isArray(articleInfo) ? _isArray = true : _isArray = false
 
@@ -66,7 +88,20 @@ let addPrivateArticleAttr = (articleInfo) => {
   return _isArray ? _articleInfo : _articleInfo[0]
 }
 
+let addPaginationProject = (name, cache) => {
+  return (cachePagination[name] = {
+    page: 1,
+    hasMoreArticle: true
+  })
+}
+
+let updatePaginationInfo = (name, val) => {
+  let key = (typeof val === 'boolean' ? 'hasMoreArticle' : 'page')
+
+  cachePagination[name][key] = val
+}
+
 // 默认输出配置信息
 export default _config
 
-export {cacheArticleList, cacheWorklogList, cacheLableArticeList, pushCacheList, addPrivateArticleAttr}
+export {cacheArticleList, cacheWorklogList, cacheLableArticeList, cachePagination, pushCacheList, addPrivateArticleAttr, addPaginationProject, updatePaginationInfo}

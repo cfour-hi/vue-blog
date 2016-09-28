@@ -1,16 +1,16 @@
 <template>
   <div class="app-wrapper">
     <header class="app-header">
-      <h1><a v-link="{ path: '/' }">Monine</a></h1>
+      <h1><a v-link="{path: '/'}">Monine</a></h1>
       <nav>
-        <a v-link="{ path: '/', exact: true }">名&nbsp;片</a>
-        <a v-link="{ path: '/article' }">文&nbsp;章</a>
-        <a v-link="{ path: '/worklog' }">工作日志</a>
+        <a v-link="{path: '/', exact: true}">名&nbsp;片</a>
+        <a v-link="{path: '/article'}">文&nbsp;章</a>
+        <a v-link="{path: '/worklog'}">工作日志</a>
       </nav>
     </header>
     <div class="app-container">
       <router-view 
-        :loading="loading" 
+        :loading="loading"
         @update-loading-statu="updateLoadingStatu"></router-view>
       <div class="la-ball-clip-rotate" v-show="loading"><div></div></div>
     </div>
@@ -346,6 +346,7 @@
     left: 3.34rem;
     text-align: center;
     color: #0097da;
+    z-index: 99;
   }
   .la-ball-clip-rotate.la-dark {
     color: #333;
