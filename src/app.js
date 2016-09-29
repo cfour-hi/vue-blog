@@ -42,7 +42,6 @@ let pushCacheList = (cacheName, cache) => {
     // 往 cacheArticleList 内添加当前获取到的文章列表数据
     _cache = cacheArticleList = cacheArticleList.concat(cache)
   } else if (cacheName === _config.worklogRepo) {
-    debugger
     if (cacheWorklogList.length) {
       for (let i = cache.length - 1; i >= 0; i--) {
         if (cache[0].id === cacheWorklogList[i].id) return
