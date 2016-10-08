@@ -125,7 +125,7 @@
     outline: none;
   }
   article {
-    font-size: 14px;
+    font-size: 16px;
   }
   article h3 {
     position: relative;
@@ -149,6 +149,7 @@
   article ul,
   article ol {
     padding-left: 1.5em;
+    font-size: 14px;
   }
   article a {
     color: #0097da;
@@ -225,7 +226,7 @@
   .issues-content__title {
     margin: 0;
     text-align: center;
-    font-size: 24px;
+    font-size: 26px;
   }
   .issues-content__title a {
     color: #333;
