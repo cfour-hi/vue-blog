@@ -1,4 +1,4 @@
-<template keep-alive>
+<template>
   <section class="article-list-page">
     <ul style="padding: 0; margin: 0;" v-if="articleListInfo.length" transition="fadeInOut">
       <li class="article-list__item" v-for="article in articleListInfo" track-by="id">

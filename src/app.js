@@ -34,20 +34,25 @@ let cachePagination = {
   }
 }
 
+// 判断文章是否已存在缓存内
+let _checkArticlesCache = (articles, cache) => {
+  for (let i = articles.length - 1; i >= 0; i--) {
+    if (articles[i].id === cache[0].id) return true
+  }
+  return false
+}
+
 let pushCacheList = (cacheName, cache) => {
   let _cache = null
 
   if (cacheName === _config.blogRepo) {
+    if (_checkArticlesCache(cacheArticleList, cache)) return false
+
     // 添加文章列表缓存
     // 往 cacheArticleList 内添加当前获取到的文章列表数据
     _cache = cacheArticleList = cacheArticleList.concat(cache)
   } else if (cacheName === _config.worklogRepo) {
-    debugger
-    if (cacheWorklogList.length) {
-      for (let i = cache.length - 1; i >= 0; i--) {
-        if (cache[0].id === cacheWorklogList[i].id) return
-      }
-    }
+    if (_checkArticlesCache(cacheWorklogList, cache)) return false
 
     // 添加工作日志列表缓存
     // 往 cacheWorklogList 内添加当前获取到的工作日志数据
@@ -56,6 +61,8 @@ let pushCacheList = (cacheName, cache) => {
     // 添加标签文章列表缓存
     // 往 cacheLableArticeList 内添加当前获取到的文章列表数据
     if (cacheLableArticeList[cache.name]) {
+      if (_checkArticlesCache(cacheLableArticeList[cache.name], cache.list)) return false
+
       cacheLableArticeList[cache.name] = cacheLableArticeList[cache.name].concat(cache.list)
     } else {
       cacheLableArticeList[cache.name] = [].concat(cache.list)
@@ -70,9 +77,9 @@ let pushCacheList = (cacheName, cache) => {
 // 参数 articleInfo 可以是 Array 或者 Object，传入什么类型则返回什么类型。
 let addPrivateArticleAttr = (articleInfo) => {
   let _articleInfo = []
-  let _isArray = null
+  let _isArray = false
 
-  Array.isArray(articleInfo) ? _isArray = true : _isArray = false
+  if (Array.isArray(articleInfo)) _isArray = true
 
   _isArray ? (_articleInfo = _articleInfo.concat(articleInfo)) : _articleInfo.push(articleInfo)
 
