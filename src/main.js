@@ -10,6 +10,8 @@ import ArticleContent from './components/Article-Content.vue'
 import Worklog from './components/Worklog.vue'
 import WorklogList from './components/Worklog-List.vue'
 
+// Vue.config.debug = true
+
 Vue.use(VueRouter)
 Vue.use(VueResource)
 

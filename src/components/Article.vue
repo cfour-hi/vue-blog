@@ -1,21 +1,18 @@
 <template>
   <section class="article-page">
-    <nav class="article-list__labels-nav" :class="{'labels-nav--show': !loading}">
+    <nav class="article-list__labels-nav" :class="{'labels-nav--show': !loader}">
       <a class="labels-nav__title" href="javascript:void(0);">标签</a>
       <a class="labels-nav__item" v-link="{name: 'label-article-list', params: {labelName: '技术'}}">技术</a>
       <a class="labels-nav__item" v-link="{name: 'label-article-list', params: {labelName: '工具'}}">工具</a>
       <a class="labels-nav__item" v-link="{name: 'label-article-list', params: {labelName: '读书'}}">读书</a>
     </nav>
-    <router-view
-      :label-name="$route.params.labelName"
-      :issues-num="$route.params.num"
-      :route-name="$route.name"></router-view>
+    <router-view></router-view>
   </section>
 </template>
 
 <script>
   export default {
-    props: ['loading']
+    props: ['loader']
   }
 </script>
 

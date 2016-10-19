@@ -1,114 +1,87 @@
 import marked from 'Marked'
 import hljs from 'highlight.js'
 
+// 代码高亮
 marked.setOptions({
   highlight: (code) => {
     return hljs.highlightAuto(code).value
   }
 })
 
-const _config = {
+// 配置
+const config = {
   owner: 'monine',
-  blogRepo: 'monine.github.io',
-  worklogRepo: 'worklog',
+  blogRepos: 'monine.github.io',
+  worklogRepos: 'worklog',
   host: 'https://api.github.com/',
   access_token: '45b2a12600ba7b61987f' + '9c2600ad46a0822b88cc'
 }
 
-// 文章列表缓存
-// 可以看作是一个全局变量
-// 每次获取到文章列表数据之后都会使用 pushCacheArticleList 方法添加新内容
-let cacheArticleList = []
+// 缓存
+let cache = {
+  issues: {
+    blog: {},
+    worklog: {}
+  },
+  comments: {}
+}
 
-// 标签文章列表缓存
-let cacheLableArticeList = {}
-
-// 工作日志缓存
-let cacheWorklogList = []
-
-// 文章列表分页信息缓存
-let cachePagination = {
-  article: {
-    page: 1,
-    hasMoreArticle: true
+// 获取 issues 信息
+let getIssuesInfo = (issue) => {
+  let _body = marked(issue.body)
+  return {
+    id: issue.id,
+    number: issue.number,
+    html_url: issue.html_url,
+    comments_url: issue.comments_url,
+    title: issue.title,
+    createdAt: issue.created_at.split('T')[0],
+    updatedAt: issue.updated_at.split('T')[0],
+    quote: _body.split('<!-- more -->')[0].trim(),
+    body: _body,
+    labels: issue.labels
   }
 }
 
-// 判断文章是否已存在缓存内
-let _checkArticlesCache = (articles, cache) => {
-  for (let i = articles.length - 1; i >= 0; i--) {
-    if (articles[i].id === cache[0].id) return true
-  }
-  return false
-}
-
-let pushCacheList = (cacheName, cache) => {
-  let _cache = null
-
-  if (cacheName === _config.blogRepo) {
-    if (_checkArticlesCache(cacheArticleList, cache)) return false
-
-    // 添加文章列表缓存
-    // 往 cacheArticleList 内添加当前获取到的文章列表数据
-    _cache = cacheArticleList = cacheArticleList.concat(cache)
-  } else if (cacheName === _config.worklogRepo) {
-    if (_checkArticlesCache(cacheWorklogList, cache)) return false
-
-    // 添加工作日志列表缓存
-    // 往 cacheWorklogList 内添加当前获取到的工作日志数据
-    _cache = cacheWorklogList = cacheWorklogList.concat(cache)
-  } else if (cacheName === 'labelArticleList') {
-    // 添加标签文章列表缓存
-    // 往 cacheLableArticeList 内添加当前获取到的文章列表数据
-    if (cacheLableArticeList[cache.name]) {
-      if (_checkArticlesCache(cacheLableArticeList[cache.name], cache.list)) return false
-
-      cacheLableArticeList[cache.name] = cacheLableArticeList[cache.name].concat(cache.list)
-    } else {
-      cacheLableArticeList[cache.name] = [].concat(cache.list)
+// 获取评论信息
+let getCommentsInfo = (comment) => {
+  return {
+    html_url: comment.html_url,
+    createdAt: comment.created_at,
+    body: marked(comment.body),
+    user: {
+      avatar_url: comment.user.avatar_url,
+      login: comment.user.login
     }
-    _cache = cacheLableArticeList
   }
-
-  return _cache
 }
 
-// 添加文章内容所需属性
-// 参数 articleInfo 可以是 Array 或者 Object，传入什么类型则返回什么类型。
-let addPrivateArticleAttr = (articleInfo) => {
-  let _articleInfo = []
-  let _isArray = false
+// 设置所需要用到的属性内容
+// 列表页面参数为 Array
+// 内容页面参数为 Object
+let setNecessaryAttribute = (info, mark) => {
+  let necessaryInfo = []
+  let _isArray = true
 
-  if (Array.isArray(articleInfo)) _isArray = true
-
-  _isArray ? (_articleInfo = _articleInfo.concat(articleInfo)) : _articleInfo.push(articleInfo)
-
-  // 把 github issues 返回的数据内容解析转换为 blog 显示需显示的内容
-  // 解析转换后的内容的 key 以 _ 开头作为私有标识区分 github issues 所返回的内容
-  for (let i = _articleInfo.length - 1; i >= 0; i--) {
-    _articleInfo[i]._createdAt = _articleInfo[i].created_at.split('T')[0]
-    _articleInfo[i]._updatedAt = _articleInfo[i].updated_at.split('T')[0]
-    _articleInfo[i]._body = marked(_articleInfo[i].body)
-    _articleInfo[i]._quote = _articleInfo[i]._body.split('<!-- more -->')[0].trim()
+  if (!Array.isArray(info)) {
+    _isArray = false
+    info = [info]
   }
 
-  return _isArray ? _articleInfo : _articleInfo[0]
-}
-
-let addPaginationProject = (name, cache) => {
-  return (cachePagination[name] = {
-    page: 1,
-    hasMoreArticle: true
+  // 把 github issues 返回的数据内容解析转换为 blog 所需内容
+  necessaryInfo = info.map(function (item, index, arr) {
+    let _info = null
+    if (mark === 'issues') {
+      _info = getIssuesInfo(item)
+    } else if (mark === 'comments') {
+      _info = getCommentsInfo(item)
+    }
+    return _info
   })
-}
-
-let updatePaginationInfo = (name, val) => {
-  let key = (typeof val === 'boolean' ? 'hasMoreArticle' : 'page')
-
-  cachePagination[name][key] = val
+  return _isArray ? necessaryInfo : necessaryInfo[0]
 }
 
 // 默认输出配置信息
-export default _config
+export default config
 
-export {cacheArticleList, cacheWorklogList, cacheLableArticeList, cachePagination, pushCacheList, addPrivateArticleAttr, addPaginationProject, updatePaginationInfo}
+export {cache, setNecessaryAttribute}

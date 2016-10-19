@@ -1,14 +1,14 @@
 <template>
   <section class="article-list-page">
-    <ul style="padding: 0; margin: 0;" v-if="articleListInfo.length" transition="fadeInOut">
-      <li class="article-list__item" v-for="article in articleListInfo" track-by="id">
+    <ul style="padding: 0; margin: 0;" v-if="articleListInfo && articleListInfo.list.length" transition="fadeInOut">
+      <li class="article-list__item" v-for="article in articleListInfo.list" track-by="id">
         <article>
           <h2 class="issues-content__title">
             <a v-link="{name: 'article-content', params: { num: article.number}}">{{ article.title}}</a>
           </h2>
-          <p class="issues-content__time">Create at {{ article._createdAt }} && Updated at {{ article._updatedAt }}</p>
-          {{{ article._quote }}}
-          <a class="article-list__read article-list__read-btn" v-link="{name: 'article-content', params: { num: article.number}}">READ</a>
+          <p class="issues-content__time">Create at {{ article.createdAt }} && Updated at {{ article.updatedAt }}</p>
+          {{{ article.quote }}}
+          <a class="article-list__read transition-color-btn" v-link="{name: 'article-content', params: { num: article.number}}">READ</a>
           <p class="article-list__labels">
             <span>标签：</span>
             <a v-link="{name: 'label-article-list', params: {labelName: label.name}}" class="article-info__label" v-for="label in article.labels">{{ label.name }}</a>
@@ -17,102 +17,79 @@
       </li>
     </ul>
     <div class="article-list__more-wrap">
-      <p class="article-list__more-box" v-show="articleListInfo.length && hasMoreArticle && showMoreBtn" transition="zoomInOut">
-        <button class="article-list__more article-list__read-btn" type="button" @click="moreArticle">MORE</button>
+      <p class="article-list__more-box" v-show="articleListInfo && articleListInfo.list.length && articleListInfo.hasMore && showMoreBtn" transition="zoomInOut">
+        <button class="article-list__more transition-color-btn" type="button" @click="getMoreArticle">MORE</button>
       </p>
-      <p class="article-list__no-more" v-show="articleListInfo.length && !hasMoreArticle" transition="zoomInOut">没有更多的文章</p>
+      <p class="article-list__no-more center-prompt-message" v-show="articleListInfo && articleListInfo.list.length && !articleListInfo.hasMore" transition="zoomInOut">没有更多的文章</p>
     </div>
   </section>
 </template>
 
 <script>
-  import app, {cacheArticleList, cacheLableArticeList, cachePagination, pushCacheList, addPrivateArticleAttr, addPaginationProject, updatePaginationInfo} from '../app.js'
-  // cacheArticleList is read-only
+  import app, {cache, setNecessaryAttribute} from '../app.js'
+  // cache is read-only
 
-  const perPage = 5
-
-  let labelName = null
-  let pageType = 'article'
+  const perPage = 5       // 每页文章数量
+  let _cache = cache      // 缓存
+  let issuesLabel = null  // issues 标签
 
   export default {
     route: {
       data (transition) {
-        this.articleListInfo = []
+        // issues 标签
+        transition.to.name === 'article-list' ? issuesLabel = 'all' : issuesLabel = transition.to.params.labelName
 
-        if (transition.to.name === 'article-list') {
-          labelName = null
-          pageType = 'article'
-          if (cacheArticleList.length) this.articleListInfo = cacheArticleList
-        } else if (transition.to.name === 'label-article-list') {
-          labelName = pageType = transition.to.params.labelName
-          if (cacheLableArticeList[labelName]) {
-            this.articleListInfo = cacheLableArticeList[labelName]
-          } else {
-            addPaginationProject(labelName)
-          }
+        // 从缓存内获取文章信息
+        if (_cache.issues.blog[issuesLabel]) {
+          this.articleListInfo = _cache.issues.blog[issuesLabel]
+          return
         }
 
-        cachePagination[pageType].hasMoreArticle ? this.hasMoreArticle = true : this.hasMoreArticle = false
+        // 初始化文章信息
+        this.articleListInfo = _cache.issues.blog[issuesLabel] = {
+          list: [],
+          page: 1,
+          hasMore: true
+        }
 
-        if (this.articleListInfo.length) return false
-
-        this.$dispatch('update-loading-statu', true)
-
-        this.getArticleList()
+        // 显示加载器、获取 blog 文章
+        this.$dispatch('set-loader-state', true)
+        this.getBlogIssues()
       }
     },
-    props: ['labelName'],
     data () {
       return {
-        articleListInfo: [],
-        hasMoreArticle: true,
-        showMoreBtn: true  // 用来触发 more 按钮隐藏动画
+        articleListInfo: null,
+        showMoreBtn: true
       }
     },
     methods: {
-      moreArticle () {
+      getMoreArticle () {
         this.showMoreBtn = false
-        this.getArticleList()
+        this.getBlogIssues()
       },
-      requestArticleList (request) {
-        return this.$http.get(request.url, (request.options ? request.options : {}))
-      },
-      hasNoMoreArticle () {
-        this.hasMoreArticle = false
-        if (!this.showMoreBtn) this.showMoreBtn = true
-        updatePaginationInfo(pageType, false)
-        // this.$dispatch('update-has-more-article-statu', pageType, false)
-      },
-      getArticleList () {
-        let request = {
-          url: app.host + 'repos/' + app.owner + '/' + app.blogRepo + '/issues',
-          options: {
-            params: {
-              filter: 'created',
-              labels: labelName,
-              page: cachePagination[pageType].page,
-              per_page: perPage,
-              access_token: app.access_token
-            }
-          }
-        }
-
+      getBlogIssues () {
         // 获取文章列表
-        this.requestArticleList(request).then((response) => {
-          this.$dispatch('update-loading-statu', false)
-
-          if (!response.data.length) return this.hasNoMoreArticle()
-
-          if (labelName) {
-            this.articleListInfo = pushCacheList('labelArticleList', {name: labelName, list: addPrivateArticleAttr(response.data)})[labelName]
-          } else {
-            this.articleListInfo = pushCacheList(app.blogRepo, addPrivateArticleAttr(response.data))
+        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.blogRepos + '/issues', {
+          params: {
+            filter: 'created',
+            labels: issuesLabel === 'all' ? null : issuesLabel,
+            page: this.articleListInfo.page,
+            per_page: perPage,
+            access_token: app.access_token
           }
-
-          if (response.data.length < perPage) return this.hasNoMoreArticle()
-
+        }).then((response) => {
+          // 更新视图状态
+          this.$dispatch('set-loader-state', false)
           if (!this.showMoreBtn) this.showMoreBtn = true
-          updatePaginationInfo(pageType, (cachePagination[pageType].page += 1))
+
+          // 更新数据、设置文章所需内容
+          if (!response.data.length) return (this.articleListInfo.hasMore = false)
+
+          this.articleListInfo.list = this.articleListInfo.list.concat(setNecessaryAttribute(response.data, 'issues'))
+          this.articleListInfo.page += 1
+
+          if (response.data.length < perPage) this.articleListInfo.hasMore = false
         })
       }
     }
@@ -188,17 +165,6 @@
   .article-list__no-more {
     position: absolute;
     width: 100%;
-    font-size: 12px;
     line-height: 3;
-    color: #999;
-  }
-  .article-list__read-btn {
-    padding: 0.05rem 0.1rem;
-    border-radius: 3px;
-    font-size: 12px;
-    -webkit-transition-property: color, background-color;
-            transition-property: color, background-color;
-    -webkit-transition-duration: 0.3s;
-            transition-duration: 0.3s;
   }
 </style>

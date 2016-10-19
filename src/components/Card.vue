@@ -1,5 +1,5 @@
 <template>
-  <div class="user-info__card" v-show="$route.path === '/'" transition="fadeUpDown">
+  <section class="user-info__card" v-show="$route.path === '/'" transition="fadeUpDown">
     <img src="https://avatars3.githubusercontent.com/u/8335856?v=3&s=460" alt="头像">
     <div class="user-info__site">
       <a href="https://github.com/Monine/">
@@ -29,13 +29,13 @@
         <a class="link" href="mailto:bob.zhouxiang@gmail.com">bob.zhouxiang@gmail.com</a>
       </li>
     </ul>
-  </div>
+  </section>
 </template>
 
 <script>
   export default {
     ready () {
-      this.$dispatch('update-loading-statu', false)
+      this.$dispatch('set-loader-state', false)
 
       let card = document.querySelector('.user-info__card')
       card.style.top = ((document.querySelector('.app-container').offsetHeight - card.offsetHeight) / 2) + 'px'
@@ -43,61 +43,61 @@
   }
 </script>
 
-<style>
-.user-info__card {
-  position: absolute;
-  width: 5rem;
-  height: 3rem;
-  padding: 0.3rem 0.4rem;
-  left: 1rem;
-  border-top: 1px solid #eee;
-  border-radius: 1em;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-  color: #000;
-}
-.user-info__card img {
-  float: left;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  -webkit-clip-path: inset(0.1rem);
-  clip-path: inset(0.1rem);
-}
-.user-info__site {
-  padding: 0.12rem;
-  text-align: center;
-}
-.user-info__site a:hover {
-  color: #5c5c5c;
-}
-.user-info__site a:active {
-  color: #303030;
-}
-.user-info__site svg {
-  fill: currentColor;
-}
-.user-info__desc {
-  margin-top: 0;
-  text-align: center;
-  color: #ccc;
-}
-.user-info__list {
-  padding: 0.2rem 0.1rem;
-  color: #000;
-}
-.user-info__item {
-  line-height: 2.5;
-  list-style: none;
-}
-.user-info__item svg {
-  width: 16px;
-  height: 16px;
-  margin-right: 0.05rem;
-  vertical-align: text-bottom;
-  fill: #999;
-}
-.user-info__item p {
-  display: inline-block;
-  margin: 0;
-}
+<style scoped>
+  .user-info__card {
+    position: absolute;
+    width: 5rem;
+    height: 3rem;
+    padding: 0.3rem 0.4rem;
+    left: 1rem;
+    border-top: 1px solid #eee;
+    border-radius: 1em;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    color: #000;
+  }
+  .user-info__card img {
+    float: left;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    -webkit-clip-path: inset(0.1rem);
+    clip-path: inset(0.1rem);
+  }
+  .user-info__site {
+    padding: 0.12rem;
+    text-align: center;
+  }
+  .user-info__site a:hover {
+    color: #5c5c5c;
+  }
+  .user-info__site a:active {
+    color: #303030;
+  }
+  .user-info__site svg {
+    fill: currentColor;
+  }
+  .user-info__desc {
+    margin-top: 0;
+    text-align: center;
+    color: #ccc;
+  }
+  .user-info__list {
+    padding: 0.2rem 0.1rem;
+    color: #000;
+  }
+  .user-info__item {
+    line-height: 2.5;
+    list-style: none;
+  }
+  .user-info__item svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.05rem;
+    vertical-align: text-bottom;
+    fill: #999;
+  }
+  .user-info__item p {
+    display: inline-block;
+    margin: 0;
+  }
 </style>

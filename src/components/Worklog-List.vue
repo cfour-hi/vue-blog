@@ -1,44 +1,55 @@
 <template>
   <section class="worklog-list-page">
-    <ul class="worklog-list" v-if="$route.name === 'worklog-list' && worklogListInfo.length" transition="fadeInOut">
-      <li class="worklog-list__item" v-for="worklog in worklogListInfo"><a v-link="{ name: 'worklog-content', params: { num: worklog.number } }">{{ worklog.title }}</a></li>
+    <ul class="worklog-list" v-if="worklogListInfo && worklogListInfo.list.length" transition="fadeInOut">
+      <li class="worklog-list__item" v-for="worklog in worklogListInfo.list"><a v-link="{ name: 'worklog-content', params: { num: worklog.number } }">{{ worklog.title }}</a></li>
     </ul>
   </section>
 </template>
 
 <script>
-  import app, {cacheWorklogList, pushCacheList, addPrivateArticleAttr} from '../app.js'
+  import app, {cache, setNecessaryAttribute} from '../app.js'
+  // cache is read-only
 
-  let perPage = 60
+  const perPage = 30  // 每页工作日志数量
+  let _cache = cache  // 缓存
 
   export default {
     ready () {
-      if (cacheWorklogList.length) return (this.worklogListInfo = cacheWorklogList)
+      // 从缓存内获取文章信息
+      if (_cache.issues[app.worklogRepos].all) {
+        this.worklogListInfo = _cache.issues[app.worklogRepos].all
+        return
+      }
 
-      this.$dispatch('update-loading-statu', true)
+      // 初始化
+      this.worklogListInfo = _cache.issues[app.worklogRepos].all = {
+        list: [],
+        page: 1,
+        hasMore: true
+      }
 
+      this.$dispatch('set-loader-state', true)
       this.getWorklogList()
     },
-    props: ['loading'],
     data () {
       return {
-        worklogListInfo: []
+        worklogListInfo: null
       }
     },
     methods: {
       getWorklogList () {
-        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.worklogRepo + '/issues', {
+        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.worklogRepos + '/issues', {
           params: {
             filter: 'created',
-            page: this.nextPage,
+            page: this.worklogListInfo.page,
             per_page: perPage,
             access_token: app.access_token
           }
         }).then((response) => {
-          if (this.loading) this.$dispatch('update-loading-statu', false)
+          this.$dispatch('set-loader-state', false)
 
-          pushCacheList(app.worklogRepo, addPrivateArticleAttr(response.data))
-          this.worklogListInfo = cacheWorklogList
+          this.worklogListInfo.list = this.worklogListInfo.list.concat(setNecessaryAttribute(response.data, 'issues'))
+          this.worklogListInfo.page += 1
         })
       }
     }
