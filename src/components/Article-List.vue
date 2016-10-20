@@ -6,7 +6,7 @@
           <h2 class="issues-content__title">
             <a v-link="{name: 'article-content', params: { num: article.number}}">{{ article.title}}</a>
           </h2>
-          <p class="issues-content__time">Create at {{ article.createdAt }} && Updated at {{ article.updatedAt }}</p>
+          <p class="issues-content__time">CREATED AT {{ article.createdAt }} _ UPDATED AT {{ article.updatedAt }}</p>
           {{{ article.quote }}}
           <a class="article-list__read transition-color-btn" v-link="{name: 'article-content', params: { num: article.number}}">READ</a>
           <p class="article-list__labels">
@@ -97,11 +97,17 @@
 </script>
 
 <style scoped>
-  .article-list-page {
-    position: relative;
-    background: #fff;
-    z-index: 2;
+  .issues-content__title a {
+    display: inline-block;
+    padding-bottom: 0.15rem;
+    color: #333;
   }
+  .issues-content__title a:hover {
+    border-bottom: none;
+    background: url(../assets/go.png) no-repeat center 0.35rem;
+    background-size: 32px;
+  }
+
   .article-list__item {
     padding-top: 0.2rem;
     border-bottom: 1px dashed #ccc;
@@ -113,11 +119,14 @@
     color: #f60;
   }
   .article-list__item .article-info__label {
+    padding: 0.2em 0.7em;
     margin-right: 0.1rem;
-    border-bottom: 1px solid #f60;
+    border: 1px dotted currentColor;
+    border-radius: 3px;
     color: inherit;
   }
   .article-list__item .article-info__label:hover {
+    border: 1px solid currentColor;
     color: #ff8533;
   }
   .article-list__item .article-info__label:active {
@@ -127,7 +136,7 @@
     display: inline-block;
     position: relative;
     left: 50%;
-    margin-top: 0.1rem;
+    margin-top: 0.3rem;
     border: 1px solid #0097da;
     color: #0097da;
     -webkit-transform: translateX(-50%);

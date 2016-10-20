@@ -105,7 +105,8 @@
     position: relative;
     height: 100%;
     margin-left: calc(100vw - 100%);
-    font: 16px/1.7 "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,sans-serif;
+    font: 16px/2 "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,sans-serif;
+    background: url(./assets/bg.jpg);
   }
   a {
     color: #333;
@@ -136,12 +137,10 @@
   }
   article h4 {
     margin-bottom: 0;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
-    color: #666;
   }
   article h4 + p,
-  article h4 + blockquote > p,
   article h4 + ul {
     margin-top: 0;
   }
@@ -167,10 +166,12 @@
   article blockquote {
     padding: 0 1em;
     margin: 0;
-    border-left: 5px solid #ccc;
+    border: 9px solid #ccc;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-radius: 20px;
     font-size: 12px;
     color: #333;
-    line-height: 2;
   }
   article strong {
     font-weight: 400;
@@ -181,23 +182,23 @@
   }
   article pre {
     padding: 16px;
-    border: 1px solid #ddd;
+    border: 1px dotted #999;
     overflow: auto;
     font-size: 12px;
-    background-color: #f7f7f7;
     border-radius: 0.5em;
     word-wrap: break-word;
   }
   article code {
-    padding: 0.2em 0.5em;
-    margin: 0;
-    background-color: rgba(0, 0, 0, 0.04);
+    padding: 0.1em 0.5em;
+    border: 1px dashed #999;
     border-radius: 3px;
     font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    color: #666;
   }
   article pre code {
-    background-color: transparent;
     padding: 0;
+    border: none;
+    background: transparent;
   }
   .hljs-built_in, .hljs-params, .hljs-number, .hljs-literal {
     color: #0086b3
@@ -226,14 +227,13 @@
     margin-right: 0;
   }
   .issues-content__title {
+    position: relative;
     margin: 0;
     text-align: center;
     font-size: 24px;
   }
-  .issues-content__title a {
-    color: #333;
-  }
   .issues-content__time {
+    margin-top: 0;
     margin-bottom: 2em;
     font-size: 12px;
     text-align: center;
@@ -250,7 +250,7 @@
             transform: translate(-50%, -50%);
   }
   .transition-color-btn {
-    padding: 0.05rem 0.1rem;
+    padding: 0.3em 1em;
     border-radius: 3px;
     font-size: 12px;
     -webkit-transition-property: color, background-color;
@@ -372,7 +372,7 @@
     position: relative;
     display: inline-block;
     float: none;
-    background-color: currentColor;
+    background: currentColor;
     border: 0 solid currentColor;
     width: 32px;
     height: 32px;

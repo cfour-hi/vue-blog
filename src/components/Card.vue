@@ -8,7 +8,7 @@
         </svg>
       </a>
     </div>
-    <p class="user-info__desc">Front-End Develop Dog</p>
+    <p class="user-info__desc">Front-End Developer</p>
     <ul class="user-info__list">
       <li class="user-info__item user-info__company">
         <svg width="16" height="16" viewBox="0 0 16 16">
@@ -50,7 +50,7 @@
     height: 3rem;
     padding: 0.3rem 0.4rem;
     left: 1rem;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #ddd;
     border-radius: 1em;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
     color: #000;
@@ -79,7 +79,7 @@
   .user-info__desc {
     margin-top: 0;
     text-align: center;
-    color: #ccc;
+    color: #999;
   }
   .user-info__list {
     padding: 0.2rem 0.1rem;

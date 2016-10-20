@@ -2,13 +2,13 @@
   <section class="article-content-page">
     <article class="issues-content" v-if="($route.name === 'article-content' || 'worklog-content') && issuesInfo" transition="fadeInOut">
       <h2 class="issues-content__title">{{ issuesInfo.title }}</h2>
-      <p class="issues-content__time">Create at {{ issuesInfo.createdAt }} && Update at {{ issuesInfo.updatedAt }}</p>
+      <p class="issues-content__time">CREATED AT {{ issuesInfo.createdAt }} _ UPDATED AT {{ issuesInfo.updatedAt }}</p>
      {{{ issuesInfo.body }}}
     </article>
     <div class="end-mark" v-if="issuesInfo">END</div>
     <div class="issues-comments" v-if="issuesInfo" transition="fadeInOut">
-      <p><a href="{{issuesInfo.html_url}}" style="color: #0097da;">去 Github 发表评论</a></p>
-      <dl v-if="commentsInfo">
+      <p><a href="{{issuesInfo.html_url}}" style="color: #f60;">去 Github 发表评论</a></p>
+      <dl v-if="commentsInfo.list.length">
         <dd class="issues-comments__item" v-for="comment in commentsInfo.list">
           <a class="issues-comments__item-avator" href="{{comment.html_url}}">
             <img :src="comment.user.avatar_url" alt="头像">

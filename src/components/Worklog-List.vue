@@ -85,7 +85,7 @@
     position: relative;
     padding: 0.05rem 0.2rem;
     border-radius: 3px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #ddd;
     color: #666;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
   }

@@ -41,10 +41,11 @@
     margin-bottom: 3px;
     border-radius: 50% 0 0 50%;
     text-align: center;
-    color: #fff;
   }
   .article-list__labels-nav .labels-nav__item {
-    background: #ddd;
+    border: 1px solid #bbb;
+    border-right: none;
+    color: #bbb;
     -webkit-transition-property: width, margin-left;
             transition-property: width, margin-left;
     -webkit-transition-duration: 0.3s;
@@ -53,19 +54,33 @@
   .article-list__labels-nav .labels-nav__item:hover {
     width: 0.6rem;
     margin-left: -0.1rem;
-    background: #ccc;
+    border-color: #999;
+    color: #666;
   }
   .article-list__labels-nav .labels-nav__item.v-link-active,
   .article-list__labels-nav .labels-nav__title {
     width: 0.65rem;
     margin-left: -0.15rem;
     font-size: 14px;
-    color: #fff;
   }
   .article-list__labels-nav .labels-nav__item.v-link-active {
-    background: #f60;
+    position: relative;
+    text-indent: 1.3em;
+    border-color: #999;
+    color: #666;
+  }
+  .article-list__labels-nav .labels-nav__item.v-link-active:before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 7px;
+    width: 8px; height: 8px;
+    margin-top: -4px;
+    border: 1px solid #999;
+    border-radius: 50%;
   }
   .article-list__labels-nav .labels-nav__title {
+    color: #fff;
     background: #0097da;
+    cursor: default;
   }
 </style>
