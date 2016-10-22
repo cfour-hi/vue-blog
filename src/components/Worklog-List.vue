@@ -1,6 +1,6 @@
 <template>
   <section class="worklog-list-page">
-    <ul class="worklog-list" v-if="worklogListInfo && worklogListInfo.list.length" transition="fadeInOut">
+    <ul class="worklog-list" v-if="worklogListInfo.list.length" transition="fadeInOut">
       <li class="worklog-list__item" v-for="worklog in worklogListInfo.list"><a v-link="{ name: 'worklog-content', params: { num: worklog.number } }">{{ worklog.title }}</a></li>
     </ul>
   </section>
@@ -8,32 +8,34 @@
 
 <script>
   import app, {cache, setNecessaryAttribute} from '../app.js'
-  // cache is read-only
 
   const perPage = 30  // 每页工作日志数量
   let _cache = cache  // 缓存
 
+  // 获取初始化工作日志列表信息
+  let getInitWorklogListInfo = () => {
+    return {
+      list: [],
+      page: 1,
+      hasMore: true
+    }
+  }
+
   export default {
     ready () {
-      // 从缓存内获取文章信息
+      // 有缓存则从缓存内取出工作日志信息
+      // 没有则初始化并从接口获取工作日志信息
       if (_cache.issues[app.worklogRepos].all) {
         this.worklogListInfo = _cache.issues[app.worklogRepos].all
-        return
+      } else {
+        _cache.issues[app.worklogRepos].all = this.worklogListInfo = getInitWorklogListInfo()
+        this.$dispatch('set-loader-state', true)
+        this.getWorklogList()
       }
-
-      // 初始化
-      this.worklogListInfo = _cache.issues[app.worklogRepos].all = {
-        list: [],
-        page: 1,
-        hasMore: true
-      }
-
-      this.$dispatch('set-loader-state', true)
-      this.getWorklogList()
     },
     data () {
       return {
-        worklogListInfo: null
+        worklogListInfo: getInitWorklogListInfo()
       }
     },
     methods: {

@@ -48,12 +48,12 @@
         transition.to.name === 'article-content' ? reposType = 'blog' : reposType = 'worklog'
 
         // 从缓存内获取文章信息
-        let cacheReposType = _cache.issues[reposType]
-        if (Object.keys(cacheReposType)) {
-          for (let key in cacheReposType) {
-            for (let i = cacheReposType[key].list.length - 1; i >= 0; i--) {
-              if (cacheReposType[key].list[i].number === issuesNum) {
-                this.issuesInfo = cacheReposType[key].list[i]
+        let cacheIssuesRepos = _cache.issues[reposType]
+        if (Object.keys(cacheIssuesRepos)) {
+          for (let key in cacheIssuesRepos) {
+            for (let i = cacheIssuesRepos[key].list.length - 1; i >= 0; i--) {
+              if (cacheIssuesRepos[key].list[i].number === issuesNum) {
+                this.issuesInfo = cacheIssuesRepos[key].list[i]
                 _cache.comments[this.issuesInfo.id] ? this.commentsInfo = _cache.comments[this.issuesInfo.id] : this.initCommentsInfo()
                 return
               }

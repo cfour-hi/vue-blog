@@ -1,6 +1,6 @@
 <template>
   <section class="article-list-page">
-    <ul style="padding: 0; margin: 0;" v-if="articleListInfo && articleListInfo.list.length" transition="fadeInOut">
+    <ul style="padding: 0; margin: 0;" v-if="articleListInfo.list.length" transition="fadeInOut">
       <li class="article-list__item" v-for="article in articleListInfo.list" track-by="id">
         <article>
           <h2 class="issues-content__title">
@@ -17,21 +17,29 @@
       </li>
     </ul>
     <div class="article-list__more-wrap">
-      <p class="article-list__more-box" v-show="articleListInfo && articleListInfo.list.length && articleListInfo.hasMore && showMoreBtn" transition="zoomInOut">
+      <p class="article-list__more-box" v-show="articleListInfo.list.length && articleListInfo.hasMore && showMoreBtn" transition="zoomInOut">
         <button class="article-list__more transition-color-btn" type="button" @click="getMoreArticle">MORE</button>
       </p>
-      <p class="article-list__no-more center-prompt-message" v-show="articleListInfo && articleListInfo.list.length && !articleListInfo.hasMore" transition="zoomInOut">没有更多的文章</p>
+      <p class="article-list__no-more center-prompt-message" v-show="articleListInfo.list.length && !articleListInfo.hasMore" transition="zoomInOut">没有更多的文章</p>
     </div>
   </section>
 </template>
 
 <script>
   import app, {cache, setNecessaryAttribute} from '../app.js'
-  // cache is read-only
 
   const perPage = 5       // 每页文章数量
   let _cache = cache      // 缓存
   let issuesLabel = null  // issues 标签
+
+  // 获取初始化文章列表信息
+  let getInitArticleListInfo = () => {
+    return {
+      list: [],
+      page: 1,
+      hasMore: true
+    }
+  }
 
   export default {
     route: {
@@ -39,27 +47,20 @@
         // issues 标签
         transition.to.name === 'article-list' ? issuesLabel = 'all' : issuesLabel = transition.to.params.labelName
 
-        // 从缓存内获取文章信息
+        // 有缓存则从缓存内取出文章信息
+        // 没有则初始化并从接口获取文章信息
         if (_cache.issues.blog[issuesLabel]) {
           this.articleListInfo = _cache.issues.blog[issuesLabel]
-          return
+        } else {
+          _cache.issues.blog[issuesLabel] = this.articleListInfo = getInitArticleListInfo()
+          this.$dispatch('set-loader-state', true)
+          this.getBlogIssues()
         }
-
-        // 初始化文章信息
-        this.articleListInfo = _cache.issues.blog[issuesLabel] = {
-          list: [],
-          page: 1,
-          hasMore: true
-        }
-
-        // 显示加载器、获取 blog 文章
-        this.$dispatch('set-loader-state', true)
-        this.getBlogIssues()
       }
     },
     data () {
       return {
-        articleListInfo: null,
+        articleListInfo: getInitArticleListInfo(),
         showMoreBtn: true
       }
     },
