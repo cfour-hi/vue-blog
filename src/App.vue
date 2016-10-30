@@ -106,7 +106,7 @@
     height: 100%;
     margin-left: calc(100vw - 100%);
     font: 16px/2 "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,sans-serif;
-    background: url(./assets/bg.jpg);
+    background: url(./assets/icon-bg.jpg);
   }
   a {
     color: #333;

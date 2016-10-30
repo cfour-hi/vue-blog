@@ -105,7 +105,7 @@
   }
   .issues-content__title a:hover {
     border-bottom: none;
-    background: url(../assets/go.png) no-repeat center 0.35rem;
+    background: url(../assets/icon-go.png) no-repeat center 0.35rem;
     background-size: 32px;
   }
 
