@@ -59,37 +59,38 @@
 </script>
 
 <style scoped>
-  .worklog-list-page,
-  .worklog-list,
-  .worklog-list__item {
-    -webkit-display: flex;
-            display: flex;
-  }
   .worklog-list-page {
     padding: 0.3rem 0.15rem;
   }
   .worklog-list {
-    -webkit-flex-wrap: wrap;
-            flex-wrap: wrap;
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
     padding: 0;
   }
   .worklog-list__item {
-    -webkit-justify-content: center;
-            justify-content: center;
-    -webkit-align-items: center;
-            align-items: center;
-    width: 25%;
-    height: 0.6rem;
+    width: 25%; height: 0.6rem;
     list-style: none;
+    text-align: center;
+  }
+  .js-inmobile .worklog-list__item {
+    width: 50%; height: 1.5rem;
+    font-size: 16px;
+  }
+  .js-inmobile[data-dpr='2'] .worklog-list__item {
+    font-size: 32px;
+  }
+  .js-inmobile[data-dpr='3'] .worklog-list__item {
+    font-size: 48px;
   }
   .worklog-list__item a {
-    position: relative;
-    padding: 0.05rem 0.2rem;
+    padding: 0.1rem 0.2rem;
     border-radius: 3px;
     border-top: 1px solid #ddd;
     color: #666;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  }
+  .js-inmobile .worklog-list__item a {
+    padding: 0.25rem 0.5rem;
   }
   .worklog-list__item a:hover {
     bottom: 2px;

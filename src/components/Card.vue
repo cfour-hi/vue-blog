@@ -1,9 +1,9 @@
 <template>
   <section class="user-info__card" v-show="$route.path === '/'" transition="fadeUpDown">
-    <img src="https://avatars3.githubusercontent.com/u/8335856?v=3&s=460" alt="头像">
+    <img src="https://avatars3.githubusercontent.com/u/8335856?v=3&s=240" alt="头像">
     <div class="user-info__site">
       <a href="https://github.com/Monine/">
-        <svg width="28" height="28" viewBox="0 0 16 16">
+        <svg width="16" height="16" viewBox="0 0 16 16">
           <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
         </svg>
       </a>
@@ -46,26 +46,34 @@
 <style scoped>
   .user-info__card {
     position: absolute;
-    width: 5rem;
-    height: 3rem;
+    left: 14%;
+    width: 72%; height: 4.3rem;
     padding: 0.3rem 0.4rem;
-    left: 1rem;
     border-top: 1px solid #ddd;
     border-radius: 1em;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
     color: #000;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  }
+  .js-inmobile .user-info__card {
+    width: 90%; height: 5.2rem;
+    left: 5%;
   }
   .user-info__card img {
     float: left;
-    width: 1rem;
-    height: 1rem;
+    width: 1.5rem; height: 1.5rem;
     border-radius: 50%;
-    -webkit-clip-path: inset(0.1rem);
-    clip-path: inset(0.1rem);
+    clip-path: inset(0.12rem);
+  }
+  .js-inmobile .user-info__card img {
+    width: 2rem; height: 2rem;
   }
   .user-info__site {
-    padding: 0.12rem;
+    max-height: 0.85rem;
+    padding-top: 0.2rem;
     text-align: center;
+  }
+  .js-inmobile .user-info__site {
+    max-height: 1.2rem;
   }
   .user-info__site a:hover {
     color: #5c5c5c;
@@ -74,27 +82,68 @@
     color: #303030;
   }
   .user-info__site svg {
+    width: 0.5rem; height: 0.5rem;
     fill: currentColor;
   }
+  .js-inmobile .user-info__site svg {
+    width: 0.75rem; height: 0.75rem;
+  }
   .user-info__desc {
-    margin-top: 0;
+    height: 0.85rem;
+    margin: 0;
+    font-size: 20px;
     text-align: center;
     color: #999;
   }
+  .js-inmobile .user-info__desc {
+    height: 1.2rem;
+    font-size: 16px;
+  }
+  .js-inmobile[data-dpr='2'] .user-info__desc {
+    font-size: 32px;
+  }
+  @media (max-device-width: 374px) {
+    .js-inmobile[data-dpr='2'] .user-info__desc {
+      font-size: 28px;
+    }
+  }
+  .js-inmobile[data-dpr='3'] .user-info__desc {
+    font-size: 48px;
+  }
   .user-info__list {
-    padding: 0.2rem 0.1rem;
-    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 2rem;
+    padding: 0;
+    margin: 0;
+  }
+  .js-inmobile .user-info__list {
+    height: 2.2rem;
+    font-size: 14px;
+  }
+  .js-inmobile[data-dpr='2'] .user-info__list {
+    font-size: 28px;
+  }
+  @media (max-device-width: 374px) {
+    .js-inmobile[data-dpr='2'] .user-info__list {
+      font-size: 24px;
+    }
+  }
+  .js-inmobile[data-dpr='3'] .user-info__list {
+    font-size: 42px;
   }
   .user-info__item {
-    line-height: 2.5;
     list-style: none;
   }
   .user-info__item svg {
-    width: 16px;
-    height: 16px;
+    width: 0.25rem; height: 0.25rem;
     margin-right: 0.05rem;
-    vertical-align: text-bottom;
+    vertical-align: text-top;
     fill: #999;
+  }
+  .js-inmobile .user-info__item svg {
+    width: 0.4rem; height: 0.4rem;
   }
   .user-info__item p {
     display: inline-block;

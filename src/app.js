@@ -47,7 +47,7 @@ let getIssuesInfo = (issue) => {
 let getCommentsInfo = (comment) => {
   return {
     html_url: comment.html_url,
-    createdAt: comment.created_at,
+    createdAt: comment.created_at.slice(0, -1).split('T').join(' '),
     body: marked(comment.body),
     user: {
       avatar_url: comment.user.avatar_url,

@@ -10,7 +10,7 @@
       <p><a href="{{issuesInfo.html_url}}" style="color: #f60;">去 Github 发表评论</a></p>
       <dl v-if="commentsInfo.list.length">
         <dd class="issues-comments__item" v-for="comment in commentsInfo.list">
-          <a class="issues-comments__item-avator" href="{{comment.html_url}}">
+          <a class="issues-comments__item-avator" href="{{comment.html_url}}" v-if="!inMobile">
             <img :src="comment.user.avatar_url" alt="头像">
           </a>
           <div class="issues-comments__item-header">
@@ -22,7 +22,7 @@
       </dl>
       <div class="issues-comments__more-wrap" v-if="commentsInfo.list.length">
         <p class="issues-comments__more-box" v-show="commentsInfo.list.length && commentsInfo.hasMore && showMoreBtn" transition="zoomInOut">
-          <button class="issues-comments__more transition-color-btn" type="button" @click="getMoreComments">更多评论</button>
+          <a class="issues-comments__more transition-color-btn" href="javascript:;" @click="getMoreComments">更多评论</a>
         </p>
         <p class="center-prompt-message" v-show="commentsInfo.list.length && !commentsInfo.hasMore" transition="zoomInOut">没有更多的评论</p>
       </div>
@@ -83,7 +83,8 @@
       return {
         issuesInfo: null,
         commentsInfo: null,
-        showMoreBtn: true
+        showMoreBtn: true,
+        inMobile: window.lib.inMobile
       }
     },
     methods: {
@@ -98,6 +99,7 @@
       },
       getCommentsInfo () {
         // 获取评论信息
+        // this.$http.get('https://api.github.com/repos/lifesinger/blog/issues/184/comments?page=1&per_page=30', {
         this.$http.get(this.issuesInfo.comments_url, {
           params: {
             page: this.commentsInfo.page,
@@ -129,13 +131,18 @@
     text-align: center;
     color: #999;
   }
+  .js-inmobile .end-mark {
+    font-size: 14px;
+  }
+  .js-inmobile[data-dpr='2'] .end-mark {
+    font-size: 28px
+  }
   .end-mark:before,
   .end-mark:after {
     content: '';
     position: absolute;
     top: 50%;
-    height: 1px;
-    width: 45%;
+    height: 1px; width: 44%;
     background: #bbb;
   }
   .end-mark:before {
@@ -148,29 +155,45 @@
   .issues-comments {
     padding-top: 0.3rem;
   }
+  .js-inmobile .issues-comments {
+    font-size: 16px;
+  }
+  .js-inmobile[data-dpr='2'] .issues-comments {
+    font-size: 32px;
+  }
+  @media (max-device-width: 374px) {
+    .js-inmobile[data-dpr='2'] .issues-comments {
+      font-size: 28px;
+    }
+  }
+  .js-inmobile[data-dpr='3'] .issues-comments {
+    font-size: 48px;
+  }
   .issues-comments__item {
     position: relative;
     margin: 0.15rem 0;
     border: 1px solid #ddd;
-
     border-radius: 3px;
+  }
+  .js-inmobile .issues-comments__item {
+    margin: 0.3rem 0;
   }
   .issues-comments__item:before {
     content: '';
     position: absolute;
-    bottom: -0.15rem; left: 0.15rem;
-    width: 2px; height: 0.13rem;
-    background: #eee;
+    bottom: -0.32rem; left: 0.3rem;
+    width: 2px; height: 0.3rem;
+    background: #ccc;
   }
   .issues-comments__item:last-child:before {
     content: none;
   }
   .issues-comments__item-avator {
     position: absolute;
-    left: -60px;
+    left: -0.8rem;
   }
   .issues-comments__item-avator img {
-    width: 44px; height: 44px;
+    width: 0.6rem; height: 0.6rem;
     border-radius: 3px;
   }
   .issues-comments__item-header {
@@ -180,16 +203,25 @@
     font-size: 14px;
     background: #f7f7f7;
   }
+  .js-inmobile[data-dpr='2'] .issues-comments__item-header {
+    font-size: 28px;
+  }
+  .js-inmobile[data-dpr='3'] .issues-comments__item-header {
+    font-size: 42px;
+  }
   .issues-comments__item-header:before {
     content: '';
     position: absolute;
-    left: -0.07rem; top: 0.15rem;
-    width: 0.12rem; height: 0.12rem;
+    top: 0.2rem; left: -0.11rem;
+    width: 0.2rem; height: 0.2rem;
     border-top: 1px solid #ddd;
     border-left: 1px solid #ddd;
     background: #f7f7f7;
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+  .js-inmobile .issues-comments__item-header:before {
+    top: 0.3rem; left: -0.18rem;
+    width: 0.3rem; height: 0.3rem;
   }
   .issues-comments__item-created {
     color: #666;
@@ -200,13 +232,16 @@
 
   .issues-comments__more-wrap {
     height: 0.75rem;
+    font-size: 18px;
     text-align: center;
   }
+  .js-inmobile .issues-comments__more-wrap  {
+    height: 1.25rem;
+  }
   .issues-comments__more {
+    display: inline-block;
     border: 1px solid #f60;
     color: #f60;
-    background: #fff;
-    cursor: pointer;
   }
   .issues-comments__more:hover {
     color: #fff;

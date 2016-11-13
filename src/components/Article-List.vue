@@ -108,6 +108,9 @@
     background: url(../assets/icon-go.png) no-repeat center 0.35rem;
     background-size: 32px;
   }
+  .js-inmobile .issues-content__title a:hover {
+    background: none;
+  }
 
   .article-list__item {
     padding-top: 0.2rem;
@@ -115,9 +118,18 @@
     font-size: 14px;
     list-style: none;
   }
+  .js-inmobile .article-list__item {
+    padding-top: 0.75rem;
+  }
   .article-list__item .article-list__labels {
     font-size: 12px;
     color: #f60;
+  }
+  .js-inmobile[data-dpr='2'] .article-list__item .article-list__labels  {
+    font-size: 24px;
+  }
+  .js-inmobile[data-dpr='3'] .article-list__item .article-list__labels  {
+    font-size: 36px;
   }
   .article-list__item .article-info__label {
     padding: 0.2em 0.7em;
@@ -137,11 +149,10 @@
     display: inline-block;
     position: relative;
     left: 50%;
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
     border: 1px solid #0097da;
     color: #0097da;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
   }
   .article-list__item .article-list__read:hover {
     color: #fff;
@@ -151,13 +162,19 @@
     background-color: #008fcf;
   }
   .article-list__more-wrap {
-    position: relative;
-    height: 0.75rem;
+    height: 5em;
+    padding-top: 1em;
+    font-size: 12px;
     text-align: center;
   }
-  .article-list__more-box {
-    position: absolute;
-    width: 100%;
+  .js-inmobile[data-dpr='2'] .article-list__more-wrap {
+    font-size: 24px;
+  }
+  .js-inmobile[data-dpr='3'] .article-list__more-wrap {
+    font-size: 36px;
+  }
+  .article-list__more-wrap p {
+    margin: 0;
   }
   .article-list__more {
     border: 1px solid #f60;
@@ -171,10 +188,5 @@
   }
   .article-list__more:active {
     background-color: #f26100;
-  }
-  .article-list__no-more {
-    position: absolute;
-    width: 100%;
-    line-height: 3;
   }
 </style>

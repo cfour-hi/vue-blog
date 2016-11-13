@@ -1,6 +1,6 @@
 <template>
   <section class="article-page">
-    <nav class="article-list__labels-nav" :class="{'labels-nav--show': !loader}">
+    <nav class="article-list__labels-nav" :class="{'labels-nav--show': !loader}" v-if="!inMobile">
       <a class="labels-nav__title" href="javascript:void(0);">标签</a>
       <a class="labels-nav__item" v-link="{name: 'label-article-list', params: {labelName: '技术'}}">技术</a>
       <a class="labels-nav__item" v-link="{name: 'label-article-list', params: {labelName: '工具'}}">工具</a>
@@ -12,7 +12,12 @@
 
 <script>
   export default {
-    props: ['loader']
+    props: ['loader'],
+    data () {
+      return {
+        inMobile: window.lib.inMobile
+      }
+    }
   }
 </script>
 
@@ -20,24 +25,21 @@
   .article-list__labels-nav {
     opacity: 0;
     position: absolute;
-    top: -1px;
-    left: 0;
+    top: -1px; left: 0;
     font-size: 12px;
     letter-spacing: 0.5em;
     text-indent: 1em;
     z-index: 1;
-    -webkit-transition-property: opacity, left;
-            transition-property: opacity, left;
-    -webkit-transition-duration: 0.5s;
-            transition-duration: 0.5s;
+    transition-property: opacity, left;
+    transition-duration: 0.5s;
   }
   .labels-nav--show {
     opacity: 1;
-    left: -0.5rem;
+    left: -50px;
   }
   .article-list__labels-nav a {
     display: block;
-    width: 0.5rem;
+    width: 50px;
     margin-bottom: 3px;
     border-radius: 50% 0 0 50%;
     text-align: center;
@@ -46,21 +48,19 @@
     border: 1px solid #bbb;
     border-right: none;
     color: #bbb;
-    -webkit-transition-property: width, margin-left;
-            transition-property: width, margin-left;
-    -webkit-transition-duration: 0.3s;
-            transition-duration: 0.3s;
+    transition-property: width, margin-left;
+    transition-duration: 0.3s;
   }
   .article-list__labels-nav .labels-nav__item:hover {
-    width: 0.6rem;
-    margin-left: -0.1rem;
+    width: 60px;
+    margin-left: -10px;
     border-color: #999;
     color: #666;
   }
   .article-list__labels-nav .labels-nav__item.v-link-active,
   .article-list__labels-nav .labels-nav__title {
-    width: 0.65rem;
-    margin-left: -0.15rem;
+    width: 65px;
+    margin-left: -15px;
     font-size: 14px;
   }
   .article-list__labels-nav .labels-nav__item.v-link-active {
