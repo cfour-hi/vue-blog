@@ -2,20 +2,34 @@
   <section class="article-page">
     <nav class="article-list__labels-nav" :class="{'labels-nav--show': !loader}" v-if="!inMobile">
       <a class="labels-nav__title" href="javascript:void(0);">标签</a>
-      <a class="labels-nav__item" v-link="{name: 'label-article-list', params: {labelName: '技术'}}">技术</a>
-      <a class="labels-nav__item" v-link="{name: 'label-article-list', params: {labelName: '工具'}}">工具</a>
-      <a class="labels-nav__item" v-link="{name: 'label-article-list', params: {labelName: '读书'}}">读书</a>
+      <a class="labels-nav__item" v-for="label in labels" v-link="{name: 'label-article-list', params: {labelName: label}}">{{ label }}</a>
     </nav>
     <router-view></router-view>
   </section>
 </template>
 
 <script>
+  import app, {cache, setLabels} from '../app.js'
+
+  let _cache = cache
+
   export default {
+    ready () {
+      this.labels = _cache.labels
+      if (!this.labels.length) { this.getLabels() }
+    },
     props: ['loader'],
     data () {
       return {
+        labels: null,
         inMobile: window.lib.inMobile
+      }
+    },
+    methods: {
+      getLabels () {
+        this.$http.get(app.host + 'repos/' + app.owner + '/' + app.blogRepos + '/labels').then((response) => {
+          setLabels(response.data)
+        })
       }
     }
   }

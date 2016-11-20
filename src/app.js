@@ -23,7 +23,8 @@ let cache = {
     blog: {},
     worklog: {}
   },
-  comments: {}
+  comments: {},
+  labels: []
 }
 
 // 获取 issues 信息
@@ -69,19 +70,26 @@ let setNecessaryAttribute = (info, mark) => {
   }
 
   // 把 github issues 返回的数据内容解析转换为 blog 所需内容
-  necessaryInfo = info.map(function (item, index, arr) {
+  necessaryInfo = info.map(function (elem, index, arr) {
     let _info = null
     if (mark === 'issues') {
-      _info = getIssuesInfo(item)
+      _info = getIssuesInfo(elem)
     } else if (mark === 'comments') {
-      _info = getCommentsInfo(item)
+      _info = getCommentsInfo(elem)
     }
     return _info
   })
   return _isArray ? necessaryInfo : necessaryInfo[0]
 }
 
+// 设置标签名称
+let setLabels = (labels) => {
+  labels.forEach((elem) => {
+    cache.labels.push(elem.name)
+  })
+}
+
 // 默认输出配置信息
 export default config
 
-export {cache, setNecessaryAttribute}
+export {cache, setNecessaryAttribute, setLabels}

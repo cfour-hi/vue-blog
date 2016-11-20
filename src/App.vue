@@ -269,11 +269,8 @@
     padding: 0.1em 0.5em;
     border: 1px dashed #999;
     border-radius: 3px;
-    font: 16px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
     color: #666;
-  }
-  .js-inmobile article code {
-    font-size: 12px;
   }
   .js-inmobile[data-dpr='2'] article code {
     font-size: 24px;

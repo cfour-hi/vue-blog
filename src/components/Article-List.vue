@@ -113,7 +113,7 @@
   }
 
   .article-list__item {
-    padding-top: 0.2rem;
+    padding-top: 0.5rem;
     border-bottom: 1px dashed #ccc;
     font-size: 14px;
     list-style: none;
