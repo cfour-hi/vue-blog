@@ -46,12 +46,11 @@
 <style scoped>
   .user-info__card {
     position: absolute;
-    left: 14%;
-    width: 72%; height: 4.3rem;
-    padding: 0.3rem 0.4rem;
+    left: 200px;
+    width: 500px; height: 300px;
+    padding: 20px;
     border-top: 1px solid #ddd;
     border-radius: 1em;
-    color: #000;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
   }
   .js-inmobile .user-info__card {
@@ -60,7 +59,7 @@
   }
   .user-info__card img {
     float: left;
-    width: 1.5rem; height: 1.5rem;
+    width: 120px; height: 120px;
     border-radius: 50%;
     clip-path: inset(0.12rem);
   }
@@ -68,8 +67,8 @@
     width: 2rem; height: 2rem;
   }
   .user-info__site {
-    max-height: 0.85rem;
-    padding-top: 0.2rem;
+    height: 60px;
+    padding-top: 18px;
     text-align: center;
   }
   .js-inmobile .user-info__site {
@@ -82,14 +81,14 @@
     color: #303030;
   }
   .user-info__site svg {
-    width: 0.5rem; height: 0.5rem;
+    width: 32px; height: 32px;
     fill: currentColor;
   }
   .js-inmobile .user-info__site svg {
     width: 0.75rem; height: 0.75rem;
   }
   .user-info__desc {
-    height: 0.85rem;
+    height: 60px;
     margin: 0;
     font-size: 20px;
     text-align: center;
@@ -114,9 +113,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 2rem;
+    margin: 0 10px;
+    height: 150px;
     padding: 0;
-    margin: 0;
   }
   .js-inmobile .user-info__list {
     height: 2.2rem;

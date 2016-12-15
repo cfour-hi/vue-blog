@@ -1,18 +1,17 @@
 <template>
   <section class="article-list-page">
     <ul style="padding: 0; margin: 0;" v-if="articleListInfo.list.length" transition="fadeInOut">
-      <li class="article-list__item" v-for="article in articleListInfo.list" track-by="id">
+      <li class="article-list__item dashed dashed-thin dashed-bottom" v-for="article in articleListInfo.list" track-by="id">
         <article>
+          <div class="article-labels">
+            <a v-link="{name: 'label-article-list', params: {labelName: label.name}}" class="article-label label-{{ label.color }}" v-for="label in article.labels">{{ label.name }}</a>
+          </div>
           <h2 class="issues-content__title">
             <a v-link="{name: 'article-content', params: { num: article.number}}">{{ article.title}}</a>
           </h2>
           <p class="issues-content__time">CREATED AT {{ article.createdAt }} _ UPDATED AT {{ article.updatedAt }}</p>
           {{{ article.quote }}}
           <a class="article-list__read transition-color-btn" v-link="{name: 'article-content', params: { num: article.number}}">READ</a>
-          <p class="article-list__labels">
-            <span>标签：</span>
-            <a v-link="{name: 'label-article-list', params: {labelName: label.name}}" class="article-info__label" v-for="label in article.labels">{{ label.name }}</a>
-          </p>
         </article>
       </li>
     </ul>
@@ -98,58 +97,18 @@
 </script>
 
 <style scoped>
-  .issues-content__title a {
-    display: inline-block;
-    padding-bottom: 0.15rem;
-    color: #333;
-  }
-  .issues-content__title a:hover {
-    border-bottom: none;
-    background: url(../assets/icon-go.png) no-repeat center 0.35rem;
-    background-size: 32px;
-  }
-  .js-inmobile .issues-content__title a:hover {
-    background: none;
-  }
-
   .article-list__item {
-    padding-top: 0.5rem;
-    border-bottom: 1px dashed #ccc;
-    font-size: 14px;
+    position: relative;
     list-style: none;
   }
   .js-inmobile .article-list__item {
     padding-top: 0.75rem;
   }
-  .article-list__item .article-list__labels {
-    font-size: 12px;
-    color: #f60;
-  }
-  .js-inmobile[data-dpr='2'] .article-list__item .article-list__labels  {
-    font-size: 24px;
-  }
-  .js-inmobile[data-dpr='3'] .article-list__item .article-list__labels  {
-    font-size: 36px;
-  }
-  .article-list__item .article-info__label {
-    padding: 0.2em 0.7em;
-    margin-right: 0.1rem;
-    border: 1px dotted currentColor;
-    border-radius: 3px;
-    color: inherit;
-  }
-  .article-list__item .article-info__label:hover {
-    border: 1px solid currentColor;
-    color: #ff8533;
-  }
-  .article-list__item .article-info__label:active {
-    color: #f26100;
-  }
   .article-list__item .article-list__read {
     display: inline-block;
     position: relative;
     left: 50%;
-    margin-top: 0.5rem;
+    margin-top: 2em;
     border: 1px solid #0097da;
     color: #0097da;
     transform: translateX(-50%);
@@ -162,10 +121,12 @@
     background-color: #008fcf;
   }
   .article-list__more-wrap {
-    height: 5em;
-    padding-top: 1em;
-    font-size: 12px;
+    height: 9em;
+    padding: 3em;
+    border-radius: 2em;
+    font-size: 14px;
     text-align: center;
+    background-color: #fcfcfc;
   }
   .js-inmobile[data-dpr='2'] .article-list__more-wrap {
     font-size: 24px;

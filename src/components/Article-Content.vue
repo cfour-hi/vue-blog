@@ -1,7 +1,10 @@
 <template>
   <section class="article-content-page">
     <article class="issues-content" v-if="($route.name === 'article-content' || 'worklog-content') && issuesInfo" transition="fadeInOut">
-      <h2 class="issues-content__title">{{ issuesInfo.title }}</h2>
+      <div class="article-labels">
+        <a v-link="{name: 'label-article-list', params: {labelName: label.name}}" class="article-label label-{{ label.color }}" v-for="label in issuesInfo.labels">{{ label.name }}</a>
+      </div>
+      <h2 class="issues-content__title"><a href="javascript:;">{{ issuesInfo.title }}</a></h2>
       <p class="issues-content__time">CREATED AT {{ issuesInfo.createdAt }} _ UPDATED AT {{ issuesInfo.updatedAt }}</p>
      {{{ issuesInfo.body }}}
     </article>
@@ -126,10 +129,15 @@
 </script>
 
 <style scoped>
+  .article-content-page .issues-content__title a:hover {
+    background: none;
+    cursor: default;
+  }
   .end-mark {
     position: relative;
+    margin: 0 2em;
     text-align: center;
-    color: #999;
+    color: #ccc;
   }
   .js-inmobile .end-mark {
     font-size: 14px;
@@ -142,8 +150,8 @@
     content: '';
     position: absolute;
     top: 50%;
-    height: 1px; width: 44%;
-    background: #bbb;
+    height: 1px; width: 45%;
+    background: #ccc;
   }
   .end-mark:before {
     left: 0;
@@ -153,7 +161,7 @@
   }
 
   .issues-comments {
-    padding-top: 0.3rem;
+    padding: 0.3rem 2em;
   }
   .js-inmobile .issues-comments {
     font-size: 16px;
@@ -171,7 +179,7 @@
   }
   .issues-comments__item {
     position: relative;
-    margin: 0.15rem 0;
+    margin: 1em 0 1em 5.5em;
     border: 1px solid #ddd;
     border-radius: 3px;
   }
@@ -190,10 +198,10 @@
   }
   .issues-comments__item-avator {
     position: absolute;
-    left: -0.8rem;
+    left: -5.5em;
   }
   .issues-comments__item-avator img {
-    width: 0.6rem; height: 0.6rem;
+    width: 4em; height: 4em;
     border-radius: 3px;
   }
   .issues-comments__item-header {
@@ -209,11 +217,11 @@
   .js-inmobile[data-dpr='3'] .issues-comments__item-header {
     font-size: 42px;
   }
-  .issues-comments__item-header:before {
+  .issues-comments__item-header::before {
     content: '';
     position: absolute;
-    top: 0.2rem; left: -0.11rem;
-    width: 0.2rem; height: 0.2rem;
+    top: 1.15em; left: -0.55em;
+    width: 1em; height: 1em;
     border-top: 1px solid #ddd;
     border-left: 1px solid #ddd;
     background: #f7f7f7;
@@ -231,8 +239,8 @@
   }
 
   .issues-comments__more-wrap {
-    height: 0.75rem;
-    font-size: 18px;
+    height: 3em;
+    margin-top: 2em;
     text-align: center;
   }
   .js-inmobile .issues-comments__more-wrap  {

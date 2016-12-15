@@ -1,9 +1,9 @@
 <template>
   <section class="article-page">
-    <nav class="article-list__labels-nav" :class="{'labels-nav--show': !loader}" v-if="!inMobile">
+    <!-- <nav class="article-list__labels-nav" :class="{'labels-nav--show': !loader}" v-if="!inMobile">
       <a class="labels-nav__title" href="javascript:void(0);">标签</a>
       <a class="labels-nav__item" v-for="label in labels" v-link="{name: 'label-article-list', params: {labelName: label}}">{{ label }}</a>
-    </nav>
+    </nav> -->
     <router-view></router-view>
   </section>
 </template>
