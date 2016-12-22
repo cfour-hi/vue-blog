@@ -1,25 +1,29 @@
 <template>
   <section class="article-list-page">
-    <ul style="padding: 0; margin: 0;" v-if="articleListInfo.list.length" transition="fadeInOut">
-      <li class="article-list__item dashed dashed-thin dashed-bottom" v-for="article in articleListInfo.list" track-by="id">
+    <transition-group name="fadeInOut" tag="ul" style="padding: 0; margin: 0;">
+      <li class="article-list__item dashed dashed-thin dashed-bottom" v-for="article in articleListInfo.list" :key="article.id">
         <article>
           <div class="article-labels">
-            <a v-link="{name: 'label-article-list', params: {labelName: label.name}}" class="article-label label-{{ label.color }}" v-for="label in article.labels">{{ label.name }}</a>
+            <router-link class="article-label" :class="'label-' + label.color" :to="{name: 'label-article-list', params: {labelName: label.name}}" v-for="label in article.labels">{{ label.name }}</router-link>
           </div>
           <h2 class="issues-content__title">
-            <a v-link="{name: 'article-content', params: { num: article.number}}">{{ article.title}}</a>
+            <router-link :to="{name: 'article-content', params: { num: article.number }}">{{ article.title }}</router-link>
           </h2>
           <p class="issues-content__time">CREATED AT {{ article.createdAt }} _ UPDATED AT {{ article.updatedAt }}</p>
-          {{{ article.quote }}}
-          <a class="article-list__read transition-color-btn" v-link="{name: 'article-content', params: { num: article.number}}">READ</a>
+          <div v-html="article.quote"></div>
+          <router-link class="article-list__read transition-color-btn" :to="{name: 'article-content', params: { num: article.number}}">READ</router-link>
         </article>
       </li>
-    </ul>
+    </transition-group>
     <div class="article-list__more-wrap">
-      <p class="article-list__more-box" v-show="articleListInfo.list.length && articleListInfo.hasMore && showMoreBtn" transition="zoomInOut">
-        <button class="article-list__more transition-color-btn" type="button" @click="getMoreArticle">MORE</button>
-      </p>
-      <p class="article-list__no-more center-prompt-message" v-show="articleListInfo.list.length && !articleListInfo.hasMore" transition="zoomInOut">没有更多的文章</p>
+      <transition name="zoomInOut">
+        <p class="article-list__more-box" v-show="articleListInfo.list.length && articleListInfo.hasMore && showMoreBtn">
+          <button class="article-list__more transition-color-btn" type="button" @click="getMoreArticle">MORE</button>
+        </p>
+      </transition>
+      <transition name="zoomInOut">
+        <p class="article-list__no-more center-prompt-message" v-show="articleListInfo.list.length && !articleListInfo.hasMore">没有更多的文章</p>
+      </transition>
     </div>
   </section>
 </template>
@@ -41,10 +45,22 @@
   }
 
   export default {
-    route: {
-      data (transition) {
+    data () {
+      return {
+        articleListInfo: getInitArticleListInfo(),
+        showMoreBtn: true
+      }
+    },
+    created () {
+      this.fetchData()
+    },
+    watch: {
+      '$route': 'fetchData'
+    },
+    methods: {
+      fetchData () {
         // issues 标签
-        transition.to.name === 'article-list' ? issuesLabel = 'all' : issuesLabel = transition.to.params.labelName
+        this.$route.name === 'article-list' ? issuesLabel = 'all' : issuesLabel = this.$route.params.labelName
 
         // 有缓存则从缓存内取出文章信息
         // 没有则初始化并从接口获取文章信息
@@ -52,18 +68,10 @@
           this.articleListInfo = _cache.issues.blog[issuesLabel]
         } else {
           _cache.issues.blog[issuesLabel] = this.articleListInfo = getInitArticleListInfo()
-          this.$dispatch('set-loader-state', true)
+          this.$emit('set-loader-state', true)
           this.getBlogIssues()
         }
-      }
-    },
-    data () {
-      return {
-        articleListInfo: getInitArticleListInfo(),
-        showMoreBtn: true
-      }
-    },
-    methods: {
+      },
       getMoreArticle () {
         this.showMoreBtn = false
         this.getBlogIssues()
@@ -80,7 +88,7 @@
           }
         }).then((response) => {
           // 更新视图状态
-          this.$dispatch('set-loader-state', false)
+          this.$emit('set-loader-state', false)
           if (!this.showMoreBtn) this.showMoreBtn = true
 
           // 更新数据、设置文章所需内容
@@ -101,14 +109,10 @@
     position: relative;
     list-style: none;
   }
-  .js-inmobile .article-list__item {
-    padding-top: 0.75rem;
-  }
   .article-list__item .article-list__read {
     display: inline-block;
     position: relative;
     left: 50%;
-    margin-top: 2em;
     border: 1px solid #0097da;
     color: #0097da;
     transform: translateX(-50%);
@@ -116,6 +120,10 @@
   .article-list__item .article-list__read:hover {
     color: #fff;
     background-color: #33ace1;
+  }
+  .js-inmobile .article-list__item .article-list__read:hover {
+    color: #0097da;
+    background-color: transparent;
   }
   .article-list__item .article-list__read:active {
     background-color: #008fcf;
@@ -146,6 +154,10 @@
   .article-list__more:hover {
     color: #fff;
     background-color: #ff8533;
+  }
+  .js-inmobile .article-list__more:hover {
+    color: #f60;
+    background-color: transparent;
   }
   .article-list__more:active {
     background-color: #f26100;

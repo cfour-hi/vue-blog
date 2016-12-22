@@ -1,11 +1,11 @@
 <template>
   <div class="app-wrapper">
     <header class="app-header dashed dashed-bottom">
-      <h1><a v-link="{path: '/'}">Monine</a></h1>
+      <h1><router-link to="/">Monine</router-link></h1>
       <nav>
-        <a v-link="{path: '/', exact: true}">名&nbsp;片</a>
-        <a v-link="{path: '/article'}">文&nbsp;章</a>
-        <a v-link="{path: '/worklog'}">工作日志</a>
+        <router-link to="/" exact>名&nbsp;片</router-link>
+        <router-link to="/article">文&nbsp;章</router-link>
+        <router-link to="/worklog">工作日志</router-link>
       </nav>
     </header>
     <section class="app-container">
@@ -50,8 +50,8 @@
 
   // 滚动事件
   document.addEventListener('scroll', () => {
-    let leave = 'fadeUpDown-leave'
-    let enter = 'fadeUpDown-enter'
+    let leave = 'fadeUpDown-leave-active'
+    let enter = 'fadeUpDown-enter-active'
 
     if (document.scrollingElement.scrollTop <= 0) {
       toggleElementState(tool4Top, leave, enter, 'none', 200)
@@ -62,9 +62,11 @@
   })
 
   export default {
-    ready () {
-      tool4Top = document.querySelector('.app-tools__top')
-      if (!window.lib.inMobile) { tool4Top.style.right = ((document.documentElement.offsetWidth - 900) / 2 - 36) + 'px' }
+    mounted () {
+      this.$nextTick(() => {
+        tool4Top = document.querySelector('.app-tools__top')
+        if (!window.lib.inMobile) { tool4Top.style.right = ((document.documentElement.offsetWidth - 900) / 2 - 35) + 'px' }
+      })
     },
     data () {
       return {
@@ -115,6 +117,11 @@
     padding: 0 1em;
     font-size: 36px;
   }
+  .js-inmobile h1 {
+    display: block;
+    margin: 0;
+    text-align: center;
+  }
   .js-inmobile[data-dpr="2"] h1 {
     font-size: 72px;
   }
@@ -125,41 +132,37 @@
     color: #333;
     text-decoration: none;
   }
-  /*.link {
-    color: #0097da;
-  }
-  .link:hover {
-    color: #33ace1;
-  }
-  .link:active {
-    color: #008fcf;
-  }*/
   button {
     outline: none;
   }
   em {
     padding: 0.3em;
-    border-bottom: 1px dotted #ccc;
     font-size: 14px;
     color: #999;
+  }
+  .js-inmobile[data-dpr='2'] em {
+    font-size: 24px;
+  }
+  .js-inmobile[data-dpr='3'] em {
+    font-size: 36px;
+  }
+  .js-inmobile[data-dpr='1'] article ul,
+  .js-inmobile[data-dpr='1'] article ol {
+    padding-left: 20px;
   }
   article {
     position: relative;
     padding: 2em;
   }
   .js-inmobile article {
-    font-size: 16px;
+    padding: 2em 1em;
+    font-size: 14px;
   }
   .js-inmobile[data-dpr='2'] article {
-    font-size: 32px;
+    font-size: 28px;
   }
-  @media (max-device-width: 374px) {
-    .js-inmobile[data-dpr='2'] article {
-      font-size: 28px;
-    }
-    .js-inmobile[data-dpr='3'] article {
-      font-size: 48px;
-    }
+  .js-inmobile[data-dpr='3'] article {
+    font-size: 40px;
   }
   article h3 {
     position: relative;
@@ -176,20 +179,31 @@
     border-radius: 5px;
     background-color: #cce4f6;
   }
-  .js-inmobile[data-dpr='2'] article h3 {
-    font-size: 40px;
+  .js-inmobile article h3 {
+    font-size: 20px;
   }
-  @media (max-device-width: 374px) {
-    .js-inmobile[data-dpr='2'] article h3 {
-      font-size: 36px;
-    }
+  .js-inmobile[data-dpr='2'] article h3 {
+    font-size: 36;
   }
   .js-inmobile[data-dpr='3'] article h3 {
     font-size: 60px;
   }
   article h4 {
+    position: relative;
+    padding-left: 0.7em;
     margin-bottom: 0;
-    font-size: 22px;
+    font-size: 18px;
+  }
+  article h4::before {
+    content: '';
+    position: absolute;
+    top: 10%; bottom: 10%; left: 0;
+    width: 0.2em;
+    border-radius: 0.4em;
+    background-color: #ff8a0c;
+  }
+  .js-inmobile article h4 {
+    font-size: 18px;
   }
   .js-inmobile[data-dpr='2'] article h4 {
     font-size: 36px;
@@ -198,7 +212,7 @@
     font-size: 54px;
   }
   article a {
-    border-bottom: 1px solid #333;
+    border-bottom: 1px dashed #999;
   }
   article a:hover {
     color: #1d80d3;
@@ -207,61 +221,57 @@
   article img {
     display: block;
     margin: 0 auto;
+    border-radius: 1em;
     max-width: 100%;
   }
   article blockquote {
     position: relative;
-    padding: 0 1.5em;
+    padding: 1em 1.5em;
     margin: 2em 0;
+    border-radius: 1em;
     font-size: 14px;
     color: #666;
+    background-color: #f3f3f3;
   }
-  article blockquote::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 0.4em; height: 100%;
-    border-radius: 0.4em;
-    background-color: #ff8a0c;
-  }
-  .js-inmobile article blockquote {
-    font-size: 14px;
+  article blockquote p {
+    margin: 0;
   }
   .js-inmobile[data-dpr='2'] article blockquote {
-    font-size: 28px;
-  }
-  @media (max-device-width: 374px) {
-    .js-inmobile[data-dpr='2'] article blockquote {
-      font-size: 24px;
-    }
+    font-size: 24px;
   }
   .js-inmobile[data-dpr='3'] article blockquote {
-    font-size: 42px;
+    font-size: 36px;
   }
   article strong {
     padding: 0.2em;
-    border-top: 1px solid #999;
     border-bottom: 1px solid #999;
   }
   article hr {
     border: 1px solid #eee;
   }
   article pre {
+    max-height: 50em;
     padding: 16px;
     border: 1px dotted #999;
     overflow: auto;
     font-size: 12px;
     border-radius: 0.5em;
-    word-wrap: break-word;
-  }
-  .js-inmobile article pre {
-    font-size: 12px;
   }
   .js-inmobile[data-dpr='2'] article pre {
     font-size: 24px;
+    border-width: 2px;
   }
   .js-inmobile[data-dpr='3'] article pre {
     font-size: 36px;
+    border-width: 3px;
+  }
+  article pre::-webkit-scrollbar {
+    width: 7px;
+    background-color: transparent;
+  }
+  article pre::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background-color: #ddd;
   }
   article code {
     padding: 0.3em 0.5em;
@@ -271,10 +281,10 @@
     background-color: #f0f0f0;
   }
   .js-inmobile[data-dpr='2'] article code {
-    font-size: 24px;
+    font-size: 20px;
   }
   .js-inmobile[data-dpr='3'] article code {
-    font-size: 36px;
+    font-size: 32px;
   }
   article pre code {
     padding: 0;
@@ -299,12 +309,6 @@
   .hljs-regexp {
     color: #183691;
   }
-  /*.issues-content {
-    padding: 0.25rem 0;
-  }*/
-  .js-inmobile .issues-content {
-    padding: 0.75rem 0;
-  }
   .issues-content li p,
   .issues-content blockquote p {
     margin-left: 0; margin-right: 0;
@@ -315,8 +319,12 @@
     text-align: center;
     font-size: 26px;
   }
+  .js-inmobile .issues-content__title {
+    padding-top: 0.5em;
+    font-size: 22px; line-height: 1.5;
+  }
   .js-inmobile[data-dpr='2'] .issues-content__title {
-    font-size: 44px;
+    font-size: 40px;
   }
   .js-inmobile[data-dpr='3'] .issues-content__title {
     font-size: 66px;
@@ -326,6 +334,12 @@
     padding-bottom: 0.5em;
     border-bottom: none;
     color: #333;
+  }
+  .js-inmobile .issues-content__title a {
+    padding-bottom: 0;
+  }
+  .js-inmobile[data-dpr='3'] .issues-content__title a {
+    padding-top: 0.5em;
   }
   .issues-content__title a:hover {
     border-bottom: none;
@@ -337,16 +351,16 @@
     background: none;
   }
   .issues-content__time {
-    margin-top: 0; margin-bottom: 3em;
+    margin-top: 0;
     font-size: 12px;
     text-align: center;
     color: #999;
   }
   .js-inmobile[data-dpr='2'] .issues-content__time {
-    font-size: 24px;
+    font-size: 20px;
   }
   .js-inmobile[data-dpr='3'] .issues-content__time {
-    font-size: 36px;
+    font-size: 32px;
   }
   /* base end */
 
@@ -363,6 +377,9 @@
     font-size: 14px;
     transition-property: color, background-color;
     transition-duration: 0.3s;
+  }
+  .js-inmobile .transition-color-btn {
+    font-size: 12px;
   }
   .js-inmobile[data-dpr='2'] .transition-color-btn {
     font-size: 24px;
@@ -386,17 +403,13 @@
     margin: 0 auto;
   }
   .js-inmobile .app-wrapper {
-    width: 100%;
+    width: 96%;
   }
   .app-header {
     flex: 0 0 auto;
     position: relative;
     border-radius: 0 0 2em 2em;
     background-color: #fcfcfc;
-  }
-  .js-inmobile .app-wrapper h1 {
-    margin: 0.3rem 0;
-    text-align: center;
   }
   .app-header nav {
     display: inline-block;
@@ -405,12 +418,13 @@
   }
   .js-inmobile .app-header nav {
     display: flex;
+    margin-bottom: 1em;
   }
   .js-inmobile[data-dpr="2"] .app-header nav {
-    font-size: 28px;
+    font-size: 30px;
   }
   .js-inmobile[data-dpr="3"] .app-header nav {
-    font-size: 42px;
+    font-size: 48px;
   }
   .app-header nav a {
     position: relative;
@@ -422,32 +436,37 @@
     width: 33.33%;
   }
   .app-header nav a:hover,
-  .app-header nav .v-link-active {
+  .app-header nav .router-link-active {
     color: #0097da;
   }
   .app-header nav a:before {
     position: absolute;
-    width: 100%;
-    height: 0;
-    left: 0;
-    bottom: -1px;
+    left: 0; bottom: -1px;
+    z-index: 1;
+    width: 100%; height: 0;
     content: '';
     border-bottom: 3px solid #33ace1;
     transform: scaleX(0);
     transition: transform .3s ease;
   }
+  .js-inmobile[data-dpr='2'] .app-header nav a:before {
+    border-bottom-width: 6px;
+  }
+  .js-inmobile[data-dpr='3'] .app-header nav a:before {
+    border-bottom-width: 9px;
+  }
   .app-header nav a:hover:before,
-  .app-header nav .v-link-active:before {
+  .app-header nav .router-link-active:before {
     transform: scaleX(1);
+  }
+  .js-inmobile .app-header nav .router-link-active:before {
+    transform: scaleX(0.7);
   }
   .app-container {
     flex: 1 0 auto;
     position: relative;
     border-radius: 2em;
     background-color: #fcfcfc;
-  }
-  .js-inmobile .app-container {
-    padding: 0 0.25rem;
   }
   .app-footer {
     flex: 0 0 auto;
@@ -479,7 +498,7 @@
   }
   .app-tools__top svg {
     fill: currentColor;
-    width: 36px; height: 36px;
+    width: 32px; height: 32px;
   }
   .js-inmobile .app-tools__top svg {
     width: 0.7rem; height: 0.7rem;
@@ -491,6 +510,12 @@
     border-bottom: 2px dashed #cce4f6;
     z-index: 1;
   }
+  .js-inmobile[data-dpr='2'] .dashed::before {
+    border-bottom-width: 4px;
+  }
+  .js-inmobile[data-dpr='3'] .dashed::before {
+    border-bottom-width: 6px;
+  }
   .dashed-top::before {
     top: -1px;
   }
@@ -500,6 +525,12 @@
   .dashed-thin::before {
     border-bottom-width: 1px;
   }
+  .js-inmobile[data-dpr='2'] .dashed-thin::before {
+    border-bottom-width: 2px;
+  }
+  .js-inmobile[data-dpr='3'] .dashed-thin::before {
+    border-bottom-width: 3px;
+  }
   article .article-labels {
     position: absolute;
     top: 0; left: 2em; right: 2em;
@@ -507,6 +538,15 @@
     font-size: 14px;
     text-indent: 3px;
     letter-spacing: 3px;
+  }
+  .js-inmobile article .article-labels {
+    font-size: 12px;
+  }
+  .js-inmobile[data-dpr='2'] article .article-labels {
+    font-size: 24px;
+  }
+  .js-inmobile[data-dpr='3'] article .article-labels {
+    font-size: 36px;
   }
   article .article-label {
     display: inline-block;
@@ -591,33 +631,33 @@
     from {opacity: 1;}
     to {opacity: 0;}
   }
-  .fadeInOut-enter {
+  .fadeInOut-enter-active {
     animation: fadeIn .5s;
   }
-  .fadeInOut-leave {
+  .fadeInOut-leave-active {
     animation: fadeOut .5s;
   }
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translate(0, 100%);
+      transform: translateY(100%);
     }
     to {
       opacity: 1;
-      transform: none;
+      transform: translateY(0);
     }
   }
   @keyframes fadeOutDown {
     from {opacity: 1;}
     to {
       opacity: 0;
-      transform: translate(0, 150%);
+      transform: translateY(100%);
     }
   }
-  .fadeUpDown-enter {
+  .fadeUpDown-enter-active {
     animation: fadeInUp .3s;
   }
-  .fadeUpDown-leave {
+  .fadeUpDown-leave-active {
     animation: fadeOutDown .3s;
   }
   @keyframes zoomIn {
@@ -635,10 +675,10 @@
     }
     to {opacity: 0;}
   }
-  .zoomInOut-enter {
+  .zoomInOut-enter-active {
     animation: zoomIn 0.3s;
   }
-  .zoomInOut-leave {
+  .zoomInOut-leave-active {
     animation: zoomOut 0.3s;
   }
   /* transition animation end */

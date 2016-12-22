@@ -1,36 +1,44 @@
 <template>
   <section class="article-content-page">
-    <article class="issues-content" v-if="($route.name === 'article-content' || 'worklog-content') && issuesInfo" transition="fadeInOut">
-      <div class="article-labels">
-        <a v-link="{name: 'label-article-list', params: {labelName: label.name}}" class="article-label label-{{ label.color }}" v-for="label in issuesInfo.labels">{{ label.name }}</a>
+    <transition name="fadeInOut">
+      <article class="issues-content" v-if="($route.name === 'article-content' || 'worklog-content') && issuesInfo">
+        <div class="article-labels">
+          <router-link class="article-label" :class="'label-' + label.color" :to="{name: 'label-article-list', params: {labelName: label.name}}" v-for="label in issuesInfo.labels">{{ label.name }}</router-link>
+        </div>
+        <h2 class="issues-content__title"><a href="javascript:;">{{ issuesInfo.title }}</a></h2>
+        <p class="issues-content__time">CREATED AT {{ issuesInfo.createdAt }} _ UPDATED AT {{ issuesInfo.updatedAt }}</p>
+        <div v-html="issuesInfo.body"></div>
+      </article>
+    </transition>
+    <div class="end-mark" v-if="issuesInfo"></div>
+    <transition name="fadeInOut">
+      <div class="issues-comments" v-if="issuesInfo">
+        <p><a :href="issuesInfo.html_url" style="color: #f60;">去 Github 发表评论</a></p>
+        <dl v-if="commentsInfo.list.length">
+          <dd class="issues-comments__item" v-for="comment in commentsInfo.list">
+            <a class="issues-comments__item-avator" v-if="!inMobile" :href="comment.html_url">
+              <img :src="comment.user.avatar_url" alt="头像">
+            </a>
+            <div class="issues-comments__item-header">
+              <a :href="comment.html_url"><strong>{{comment.user.login}}</strong></a>
+              <span class="issues-comments__item-created">commented on {{comment.createdAt}}</span>
+            </div>
+            <article class="issues-comments__item-main" v-html="comment.body"></article>
+          </dd>
+        </dl>
+        <div class="issues-comments__more-wrap" v-if="commentsInfo.list.length">
+          <transition name="zoomInOut">
+            <p class="issues-comments__more-box" v-show="commentsInfo.list.length && commentsInfo.hasMore && showMoreBtn">
+              <a class="issues-comments__more transition-color-btn" href="javascript:;" @click="getMoreComments">更多评论</a>
+            </p>
+          </transition>
+          <transition name="zoomInOut">
+            <p class="center-prompt-message" v-show="commentsInfo.list.length && !commentsInfo.hasMore">没有更多的评论</p>
+          </transition>
+        </div>
+        <p class="center-prompt-message" v-if="issuesInfo && !commentsInfo.list.length">还没有小伙伴发言 ... </p>
       </div>
-      <h2 class="issues-content__title"><a href="javascript:;">{{ issuesInfo.title }}</a></h2>
-      <p class="issues-content__time">CREATED AT {{ issuesInfo.createdAt }} _ UPDATED AT {{ issuesInfo.updatedAt }}</p>
-     {{{ issuesInfo.body }}}
-    </article>
-    <div class="end-mark" v-if="issuesInfo">END</div>
-    <div class="issues-comments" v-if="issuesInfo" transition="fadeInOut">
-      <p><a href="{{issuesInfo.html_url}}" style="color: #f60;">去 Github 发表评论</a></p>
-      <dl v-if="commentsInfo.list.length">
-        <dd class="issues-comments__item" v-for="comment in commentsInfo.list">
-          <a class="issues-comments__item-avator" href="{{comment.html_url}}" v-if="!inMobile">
-            <img :src="comment.user.avatar_url" alt="头像">
-          </a>
-          <div class="issues-comments__item-header">
-            <a href="{{comment.html_url}}"><strong>{{comment.user.login}}</strong></a>
-            <span class="issues-comments__item-created">commented on {{comment.createdAt}}</span>
-          </div>
-          <article class="issues-comments__item-main">{{{comment.body}}}</article>
-        </dd>
-      </dl>
-      <div class="issues-comments__more-wrap" v-if="commentsInfo.list.length">
-        <p class="issues-comments__more-box" v-show="commentsInfo.list.length && commentsInfo.hasMore && showMoreBtn" transition="zoomInOut">
-          <a class="issues-comments__more transition-color-btn" href="javascript:;" @click="getMoreComments">更多评论</a>
-        </p>
-        <p class="center-prompt-message" v-show="commentsInfo.list.length && !commentsInfo.hasMore" transition="zoomInOut">没有更多的评论</p>
-      </div>
-      <p class="center-prompt-message" v-if="issuesInfo && !commentsInfo.list.length">还没有小伙伴发言 ... </p>
-    </div>
+    </transition>
   </section>
 </template>
 
@@ -43,45 +51,6 @@
   let issuesNum = null  // issues number 标识
 
   export default {
-    route: {
-      data (transition) {
-        window.scrollTo(0, 0)
-
-        issuesNum = +transition.to.params.num
-        transition.to.name === 'article-content' ? reposType = 'blog' : reposType = 'worklog'
-
-        // 从缓存内获取文章信息
-        let cacheIssuesRepos = _cache.issues[reposType]
-        if (Object.keys(cacheIssuesRepos)) {
-          for (let key in cacheIssuesRepos) {
-            for (let i = cacheIssuesRepos[key].list.length - 1; i >= 0; i--) {
-              if (cacheIssuesRepos[key].list[i].number === issuesNum) {
-                this.issuesInfo = cacheIssuesRepos[key].list[i]
-                _cache.comments[this.issuesInfo.id] ? this.commentsInfo = _cache.comments[this.issuesInfo.id] : this.initCommentsInfo()
-                return
-              }
-            }
-          }
-        }
-
-        this.$dispatch('set-loader-state', true)
-
-        // 获取当前文章信息
-        this.$http.get(app.host + 'repos/' + app.owner + '/' + (app[reposType + 'Repos']) + '/issues/' + issuesNum, {
-          params: {
-            access_token: app.access_token
-          }
-        }).then((response) => {
-          // 设置文章所需内容
-          this.issuesInfo = setNecessaryAttribute(response.data, 'issues')
-
-          // 获取评论信息
-          _cache.comments[this.issuesInfo.id] ? this.commentsInfo = _cache.comments[this.issuesInfo.id] : this.initCommentsInfo()
-
-          this.$dispatch('set-loader-state', false)
-        })
-      }
-    },
     data () {
       return {
         issuesInfo: null,
@@ -89,6 +58,43 @@
         showMoreBtn: true,
         inMobile: window.lib.inMobile
       }
+    },
+    created () {
+      window.scrollTo(0, 0)
+
+      issuesNum = +this.$route.params.num
+      this.$route.name === 'article-content' ? reposType = 'blog' : reposType = 'worklog'
+
+      // 从缓存内获取文章信息
+      let cacheIssuesRepos = _cache.issues[reposType]
+      if (Object.keys(cacheIssuesRepos)) {
+        for (let key in cacheIssuesRepos) {
+          for (let i = cacheIssuesRepos[key].list.length - 1; i >= 0; i--) {
+            if (cacheIssuesRepos[key].list[i].number === issuesNum) {
+              this.issuesInfo = cacheIssuesRepos[key].list[i]
+              _cache.comments[this.issuesInfo.id] ? this.commentsInfo = _cache.comments[this.issuesInfo.id] : this.initCommentsInfo()
+              return
+            }
+          }
+        }
+      }
+
+      this.$emit('set-loader-state', true)
+
+      // 获取当前文章信息
+      this.$http.get(app.host + 'repos/' + app.owner + '/' + (app[reposType + 'Repos']) + '/issues/' + issuesNum, {
+        params: {
+          access_token: app.access_token
+        }
+      }).then((response) => {
+        // 设置文章所需内容
+        this.issuesInfo = setNecessaryAttribute(response.data, 'issues')
+
+        // 获取评论信息
+        _cache.comments[this.issuesInfo.id] ? this.commentsInfo = _cache.comments[this.issuesInfo.id] : this.initCommentsInfo()
+
+        this.$emit('set-loader-state', false)
+      })
     },
     methods: {
       initCommentsInfo () {
@@ -129,53 +135,46 @@
 </script>
 
 <style scoped>
-  .article-content-page .issues-content__title a:hover {
-    background: none;
+  .article-content-page .issues-content__title a {
+    background: url(../assets/icon-go.png) no-repeat center 1.5em;
+    background-size: 32px;
     cursor: default;
+  }
+  .js-inmobile .article-content-page .issues-content__title a {
+    background: none;
   }
   .end-mark {
     position: relative;
-    margin: 0 2em;
-    text-align: center;
-    color: #ccc;
+    height: 3em;
   }
-  .js-inmobile .end-mark {
-    font-size: 14px;
-  }
-  .js-inmobile[data-dpr='2'] .end-mark {
-    font-size: 28px
-  }
-  .end-mark:before,
-  .end-mark:after {
+  .end-mark::before {
     content: '';
     position: absolute;
-    top: 50%;
-    height: 1px; width: 45%;
-    background: #ccc;
+    top: 50%; right: 2em; left: 2em;
+    border-bottom: 1px solid #999;
   }
-  .end-mark:before {
-    left: 0;
-  }
-  .end-mark:after {
-    right: 0;
+  .end-mark::after {
+    content: 'END';
+    position: absolute;
+    top: 0; left: 50%;
+    padding: 0.5em 2em;
+    color: #999;
+    background-color: #fcfcfc;
+    transform: translateX(-50%);
   }
 
   .issues-comments {
-    padding: 0.3rem 2em;
+    padding: 1em 2em;
   }
   .js-inmobile .issues-comments {
-    font-size: 16px;
+    padding: 1em;
+    font-size: 14px;
   }
   .js-inmobile[data-dpr='2'] .issues-comments {
-    font-size: 32px;
-  }
-  @media (max-device-width: 374px) {
-    .js-inmobile[data-dpr='2'] .issues-comments {
-      font-size: 28px;
-    }
+    font-size: 28px;
   }
   .js-inmobile[data-dpr='3'] .issues-comments {
-    font-size: 48px;
+    font-size: 40px;
   }
   .issues-comments__item {
     position: relative;
@@ -212,10 +211,10 @@
     background: #f7f7f7;
   }
   .js-inmobile[data-dpr='2'] .issues-comments__item-header {
-    font-size: 28px;
+    font-size: 24px;
   }
   .js-inmobile[data-dpr='3'] .issues-comments__item-header {
-    font-size: 42px;
+    font-size: 36px;
   }
   .issues-comments__item-header::before {
     content: '';
@@ -236,6 +235,12 @@
   }
   .issues-comments__item-main {
     padding: 0.15rem;
+  }
+  .js-inmobile[data-dpr='2'] .issues-comments__item-main {
+    font-size: 24px;
+  }
+  .js-inmobile[data-dpr='3'] .issues-comments__item-main {
+    font-size: 36px;
   }
 
   .issues-comments__more-wrap {

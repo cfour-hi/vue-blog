@@ -1,8 +1,10 @@
 <template>
   <section class="worklog-list-page">
-    <ul class="worklog-list" v-if="worklogListInfo.list.length" transition="fadeInOut">
-      <li class="worklog-list__item" v-for="worklog in worklogListInfo.list"><a v-link="{ name: 'worklog-content', params: { num: worklog.number } }">{{ worklog.title }}</a></li>
-    </ul>
+    <transition-group class="worklog-list" name="fadeInOut" tag="ul" v-if="worklogListInfo.list.length">
+      <li class="worklog-list__item" v-for="worklog in worklogListInfo.list" :key="worklog.id">
+        <router-link :to="{name: 'worklog-content', params: { num: worklog.number }}">{{ worklog.title }}</router-link>
+      </li>
+    </transition-group>
   </section>
 </template>
 
@@ -22,14 +24,14 @@
   }
 
   export default {
-    ready () {
+    mounted () {
       // 有缓存则从缓存内取出工作日志信息
       // 没有则初始化并从接口获取工作日志信息
       if (_cache.issues[app.worklogRepos].all) {
         this.worklogListInfo = _cache.issues[app.worklogRepos].all
       } else {
         _cache.issues[app.worklogRepos].all = this.worklogListInfo = getInitWorklogListInfo()
-        this.$dispatch('set-loader-state', true)
+        this.$emit('set-loader-state', true)
         this.getWorklogList()
       }
     },
@@ -48,7 +50,7 @@
             access_token: app.access_token
           }
         }).then((response) => {
-          this.$dispatch('set-loader-state', false)
+          this.$emit('set-loader-state', false)
 
           this.worklogListInfo.list = this.worklogListInfo.list.concat(setNecessaryAttribute(response.data, 'issues'))
           this.worklogListInfo.page += 1
