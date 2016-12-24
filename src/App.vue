@@ -140,7 +140,7 @@
   em {
     padding: 0.3em;
     font-size: 14px;
-    color: #999;
+    color: inherit;
   }
   .js-inmobile em {
     font-size: 12px;
@@ -217,15 +217,11 @@
   }
   article a {
     padding-bottom: 0.15em;
-    border-bottom: 1px dashed #999;
-    color: inherit;
+    color: #4078c0;
   }
   article a:hover {
     color: #1d80d3;
-    border-bottom-color: #1d80d3;
-  }
-  article a:hover * {
-    color: #1d80d3;
+    border-bottom: 1px solid currentColor;
   }
   article img {
     display: block;
@@ -252,11 +248,8 @@
     font-size: 36px;
   }
   article strong {
-    padding: 0.2em;
-    border-bottom: 1px solid #999;
-  }
-  article hr {
-    border: 1px solid #eee;
+    padding-bottom: 0.15em;
+    border-bottom: 1px solid currentColor;
   }
   article pre {
     max-height: 50em;
@@ -290,7 +283,7 @@
     padding: 0.2em 0.5em;
     border-radius: 0.3em;
     font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    color: #666;
+    color: inherit;
     background-color: #f0f0f0;
   }
   .js-inmobile[data-dpr='2'] article code {
@@ -333,6 +326,9 @@
   }
   .issues-content__title a {
     font-size: 22px;
+  }
+  .issues-content__title a:hover {
+    border-bottom: none;
   }
   .js-inmobile .issues-content__title a {
     font-size: 20px; line-height: 1.5;
