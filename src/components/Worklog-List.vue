@@ -76,23 +76,22 @@
   }
   .js-inmobile .worklog-list__item {
     width: 50%; height: 1.5rem;
-    font-size: 16px;
+    font-size: 14px;
   }
   .js-inmobile[data-dpr='2'] .worklog-list__item {
-    font-size: 32px;
+    font-size: 28px;
   }
   .js-inmobile[data-dpr='3'] .worklog-list__item {
-    font-size: 48px;
+    font-size: 42px;
   }
   .worklog-list__item a {
-    padding: 0.1rem 0.2rem;
-    border-radius: 3px;
+    display: block;
+    width: 60%;
     border-top: 1px solid #ddd;
+    margin: auto;
+    border-radius: 0.2em;
     color: #666;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-  }
-  .js-inmobile .worklog-list__item a {
-    padding: 0.25rem 0.5rem;
   }
   .worklog-list__item a:hover {
     bottom: 2px;

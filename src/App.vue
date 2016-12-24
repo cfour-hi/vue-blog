@@ -49,23 +49,25 @@
   }
 
   // 滚动事件
-  document.addEventListener('scroll', () => {
-    let leave = 'fadeUpDown-leave-active'
-    let enter = 'fadeUpDown-enter-active'
+  if (!window.lib.inMobile) {
+    document.addEventListener('scroll', () => {
+      let leave = 'fadeUpDown-leave-active'
+      let enter = 'fadeUpDown-enter-active'
 
-    if (document.scrollingElement.scrollTop <= 0) {
-      toggleElementState(tool4Top, leave, enter, 'none', 200)
-    } else {
-      if (tool4Top.className.indexOf(enter) !== -1) return
-      toggleElementState(tool4Top, enter, leave, 'block', 200)
-    }
-  })
+      if (document.scrollingElement.scrollTop <= 0) {
+        toggleElementState(tool4Top, leave, enter, 'none', 200)
+      } else {
+        if (tool4Top.className.indexOf(enter) !== -1) return
+        toggleElementState(tool4Top, enter, leave, 'block', 200)
+      }
+    })
+  }
 
   export default {
     mounted () {
       this.$nextTick(() => {
         tool4Top = document.querySelector('.app-tools__top')
-        if (!window.lib.inMobile) { tool4Top.style.right = ((document.documentElement.offsetWidth - 900) / 2 - 35) + 'px' }
+        if (!window.lib.inMobile) { tool4Top.style.right = ((window.innerWidth - 900) / 2 - 50) + 'px' }
       })
     },
     data () {
@@ -115,7 +117,7 @@
   h1 {
     display: inline-block;
     padding: 0 1em;
-    font-size: 36px;
+    font-size: 24px;
   }
   .js-inmobile h1 {
     display: block;
@@ -123,10 +125,10 @@
     text-align: center;
   }
   .js-inmobile[data-dpr="2"] h1 {
-    font-size: 72px;
+    font-size: 48px;
   }
   .js-inmobile[data-dpr="3"] h1 {
-    font-size: 108px;
+    font-size: 72px;
   }
   a {
     color: #333;
@@ -139,6 +141,9 @@
     padding: 0.3em;
     font-size: 14px;
     color: #999;
+  }
+  .js-inmobile em {
+    font-size: 12px;
   }
   .js-inmobile[data-dpr='2'] em {
     font-size: 24px;
@@ -162,12 +167,12 @@
     font-size: 28px;
   }
   .js-inmobile[data-dpr='3'] article {
-    font-size: 40px;
+    font-size: 42px;
   }
   article h3 {
     position: relative;
     padding-top: 1em;
-    font-size: 24px;
+    font-size: 20px;
     text-indent: 0.5em;
     color: #0097da;
   }
@@ -180,43 +185,47 @@
     background-color: #cce4f6;
   }
   .js-inmobile article h3 {
-    font-size: 20px;
+    font-size: 18px;
   }
   .js-inmobile[data-dpr='2'] article h3 {
-    font-size: 36;
+    font-size: 36px;
   }
   .js-inmobile[data-dpr='3'] article h3 {
-    font-size: 60px;
+    font-size: 54px;
   }
   article h4 {
     position: relative;
     padding-left: 0.7em;
-    margin-bottom: 0;
     font-size: 18px;
   }
   article h4::before {
     content: '';
     position: absolute;
-    top: 10%; bottom: 10%; left: 0;
+    top: 0.2em; bottom: 0.2em; left: 0;
     width: 0.2em;
     border-radius: 0.4em;
     background-color: #ff8a0c;
   }
   .js-inmobile article h4 {
-    font-size: 18px;
+    font-size: 16px;
   }
   .js-inmobile[data-dpr='2'] article h4 {
-    font-size: 36px;
+    font-size: 32px;
   }
   .js-inmobile[data-dpr='3'] article h4 {
-    font-size: 54px;
+    font-size: 48px;
   }
   article a {
+    padding-bottom: 0.15em;
     border-bottom: 1px dashed #999;
+    color: inherit;
   }
   article a:hover {
     color: #1d80d3;
     border-bottom-color: #1d80d3;
+  }
+  article a:hover * {
+    color: #1d80d3;
   }
   article img {
     display: block;
@@ -228,7 +237,7 @@
     position: relative;
     padding: 1em 1.5em;
     margin: 2em 0;
-    border-radius: 1em;
+    border-radius: 0.5em;
     font-size: 14px;
     color: #666;
     background-color: #f3f3f3;
@@ -253,9 +262,10 @@
     max-height: 50em;
     padding: 16px;
     border: 1px dotted #999;
-    overflow: auto;
-    font-size: 12px;
     border-radius: 0.5em;
+    font-size: 12px;
+    background-color: #fff;
+    overflow: auto;
   }
   .js-inmobile[data-dpr='2'] article pre {
     font-size: 24px;
@@ -266,15 +276,18 @@
     border-width: 3px;
   }
   article pre::-webkit-scrollbar {
-    width: 7px;
+    width: 7px; height: 7px;
     background-color: transparent;
   }
   article pre::-webkit-scrollbar-thumb {
     border-radius: 7px;
     background-color: #ddd;
   }
+  article pre::-webkit-scrollbar-corner {
+    background-color: #fff;
+  }
   article code {
-    padding: 0.3em 0.5em;
+    padding: 0.2em 0.5em;
     border-radius: 0.3em;
     font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
     color: #666;
@@ -317,17 +330,18 @@
     position: relative;
     margin: 0;
     text-align: center;
-    font-size: 26px;
   }
-  .js-inmobile .issues-content__title {
-    padding-top: 0.5em;
-    font-size: 22px; line-height: 1.5;
+  .issues-content__title a {
+    font-size: 22px;
   }
-  .js-inmobile[data-dpr='2'] .issues-content__title {
+  .js-inmobile .issues-content__title a {
+    font-size: 20px; line-height: 1.5;
+  }
+  .js-inmobile[data-dpr='2'] .issues-content__title a {
     font-size: 40px;
   }
-  .js-inmobile[data-dpr='3'] .issues-content__title {
-    font-size: 66px;
+  .js-inmobile[data-dpr='3'] .issues-content__title a {
+    font-size: 60px;
   }
   .issues-content__title a {
     display: inline-block;
@@ -344,7 +358,7 @@
   .issues-content__title a:hover {
     border-bottom: none;
     color: #333;
-    background: url(assets/icon-go.png) no-repeat center 1.5em;
+    background: url(assets/icon-go.png) no-repeat center 1.3em;
     background-size: 32px;
   }
   .js-inmobile .issues-content__title a:hover {
@@ -421,10 +435,10 @@
     margin-bottom: 1em;
   }
   .js-inmobile[data-dpr="2"] .app-header nav {
-    font-size: 30px;
+    font-size: 28px;
   }
   .js-inmobile[data-dpr="3"] .app-header nav {
-    font-size: 48px;
+    font-size: 42px;
   }
   .app-header nav a {
     position: relative;
@@ -488,7 +502,7 @@
     cursor: pointer;
   }
   .js-inmobile .app-tools__top {
-    right: 0.5rem;
+    display: none;
   }
   .app-tools__top:hover {
     color: #f7f7f7;
@@ -506,7 +520,7 @@
   .dashed::before {
     content: '';
     position: absolute;
-    left: 24px; right: 24px;
+    left: 1em; right: 1em;
     border-bottom: 2px dashed #cce4f6;
     z-index: 1;
   }
@@ -533,29 +547,30 @@
   }
   article .article-labels {
     position: absolute;
-    top: 0; left: 2em; right: 2em;
+    top: 0; left: 1.7em; right: 1.7em;
     z-index: 2;
-    font-size: 14px;
     text-indent: 3px;
     letter-spacing: 3px;
   }
-  .js-inmobile article .article-labels {
-    font-size: 12px;
-  }
-  .js-inmobile[data-dpr='2'] article .article-labels {
-    font-size: 24px;
-  }
-  .js-inmobile[data-dpr='3'] article .article-labels {
-    font-size: 36px;
-  }
   article .article-label {
-    display: inline-block;
-    padding: 0 10px;
+    float: left;
+    padding: 0 0.5em;
+    border-bottom: none;
     margin-right: 0.5em;
     border-radius: 0 0 0.5em 0.5em;
+    font-size: 14px;
     color: #fff;
     background-color: #ccc;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
+  }
+  .js-inmobile article .article-label {
+    font-size: 12px;
+  }
+  .js-inmobile[data-dpr='2'] article .article-label {
+    font-size: 24px;
+  }
+  .js-inmobile[data-dpr='3'] article .article-label {
+    font-size: 36px;
   }
   article .article-label:hover {
     color: #fff;

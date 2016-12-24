@@ -136,7 +136,7 @@
 
 <style scoped>
   .article-content-page .issues-content__title a {
-    background: url(../assets/icon-go.png) no-repeat center 1.5em;
+    background: url(../assets/icon-go.png) no-repeat center 1.3em;
     background-size: 32px;
     cursor: default;
   }
@@ -152,6 +152,9 @@
     position: absolute;
     top: 50%; right: 2em; left: 2em;
     border-bottom: 1px solid #999;
+  }
+  .js-inmobile .end-mark::before {
+    left: 1em; right: 1em;
   }
   .end-mark::after {
     content: 'END';
