@@ -20,8 +20,8 @@
               <img :src="comment.user.avatar_url" alt="头像">
             </a>
             <div class="issues-comments__item-header">
-              <a :href="comment.html_url"><strong>{{comment.user.login}}</strong></a>
-              <span class="issues-comments__item-created">commented on {{comment.createdAt}}</span>
+              <a :href="comment.html_url"><strong>{{ comment.user.login }}</strong></a>
+              <span class="issues-comments__item-created">commented on {{ comment.createdAt }}</span>
             </div>
             <article class="issues-comments__item-main" v-html="comment.body"></article>
           </dd>
@@ -171,13 +171,6 @@
   }
   .js-inmobile .issues-comments {
     padding: 1em;
-    font-size: 14px;
-  }
-  .js-inmobile[data-dpr='2'] .issues-comments {
-    font-size: 28px;
-  }
-  .js-inmobile[data-dpr='3'] .issues-comments {
-    font-size: 40px;
   }
   .issues-comments__item {
     position: relative;
@@ -188,14 +181,14 @@
   .js-inmobile .issues-comments__item {
     margin: 0.3rem 0;
   }
-  .issues-comments__item:before {
+  .issues-comments__item::before {
     content: '';
     position: absolute;
-    bottom: -0.32rem; left: 0.3rem;
-    width: 2px; height: 0.3rem;
+    bottom: -1.1em; left: 0.3rem;
+    width: 2px; height: 1.1em;
     background: #ccc;
   }
-  .issues-comments__item:last-child:before {
+  .issues-comments__item:last-child::before {
     content: none;
   }
   .issues-comments__item-avator {
@@ -210,7 +203,7 @@
     position: relative;
     padding: 0.1rem 0.15rem;
     border-bottom: 1px solid #ddd;
-    font-size: 14px;
+    font-size: 12px;
     background: #f7f7f7;
   }
   .js-inmobile[data-dpr='2'] .issues-comments__item-header {
@@ -229,7 +222,7 @@
     background: #f7f7f7;
     transform: rotate(-45deg);
   }
-  .js-inmobile .issues-comments__item-header:before {
+  .js-inmobile .issues-comments__item-header::before {
     top: 0.3rem; left: -0.18rem;
     width: 0.3rem; height: 0.3rem;
   }
@@ -238,21 +231,29 @@
   }
   .issues-comments__item-main {
     padding: 0.15rem;
+    font-size: 14px;
   }
   .js-inmobile[data-dpr='2'] .issues-comments__item-main {
-    font-size: 24px;
+    font-size: 28px;
   }
   .js-inmobile[data-dpr='3'] .issues-comments__item-main {
-    font-size: 36px;
+    font-size: 42px;
   }
 
   .issues-comments__more-wrap {
     height: 3em;
     margin-top: 2em;
+    font-size: 14px;
     text-align: center;
   }
   .js-inmobile .issues-comments__more-wrap  {
     height: 1.25rem;
+  }
+  .js-inmobile[data-dpr='2'] .issues-comments__more-wrap {
+    font-size: 28px;
+  }
+  .js-inmobile[data-dpr='3'] .issues-comments__more-wrap {
+    font-size: 42px;
   }
   .issues-comments__more {
     display: inline-block;
@@ -262,6 +263,10 @@
   .issues-comments__more:hover {
     color: #fff;
     background-color: #ff8533;
+  }
+  .js-inmobile .issues-comments__more:hover {
+    color: #f60;
+    background-color: transparent;
   }
   .issues-comments__more:active {
     background-color: #f26100;

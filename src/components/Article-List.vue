@@ -137,7 +137,7 @@
     background-color: #fcfcfc;
   }
   .js-inmobile[data-dpr='2'] .article-list__more-wrap {
-    font-size: 24px;
+    font-size: 28px;
   }
   .js-inmobile[data-dpr='3'] .article-list__more-wrap {
     font-size: 36px;

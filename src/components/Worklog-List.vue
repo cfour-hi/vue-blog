@@ -76,13 +76,6 @@
   }
   .js-inmobile .worklog-list__item {
     width: 50%; height: 1.5rem;
-    font-size: 14px;
-  }
-  .js-inmobile[data-dpr='2'] .worklog-list__item {
-    font-size: 28px;
-  }
-  .js-inmobile[data-dpr='3'] .worklog-list__item {
-    font-size: 42px;
   }
   .worklog-list__item a {
     display: block;

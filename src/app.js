@@ -5,7 +5,8 @@ import hljs from 'highlight.js'
 marked.setOptions({
   highlight: (code) => {
     return hljs.highlightAuto(code).value
-  }
+  },
+  breaks: true
 })
 
 // 配置

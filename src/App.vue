@@ -110,7 +110,6 @@
     margin-left: calc(100vw - 100%);
     font: 16px/2 "PingFang SC", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,sans-serif;
     word-wrap: break-word;
-    /*word-break: break-all;*/
     color: #333;
     background-color: #cce4f6;
   }
@@ -124,50 +123,11 @@
     margin: 0;
     text-align: center;
   }
-  .js-inmobile[data-dpr="2"] h1 {
+  .js-inmobile[data-dpr='2'] h1 {
     font-size: 48px;
   }
-  .js-inmobile[data-dpr="3"] h1 {
+  .js-inmobile[data-dpr='3'] h1 {
     font-size: 72px;
-  }
-  a {
-    color: #333;
-    text-decoration: none;
-  }
-  button {
-    outline: none;
-  }
-  em {
-    padding: 0.3em;
-    font-size: 14px;
-    color: inherit;
-  }
-  .js-inmobile em {
-    font-size: 12px;
-  }
-  .js-inmobile[data-dpr='2'] em {
-    font-size: 24px;
-  }
-  .js-inmobile[data-dpr='3'] em {
-    font-size: 36px;
-  }
-  .js-inmobile[data-dpr='1'] article ul,
-  .js-inmobile[data-dpr='1'] article ol {
-    padding-left: 20px;
-  }
-  article {
-    position: relative;
-    padding: 2em;
-  }
-  .js-inmobile article {
-    padding: 2em 1em;
-    font-size: 14px;
-  }
-  .js-inmobile[data-dpr='2'] article {
-    font-size: 28px;
-  }
-  .js-inmobile[data-dpr='3'] article {
-    font-size: 42px;
   }
   article h3 {
     position: relative;
@@ -180,18 +140,15 @@
     content: '';
     position: absolute;
     bottom: -0.2em; left: 0;
-    width: 100%; height: 5px;
-    border-radius: 5px;
+    width: 100%; height: 0.2em;
+    border-radius: 0.2em;
     background-color: #cce4f6;
   }
-  .js-inmobile article h3 {
-    font-size: 18px;
-  }
   .js-inmobile[data-dpr='2'] article h3 {
-    font-size: 36px;
+    font-size: 40px;
   }
   .js-inmobile[data-dpr='3'] article h3 {
-    font-size: 54px;
+    font-size: 60px;
   }
   article h4 {
     position: relative;
@@ -206,14 +163,40 @@
     border-radius: 0.4em;
     background-color: #ff8a0c;
   }
-  .js-inmobile article h4 {
-    font-size: 16px;
-  }
   .js-inmobile[data-dpr='2'] article h4 {
-    font-size: 32px;
+    font-size: 36px;
   }
   .js-inmobile[data-dpr='3'] article h4 {
-    font-size: 48px;
+    font-size: 54px;
+  }
+  a {
+    color: #333;
+    text-decoration: none;
+  }
+  button {
+    outline: none;
+  }
+  em {
+    padding: 0.3em;
+    font-size: 14px;
+    color: inherit;
+  }
+  .js-inmobile[data-dpr='2'] em {
+    font-size: 28px;
+  }
+  .js-inmobile[data-dpr='3'] em {
+    font-size: 42px;
+  }
+  article {
+    position: relative;
+    padding: 2em;
+  }
+  .js-inmobile article {
+    padding: 2em 1em;
+  }
+  .js-inmobile[data-dpr='1'] article ul,
+  .js-inmobile[data-dpr='1'] article ol {
+    padding-left: 1.3em;
   }
   article a {
     padding-bottom: 0.15em;
@@ -238,14 +221,14 @@
     color: #666;
     background-color: #f3f3f3;
   }
-  article blockquote p {
-    margin: 0;
-  }
   .js-inmobile[data-dpr='2'] article blockquote {
-    font-size: 24px;
+    font-size: 28px;
   }
   .js-inmobile[data-dpr='3'] article blockquote {
-    font-size: 36px;
+    font-size: 42px;
+  }
+  article blockquote p {
+    margin: 0;
   }
   article blockquote code {
     background-color: #e7e7e7;
@@ -262,6 +245,17 @@
     font-size: 12px;
     background-color: #fff;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media screen and (max-device-height: 736px) {
+    article pre {
+      max-height: 40em;
+    }
+  }
+  @media screen and (max-device-height: 568px) {
+    article pre {
+      max-height: 30em;
+    }
   }
   .js-inmobile[data-dpr='2'] article pre {
     font-size: 24px;
@@ -290,16 +284,20 @@
     background-color: #f0f0f0;
   }
   .js-inmobile[data-dpr='2'] article code {
-    font-size: 20px;
+    font-size: 24px;
   }
   .js-inmobile[data-dpr='3'] article code {
-    font-size: 32px;
+    font-size: 36px;
   }
   article pre code {
     padding: 0;
     border: none;
     background: transparent;
   }
+  li > br {
+    display: none;
+  }
+
   .hljs-built_in, .hljs-params, .hljs-number, .hljs-literal {
     color: #0086b3
   }
@@ -322,37 +320,18 @@
   .issues-content blockquote p {
     margin-left: 0; margin-right: 0;
   }
+
   .issues-content__title {
     position: relative;
     margin-top: 0.5em; margin-bottom: 0;
     text-align: center;
   }
   .issues-content__title a {
-    font-size: 22px;
-  }
-  .issues-content__title a:hover {
-    border-bottom: none;
-  }
-  .js-inmobile .issues-content__title a {
-    font-size: 20px; line-height: 1.5;
-  }
-  .js-inmobile[data-dpr='2'] .issues-content__title a {
-    font-size: 40px;
-  }
-  .js-inmobile[data-dpr='3'] .issues-content__title a {
-    font-size: 60px;
-  }
-  .issues-content__title a {
     display: inline-block;
     padding-bottom: 0.5em;
     border-bottom: none;
+    font-size: 22px;
     color: #333;
-  }
-  .js-inmobile .issues-content__title a {
-    padding-bottom: 0;
-  }
-  .js-inmobile[data-dpr='3'] .issues-content__title a {
-    padding-top: 0.5em;
   }
   .issues-content__title a:hover {
     border-bottom: none;
@@ -360,8 +339,18 @@
     background: url(assets/icon-go.png) no-repeat center 1.3em;
     background-size: 32px;
   }
+  .js-inmobile .issues-content__title a {
+    padding-bottom: 0;
+    line-height: 1.5;
+  }
   .js-inmobile .issues-content__title a:hover {
     background: none;
+  }
+  .js-inmobile[data-dpr='2'] .issues-content__title a {
+    font-size: 44px;
+  }
+  .js-inmobile[data-dpr='3'] .issues-content__title a {
+    font-size: 66px;
   }
   .issues-content__time {
     margin-top: 0;
@@ -370,10 +359,10 @@
     color: #999;
   }
   .js-inmobile[data-dpr='2'] .issues-content__time {
-    font-size: 20px;
+    font-size: 24px;
   }
   .js-inmobile[data-dpr='3'] .issues-content__time {
-    font-size: 32px;
+    font-size: 36px;
   }
   /* base end */
 
@@ -391,14 +380,11 @@
     transition-property: color, background-color;
     transition-duration: 0.3s;
   }
-  .js-inmobile .transition-color-btn {
-    font-size: 12px;
-  }
   .js-inmobile[data-dpr='2'] .transition-color-btn {
-    font-size: 24px;
+    font-size: 28px;
   }
   .js-inmobile[data-dpr='3'] .transition-color-btn {
-    font-size: 36px;
+    font-size: 42px;
   }
   .center-prompt-message {
     text-align: center;
@@ -421,7 +407,7 @@
   .app-header {
     flex: 0 0 auto;
     position: relative;
-    border-radius: 0 0 2em 2em;
+    border-radius: 0 0 1em 1em;
     background-color: #fcfcfc;
   }
   .app-header nav {
@@ -440,8 +426,8 @@
     font-size: 42px;
   }
   .app-header nav a {
-    position: relative;
     display: table-cell;
+    position: relative;
     width: 6em;
     text-align: center;
   }
@@ -453,11 +439,11 @@
     color: #0097da;
   }
   .app-header nav a:before {
+    content: '';
     position: absolute;
     left: 0; bottom: -1px;
     z-index: 1;
     width: 100%; height: 0;
-    content: '';
     border-bottom: 3px solid #33ace1;
     transform: scaleX(0);
     transition: transform .3s ease;
@@ -468,8 +454,8 @@
   .js-inmobile[data-dpr='3'] .app-header nav a:before {
     border-bottom-width: 9px;
   }
-  .app-header nav a:hover:before,
-  .app-header nav .router-link-active:before {
+  .app-header nav a:hover::before,
+  .app-header nav .router-link-active::before {
     transform: scaleX(1);
   }
   .js-inmobile .app-header nav .router-link-active:before {
@@ -478,30 +464,31 @@
   .app-container {
     flex: 1 0 auto;
     position: relative;
-    border-radius: 2em;
+    border-radius: 1em;
     background-color: #fcfcfc;
   }
   .app-footer {
     flex: 0 0 auto;
     position: relative;
-    border-radius: 2em 2em 0 0;
-    text-align: center;
+    border-radius: 1em 1em 0 0;
     font-size: 14px;
+    text-align: center;
     color: #999;
     background-color: #fcfcfc;
   }
-  .js-inmobile .app-footer {
-    font-size: 1em;
+  .js-inmobile[data-dpr="2"] .app-footer {
+    font-size: 28px;
   }
+  .js-inmobile[data-dpr="3"] .app-footer {
+    font-size: 42px;
+  }
+
   .app-tools__top {
     display: none;
     position: fixed;
     bottom: 36px;
     color: #fcfcfc;
     cursor: pointer;
-  }
-  .js-inmobile .app-tools__top {
-    display: none;
   }
   .app-tools__top:hover {
     color: #f7f7f7;
@@ -513,15 +500,13 @@
     fill: currentColor;
     width: 32px; height: 32px;
   }
-  .js-inmobile .app-tools__top svg {
-    width: 0.7rem; height: 0.7rem;
-  }
+
   .dashed::before {
     content: '';
     position: absolute;
     left: 1em; right: 1em;
-    border-bottom: 2px dashed #cce4f6;
     z-index: 1;
+    border-bottom: 2px dashed #cce4f6;
   }
   .js-inmobile[data-dpr='2'] .dashed::before {
     border-bottom-width: 4px;
@@ -544,9 +529,10 @@
   .js-inmobile[data-dpr='3'] .dashed-thin::before {
     border-bottom-width: 3px;
   }
+
   article .article-labels {
     position: absolute;
-    top: 0; left: 1.7em; right: 1.7em;
+    top: 0; left: 1em; right: 1em;
     z-index: 2;
     text-indent: 3px;
     letter-spacing: 3px;
@@ -555,21 +541,18 @@
     float: left;
     padding: 0 0.5em;
     border-bottom: none;
-    margin-right: 0.5em;
+    margin-right: 1em;
     border-radius: 0 0 0.5em 0.5em;
     font-size: 14px;
     color: #fff;
     background-color: #ccc;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
   }
-  .js-inmobile article .article-label {
-    font-size: 12px;
-  }
   .js-inmobile[data-dpr='2'] article .article-label {
-    font-size: 24px;
+    font-size: 28px;
   }
   .js-inmobile[data-dpr='3'] article .article-label {
-    font-size: 36px;
+    font-size: 42px;
   }
   article .article-label:hover {
     color: #fff;

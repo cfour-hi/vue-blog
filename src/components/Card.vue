@@ -117,9 +117,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin: 0 10px;
     height: 150px;
-    padding: 0.5em 0;
+    padding: 0.5em 0 0;
+    margin: 0 10px;
   }
   .js-inmobile .user-info__list {
     height: 2.6rem;
