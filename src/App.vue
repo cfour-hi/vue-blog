@@ -247,6 +247,9 @@
   .js-inmobile[data-dpr='3'] article blockquote {
     font-size: 36px;
   }
+  article blockquote code {
+    background-color: #e7e7e7;
+  }
   article strong {
     padding-bottom: 0.15em;
     border-bottom: 1px solid currentColor;
@@ -321,7 +324,7 @@
   }
   .issues-content__title {
     position: relative;
-    margin: 0;
+    margin-top: 0.5em; margin-bottom: 0;
     text-align: center;
   }
   .issues-content__title a {
