@@ -9,7 +9,7 @@
       </nav>
     </header>
     <section class="app-container">
-      <router-view 
+      <router-view
         :loader="loader"
         @set-loader-state="setLoaderState">
       </router-view>
@@ -574,6 +574,15 @@
   }
   article .label-60be29:active {
     background-color: #5bb527;
+  }
+  article .label-ff6100 {
+    background-color: #ff6100;
+  }
+  article .label-ff6100:hover {
+    background-color: #ff8133;
+  }
+  article .label-ff6100:active {
+    background-color: #f25c00;
   }
   /* app end */
 
