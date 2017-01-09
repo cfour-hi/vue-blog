@@ -294,9 +294,6 @@
     border: none;
     background: transparent;
   }
-  li > br {
-    display: none;
-  }
 
   .hljs-built_in, .hljs-params, .hljs-number, .hljs-literal {
     color: #0086b3
