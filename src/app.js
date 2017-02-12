@@ -15,7 +15,7 @@ const config = {
   blogRepos: 'monine.github.io',
   worklogRepos: 'worklog',
   host: 'https://api.github.com/',
-  access_token: '45b2a12600ba7b61987f' + '9c2600ad46a0822b88cc'
+  access_token: 'd5bd3cf2dfec0b8dffa6' + '38b715aaaf76fc674b23'
 }
 
 // 缓存
