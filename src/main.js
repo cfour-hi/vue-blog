@@ -31,7 +31,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes  // === routes: routes
+  routes  // routes: routes
 })
 
 new Vue({
