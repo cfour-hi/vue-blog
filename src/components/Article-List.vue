@@ -134,7 +134,6 @@
     border-radius: 2em;
     font-size: 14px;
     text-align: center;
-    background-color: #fcfcfc;
   }
   .js-inmobile[data-dpr='2'] .article-list__more-wrap {
     font-size: 28px;

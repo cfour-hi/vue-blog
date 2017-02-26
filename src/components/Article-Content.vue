@@ -136,7 +136,7 @@
 
 <style scoped>
   .article-content-page .issues-content__title a {
-    background: url(../assets/icon-go.png) no-repeat center 1.3em;
+    background: url(../assets/img/icon-go.png) no-repeat center 1.3em;
     background-size: 32px;
     cursor: default;
   }
@@ -162,7 +162,7 @@
     top: 0; left: 50%;
     padding: 0.5em 2em;
     color: #999;
-    background-color: #fcfcfc;
+    background-color: #fff;
     transform: translateX(-50%);
   }
 

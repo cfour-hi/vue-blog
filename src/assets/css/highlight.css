@@ -1,0 +1,18 @@
+.hljs-built_in, .hljs-params, .hljs-number, .hljs-literal {
+  color: #0086b3
+}
+.hljs-string {
+  color: #183691;
+}
+.hljs-keyword, .hljs-meta, .hljs-name {
+  color: #a71d5d;
+}
+.hljs-title {
+  color: #795da3;
+}
+.hljs-comment {
+  color: #969896;
+}
+.hljs-regexp {
+  color: #183691;
+}
