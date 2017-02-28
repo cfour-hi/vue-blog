@@ -9,7 +9,7 @@
           <h2 class="issues-content__title">
             <router-link :to="{name: 'article-content', params: { num: article.number }}">{{ article.title }}</router-link>
           </h2>
-          <p class="issues-content__time">CREATED AT {{ article.createdAt }} _ UPDATED AT {{ article.updatedAt }}</p>
+          <p class="issues-content__time">CREATED AT {{ article.createdAt }}</p>
           <div v-html="article.quote"></div>
           <router-link class="article-list__read transition-color-btn" :to="{name: 'article-content', params: { num: article.number}}">READ</router-link>
         </article>

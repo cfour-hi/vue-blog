@@ -59,7 +59,7 @@ article img {
 article blockquote {
   position: relative;
   padding: 1em 1.5em;
-  margin: 2em 0;
+  margin: 0;
   border-radius: 0.5em;
   font-size: 14px;
   color: #666;
@@ -72,6 +72,7 @@ article blockquote {
   font-size: 42px;
 }
 .article-list__item article blockquote {
+  padding: 1em 0;
   background-color: transparent;
 }
 article blockquote p {
@@ -207,6 +208,9 @@ article .label-ff6100:active {
   margin-top: 0.5em; margin-bottom: 0;
   text-align: center;
 }
+.js-inmobile .issues-content__title {
+  text-align: left;
+}
 .issues-content__title a {
   display: inline-block;
   padding-bottom: 0.5em;
@@ -238,6 +242,10 @@ article .label-ff6100:active {
   font-size: 12px;
   text-align: center;
   color: #999;
+}
+.js-inmobile .issues-content__time {
+  margin-bottom: 0;
+  text-align: left;
 }
 .js-inmobile[data-dpr='2'] .issues-content__time {
   font-size: 24px;

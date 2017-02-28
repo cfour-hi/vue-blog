@@ -68,7 +68,7 @@
 .app-header nav .router-link-active {
   /*color: #0097da;*/
 }
-.app-header nav a:before {
+.app-header nav a::before {
   content: '';
   position: absolute;
   left: 0; bottom: -1px;
@@ -78,17 +78,17 @@
   transform: scaleX(0);
   transition: transform .3s ease;
 }
-.js-inmobile[data-dpr='2'] .app-header nav a:before {
+.js-inmobile[data-dpr='2'] .app-header nav a::before {
   border-bottom-width: 6px;
 }
-.js-inmobile[data-dpr='3'] .app-header nav a:before {
+.js-inmobile[data-dpr='3'] .app-header nav a::before {
   border-bottom-width: 9px;
 }
 .app-header nav a:hover::before,
 .app-header nav .router-link-active::before {
   transform: scaleX(1);
 }
-.js-inmobile .app-header nav .router-link-active:before {
+.js-inmobile .app-header nav .router-link-active::before {
   transform: scaleX(0.7);
 }
 .app-container {
@@ -136,10 +136,10 @@
   border-bottom: 1px dashed #ccc;
 }
 .js-inmobile[data-dpr='2'] .dashed::before {
-  border-bottom-width: 4px;
+  border-bottom-width: 2px;
 }
 .js-inmobile[data-dpr='3'] .dashed::before {
-  border-bottom-width: 6px;
+  border-bottom-width: 3px;
 }
 .dashed-top::before {
   top: -1px;
