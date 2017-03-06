@@ -34,7 +34,7 @@
   margin: 0 auto;
 }
 .js-inmobile .app-wrapper {
-  width: 96%;
+  width: 100%;
 }
 .app-header {
   flex: 0 0 auto;

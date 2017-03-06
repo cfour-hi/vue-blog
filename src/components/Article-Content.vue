@@ -6,7 +6,7 @@
           <router-link class="article-label" :class="'label-' + label.color" :to="{name: 'label-article-list', params: {labelName: label.name}}" v-for="label in issuesInfo.labels">{{ label.name }}</router-link>
         </div>
         <h2 class="issues-content__title"><a href="javascript:;">{{ issuesInfo.title }}</a></h2>
-        <p class="issues-content__time">CREATED AT {{ issuesInfo.createdAt }} _ UPDATED AT {{ issuesInfo.updatedAt }}</p>
+        <p class="issues-content__time">CREATED AT {{ issuesInfo.createdAt }}</p>
         <div v-html="issuesInfo.body"></div>
       </article>
     </transition>

@@ -50,9 +50,11 @@ em {
   font-size: 42px;
 }
 ul, ol {
-  padding-left: 1.3em;
+  padding-left: 1.2em;
 }
 table {
+  display: block;
+  overflow: auto;
   border-collapse: collapse;
 }
 table tr {

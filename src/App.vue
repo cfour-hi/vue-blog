@@ -16,7 +16,7 @@
       <div class="la-ball-clip-rotate" v-show="loader"><div></div></div>
     </section>
     <footer class="app-footer dashed dashed-top">
-      <p>© 2016 Monine</p>
+      <p>© 2016 - 2017 Monine</p>
     </footer>
     <div class="app-tool">
       <div class="app-tools__top" @click="scroll2TopLinear">
