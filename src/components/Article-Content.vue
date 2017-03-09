@@ -10,7 +10,7 @@
         <div v-html="issuesInfo.body"></div>
       </article>
     </transition>
-    <div class="end-mark" v-if="issuesInfo"></div>
+    <div class="horizontal-rule" v-if="issuesInfo" data-text="END"></div>
     <transition name="fadeInOut">
       <div class="issues-comments" v-if="issuesInfo">
         <p><a :href="issuesInfo.html_url" style="color: #f60;">去 Github 发表评论</a></p>
@@ -143,24 +143,25 @@
   .js-inmobile .article-content-page .issues-content__title a {
     background: none;
   }
-  .end-mark {
+  .horizontal-rule {
     position: relative;
     height: 3em;
   }
-  .end-mark::before {
+  .horizontal-rule::before {
     content: '';
     position: absolute;
     top: 50%; right: 2em; left: 2em;
     border-bottom: 1px solid #999;
   }
-  .js-inmobile .end-mark::before {
+  .js-inmobile .horizontal-rule::before {
     left: 1em; right: 1em;
   }
-  .end-mark::after {
-    content: 'END';
+  .horizontal-rule::after {
+    content: attr(data-text);
     position: absolute;
     top: 0; left: 50%;
     padding: 0.5em 2em;
+    line-height: 2;
     color: #999;
     background-color: #fff;
     transform: translateX(-50%);

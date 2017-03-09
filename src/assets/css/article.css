@@ -62,7 +62,6 @@ article blockquote {
   margin: 0;
   border-radius: 0.5em;
   font-size: 14px;
-  color: #666;
   background-color: #f3f3f3;
 }
 .js-inmobile[data-dpr='2'] article blockquote {

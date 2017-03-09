@@ -2,7 +2,6 @@ html {
   height: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
-
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -11,9 +10,9 @@ body {
   position: relative;
   height: 100%;
   margin-left: calc(100vw - 100%);
-  font: 16px/2 "PingFang SC", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,sans-serif;
+  font: 16px/1.8 "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   word-wrap: break-word;
-  color: #333;
+  color: rgba(0, 0, 0, 0.65);
 }
 h1 {
   display: inline-block;
@@ -50,7 +49,7 @@ em {
   font-size: 42px;
 }
 ul, ol {
-  padding-left: 1.2em;
+  padding-left: 1.6em;
 }
 table {
   display: block;
