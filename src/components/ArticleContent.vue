@@ -8,7 +8,7 @@
       <div v-if="articleInfo.banner" v-html="articleInfo.banner" class="article-banner" alt="banner"></div>
       <div v-html="articleInfo.body" class="article-content"></div>
     </article>
-    <article-comment :comment-url="articleInfo.commentUrl"></article-comment>
+    <article-comment v-if="articleInfo.commentUrl" :comment-url="articleInfo.commentUrl"></article-comment>
   </div>
 </template>
 

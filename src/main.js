@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import marked from 'Marked'
+import marked from 'marked'
 import hljs from 'highlight.js'
 
 Vue.config.productionTip = false
