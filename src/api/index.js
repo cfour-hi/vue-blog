@@ -5,7 +5,7 @@ import { articleCategoryList } from '@/app/js/config'
 
 const ORIGIN = 'https://api.github.com'
 const OWNER = 'monine'
-const ACCESS_TOKEN = 'b2f811c8b61b55743e97' + '4643f20d98956812c71b'
+const ACCESS_TOKEN = 'f4a8a1c4745930812568' + 'cea904f765c68ab412c5'
 
 export function getArticleList ({ page = 1, size = 5 }) {
   const params = {

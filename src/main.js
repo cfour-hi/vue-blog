@@ -6,7 +6,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import marked from 'marked'
-import hljs from 'highlight.js'
+import hljs from 'hljs'
 
 Vue.config.productionTip = false
 

@@ -25,6 +25,11 @@ module.exports = {
       '@': resolve('src')
     }
   },
+  externals: {
+    axios: 'axios',
+    hljs: 'hljs',
+    marked: 'marked'
+  },
   module: {
     rules: [
       {
