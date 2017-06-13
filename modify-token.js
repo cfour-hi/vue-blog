@@ -17,10 +17,12 @@ module.exports = function () {
 
   var buf = fs.readFileSync(appFileName, { encoding: 'utf8' })
 
-  var token = '"f4a8a1c4745930812568cea904f765c68ab412c5"'
+  var token1 = '12f420ed696dd63fb9eb'
+  var token2 = '7702ac5a64061bad1315'
+  var token = token1 + token2
 
   if (buf.indexOf(token)) {
-    buf = buf.toString().replace(token, '"f4a8a1c4745930812568"+"cea904f765c68ab412c5"')
+    buf = buf.toString().replace(token, token1 + '"+"' + token2)
 
     fs.writeFileSync(appFileName, buf)
 
