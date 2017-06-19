@@ -2,6 +2,7 @@ import marked from 'marked'
 
 export function converArticleInfo (article) {
   const sections = marked(article.body).split(/<!--\s*\w{1,9}\s*-->/g)
+
   return {
     id: article.id,
     number: article.number,

@@ -1,8 +1,8 @@
 <template>
   <aside class="main-sidebar">
-    <div class="slide-bar" :style="{ transform: 'translateY(' + sliderBarTranslate + ')' }"></div>
+    <div class="slide-bar" :style="{ height: sidebarLineHeight, transform: 'translateY(' + sliderBarTranslate + ')' }"></div>
     <nav class="main-nav">
-      <router-link v-for="(nav, index) in navs" class="nav-item" :key="nav.label" :to="nav.route" :exact="nav.exact" @click.native="sliderBarIndex = index">
+      <router-link v-for="(nav, index) in navs" :key="nav.label" :to="nav.route" :exact="nav.exact" :style="{ 'line-height': sidebarLineHeight }" class="nav-item">
         <i class="fa fa-fw" :class="nav.iconClass"></i>
         {{ nav.label }}
       </router-link>
@@ -11,40 +11,30 @@
 </template>
 
 <script>
+import { ROUTE_SPLIT_REG } from '@/shared/constants'
+import { navRoutes, sidebar } from '@/app/js/config'
+
 export default {
   name: 'main-sidebar',
   data () {
     return {
-      sliderBarIndex: 0,
-      navs: [
-        {
-          label: 'ARTICLE',
-          route: '/article',
-          iconClass: 'fa-chrome'
-        },
-        {
-          label: 'WORKLOG',
-          route: '/worklog',
-          iconClass: 'fa-internet-explorer'
-        },
-        {
-          label: 'ABOUT',
-          route: '/about',
-          iconClass: 'fa-firefox',
-          exact: true
-        }
-      ]
+      navs: generateNavList(),
+      sidebarLineHeight: sidebar.lineHeight + 'em'
     }
   },
   computed: {
     sliderBarTranslate () {
-      return this.sliderBarIndex * 2.5 + 'em'
+      return this.navs.findIndex(nav => nav.route === this.$route.path.match(ROUTE_SPLIT_REG)[0]) * sidebar.lineHeight + 'em'
     }
-  },
-  created () {
-    const rootPath = this.$route.path.match(/\/\w*/g)[0]
-    this.sliderBarIndex = this.navs.findIndex(nav => nav.route === rootPath)
   }
+}
+
+function generateNavList () {
+  const navList = []
+  for (const key in navRoutes) {
+    navList.push(navRoutes[key])
+  }
+  return navList
 }
 </script>
 
@@ -57,7 +47,6 @@ export default {
 .slide-bar {
   position: absolute;
   width: 100%;
-  height: 2.5em;
   background-color: rgba(255, 255, 255, .8);
   transition: transform .3s;
 }
@@ -68,7 +57,6 @@ export default {
 
 .nav-item {
   display: block;
-  line-height: 2.5em;
   text-decoration: none;
   color: #5a5a5a;
 }

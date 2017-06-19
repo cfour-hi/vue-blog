@@ -52,6 +52,8 @@ export default {
       if (this.loadingMore) return
       this.loadingMore = true
 
+      this.$store.commit('setProgress', { step: 'loading' })
+
       getArticleList(pagination).then(response => {
         const articleList = []
         response.forEach(article => {
@@ -154,7 +156,8 @@ export default {
   transform: scale(1.2) rotate(9deg);
 }
 
-.article-list-page .article-quote p {
+.article-list-page .article-quote p,
+.article-list-page .article-quote ol {
   margin: .5em 0;
 }
 

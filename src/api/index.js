@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { ARTICLE_REPO, WORKLOG_REPO } from '@/shared/constants'
+import { BLOG_REPO, WORKLOG_REPO } from '@/shared/constants'
 import { articleCategoryList } from '@/app/js/config'
 
 const ORIGIN = 'https://api.github.com'
@@ -14,7 +14,7 @@ export function getArticleList ({ page = 1, size = 5 }) {
     per_page: size,
     access_token: ACCESS_TOKEN
   }
-  return axios.get(ORIGIN + '/repos/' + OWNER + '/' + ARTICLE_REPO + '/issues', { params })
+  return axios.get(ORIGIN + '/repos/' + OWNER + '/' + BLOG_REPO + '/issues', { params })
 }
 
 export function getWorklogList ({ page = 1, size = 24 }) {

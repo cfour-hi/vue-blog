@@ -48,6 +48,8 @@ export default {
   },
   methods: {
     getWorklogList () {
+      this.$store.commit('setProgress', { step: 'loading' })
+
       getWorklogList(pagination).then(response => {
         const worklogList = []
         response.forEach(worklog => {

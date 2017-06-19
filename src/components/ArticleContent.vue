@@ -1,5 +1,5 @@
 <template>
-  <div class="article-page">
+  <div v-if="articleInfo.title" class="article-content-page">
     <article class="article-container">
       <h2 class="article-title">{{ articleInfo.title }}</h2>
       <article-pieces :articleInfo="articleInfo"></article-pieces>
@@ -37,6 +37,8 @@ export default {
 }
 
 function setArticleInfo (vm) {
+  this.$store.commit('setProgress', { step: 'loading' })
+
   getArticleInfo(vm.$route.meta.category, vm.$route.params.number).then(response => {
     const category = articleCategoryList.find(category => category.label === vm.$route.meta.category)
     vm.articleInfo = category.converFunc(response)
@@ -67,16 +69,21 @@ function setArticleInfo (vm) {
 </style>
 
 <style>
-.article-page .article-pieces {
+.article-content-page .article-pieces {
   margin-bottom: 1.2em;
   text-align: center;
 }
 
-.article-page .article-container img {
+.article-content-page .article-quote ol {
+  padding-left: 7em;
+  margin: 0;
+}
+
+.article-content-page .article-container img {
   border-radius: 5px;
 }
 
-.article-page .article-content blockquote {
+.article-content-page .article-content blockquote {
   padding: 1px 1em;
   margin-left: 0;
   margin-right: 0;
@@ -86,29 +93,29 @@ function setArticleInfo (vm) {
   background-color: #ecf6fd;
 }
 
-.article-page .article-content a,
+.article-content-page .article-content a,
 .article-container blockquote a {
   padding-bottom: 2px;
   border-bottom: 1px solid #919191;
   text-decoration: none;
 }
 
-.article-page .article-content a:hover,
+.article-content-page .article-content a:hover,
 .article-container blockquote a:hover {
   color: #7265e6;
   border-color: currentColor;
 }
 
-.article-page .article-content em {
+.article-content-page .article-content em {
   font-size: 12px;
 }
 
-.article-page .article-content code {
+.article-content-page .article-content code {
   font-size: 13px;
   color: #5a5a5a;
 }
 
-.article-page .article-content pre {
+.article-content-page .article-content pre {
   max-height: 50em;
   padding: 1em;
   border-radius: 5px;
@@ -118,22 +125,22 @@ function setArticleInfo (vm) {
   -webkit-overflow-scrolling: touch;
 }
 
-.article-page .article-content pre::-webkit-scrollbar {
+.article-content-page .article-content pre::-webkit-scrollbar {
   width: 5px;
   height: 5px;
   background-color: transparent;
 }
 
-.article-page .article-content pre::-webkit-scrollbar-thumb {
+.article-content-page .article-content pre::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: #bfbfbf;
 }
 
-.article-page .article-content pre::-webkit-scrollbar-corner {
+.article-content-page .article-content pre::-webkit-scrollbar-corner {
   background-color: #fff;
 }
 
-.article-page .article-content pre code {
+.article-content-page .article-content pre code {
   font-size: 12px;
   color: #fff;
 }

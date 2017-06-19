@@ -5,21 +5,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    progress: 0,
+    progress: 'wait',
     articles: {},
     comments: {}
   },
   mutations: {
-    modifyProgress (state, payload) {
-      state.progress = payload.progress
+    setProgress (state, { step }) {
+      state.progress = step
     },
-    concatArticleList (state, payload) {
-      if (!state.articles[payload.category]) state.articles[payload.category] = []
-      state.articles[payload.category] = state.articles[payload.category].concat(payload.list)
+    concatArticleList (state, { category, list }) {
+      if (!state.articles[category]) state.articles[category] = []
+      state.articles[category] = state.articles[category].concat(list)
     },
-    addCommentList (state, payload) {
-      if (!state.comments[payload.category]) state.comments[payload.category] = {}
-      state.comments[payload.category][payload.number] = payload.list
+    addCommentList (state, { category, number, list }) {
+      if (!state.comments[category]) state.comments[category] = {}
+      state.comments[category][number] = list
     }
   }
 })

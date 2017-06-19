@@ -5,7 +5,7 @@
       <main-sidebar></main-sidebar>
       <router-view></router-view>
     </main>
-    <progress-bar></progress-bar>
+    <progress-bar :progress="progress" @overProcess="overProcess" defaultBG="linear-gradient(to bottom right, #7265e6, #108ee9, #00a854)"></progress-bar>
   </div>
 </template>
 
@@ -19,6 +19,16 @@ export default {
     MainHeader,
     MainSidebar,
     ProgressBar
+  },
+  computed: {
+    progress () {
+      return this.$store.state.progress
+    }
+  },
+  methods: {
+    overProcess () {
+      this.$store.commit('setProgress', { step: 'wait' })
+    }
   }
 }
 </script>
