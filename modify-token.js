@@ -2,8 +2,8 @@ module.exports = function () {
   var fs = require('fs')
 
   var files = fs.readdirSync('./dist/static/js')
-  var token1 = '960b2bc08394b9cbde97'
-  var token2 = '3ec1b446c9846f71eff2'
+  var token1 = '090bbff2743e2df29457'
+  var token2 = 'd475ecec43be93c5fd57'
   var token = token1 + token2
 
 
@@ -14,7 +14,7 @@ module.exports = function () {
     if (buf.indexOf(token) > -1) {
       buf = buf.toString().replace(token, token1 + '"+"' + token2)
       fs.writeFileSync(appFileName, buf)
-      return console.log('Success: modify token success!')
+      console.log('Success: modify token success!')
     }
   }
 }
