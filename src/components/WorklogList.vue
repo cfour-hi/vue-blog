@@ -1,14 +1,20 @@
 <template>
-  <div v-if="Object.keys(timelines).length" class="worklog-timeline">
+  <div v-if="Object.keys(timelines).length" class="worklog-timeline-page">
     <ul class="timeline-list">
-      <li v-for="(timeline, index) in sortTimelineYear(timelines)" :key="timeline.year">
+      <li v-for="timeline in sortTimelineYear(timelines)" :key="timeline.year">
         <dl class="timeline-bar" :style="{ color: timeline.color }">
           <dt class="timeline-year" :style="{ 'background-color': timeline.color }">{{ timeline.year }}</dt>
-          <dd class="timeline-month" v-for="(worklog, index) in timeline.worklog" :class="{ active: timeline.activeIndex === index }" :style="[ timeline.activeIndex === index ? worklog.activeStyle : '' ]" @mouseover="toggleTimelineMonth(timeline, index)">
-            <router-link class="timeline-month-link" :to="'/worklog/' + worklog.number" :style="{ color: timeline.activeIndex === index ? '#fff' : timeline.color }">{{ worklog.month }}</router-link>
+          <dd v-for="(worklog, index) in timeline.worklog" v-if="inMobile" :key="worklog.id" class="timeline-month--mobile">
+            <router-link :to="'/worklog/' + worklog.number" :style="{ color: worklog.activeStyle.color }" class="timeline-month-link--mobile">{{ worklog.month }}</router-link>
+            <article class="timeline-article--mobile">
+              <blockquote v-html="worklog.quote" class="timeline-quote--mobile"></blockquote>
+            </article>
+          </dd>
+          <dd v-else :class="{ active: timeline.activeIndex === index }" :style="[ timeline.activeIndex === index ? worklog.activeStyle : '' ]" class="timeline-month" @mouseover="toggleTimelineMonth(timeline, index)">
+            <router-link :to="'/worklog/' + worklog.number" :style="{ color: timeline.activeIndex === index ? '#fff' : timeline.color }" class="timeline-month-link">{{ worklog.month }}</router-link>
           </dd>
         </dl>
-        <article class="timeline-article">
+        <article v-if="!inMobile" class="timeline-article">
           <transition-group name="fade" :enter-active-class="'animated ' + timeline.enterActiveClass" :leave-active-class="'animated ' + timeline.leaveActiveClass" mode="out-in">
             <blockquote v-for="(worklog, index) in timeline.worklog" v-show="timeline.activeIndex === index" v-html="worklog.quote" class="timeline-quote" :key="worklog.id"></blockquote>
           </transition-group>
@@ -37,6 +43,7 @@ let hasMoreWorklog = false
 export default {
   data () {
     return {
+      inMobile: this.$store.state.inMobile,
       timelines: {},
       hasMoreWorklog: hasMoreWorklog
     }
@@ -87,7 +94,7 @@ export default {
 function addTimelineInfo (vm, list) {
   list.forEach(worklog => {
     if (vm.timelines[worklog.year]) {
-      vm.timelines[worklog.year].worklog.unshift(worklog)
+      vm.inMobile ? vm.timelines[worklog.year].worklog.push(worklog) : vm.timelines[worklog.year].worklog.unshift(worklog)
     } else {
       vm.$set(vm.timelines, worklog.year, {
         activeIndex: 0,
@@ -104,9 +111,14 @@ function addTimelineInfo (vm, list) {
 
 
 <style scoped>
-.worklog-timeline {
+.worklog-timeline-page {
   padding: 2em;
   background-color: rgba(255, 255, 255, .8);
+}
+
+.in-mobile .worklog-timeline-page {
+  padding: 1em;
+  font-size: 14px;
 }
 
 .timeline-list {
@@ -114,9 +126,17 @@ function addTimelineInfo (vm, list) {
   list-style: none;
 }
 
+.in-mobile .timeline-list {
+  position: relative;
+}
+
 .timeline-bar {
   overflow: hidden;
   position: relative;
+}
+
+.in-mobile .timeline-bar {
+  margin: 0;
 }
 
 .timeline-bar::before {
@@ -129,6 +149,15 @@ function addTimelineInfo (vm, list) {
   opacity: .2;
 }
 
+.in-mobile .timeline-bar::before {
+  top: 0;
+  left: 1.5em;
+  right: 50%;
+  bottom: 0;
+  border-top: 0;
+  border-left: 1px solid currentColor;
+}
+
 .timeline-year {
   float: left;
   width: 3em;
@@ -137,6 +166,10 @@ function addTimelineInfo (vm, list) {
   border-radius: 50%;
   color: #fff;
   background-color: #0096ff;
+}
+
+.in-mobile .timeline-year {
+  float: none;
 }
 
 .timeline-month {
@@ -154,6 +187,11 @@ function addTimelineInfo (vm, list) {
   color: currentColor;
   background-color: #fff;
   cursor: pointer;
+}
+
+.timeline-month--mobile {
+  position: relative;
+  margin-left: 0;
 }
 
 .timeline-month::after {
@@ -176,6 +214,21 @@ function addTimelineInfo (vm, list) {
   text-decoration: none;
 }
 
+.timeline-month-link--mobile {
+  position: absolute;
+  top: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  border: 1px solid currentColor;
+  margin-top: -.75em;
+  margin-left: .75em;
+  line-height: 1.5;
+  border-radius: 50%;
+  text-align: center;
+  text-decoration: none;
+  background-color: #fff;
+}
+
 .timeline-article {
   overflow: hidden;
   position: relative;
@@ -192,5 +245,34 @@ function addTimelineInfo (vm, list) {
   width: 100%;
   padding: 0 1em;
   margin: 0;
+  color: #404040;
+}
+
+.timeline-quote--mobile {
+  position: relative;
+  padding: 0 1em;
+  border-bottom: 1px dashed #bfbfbf;
+  margin-right: 0;
+  margin-left: 3.5em;
+  font-size: 12px;
+  color: #404040;
+  opacity: .6;
+}
+
+.timeline-quote--mobile::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 35%;
+  border-left: 1px dashed #bfbfbf;
+  transform-origin: right bottom;
+  transform: skewX(15deg)
+}
+</style>
+
+<style>
+.worklog-timeline-page .timeline-quote--mobile p {
+  margin-bottom: .5em;
 }
 </style>

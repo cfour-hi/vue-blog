@@ -1,9 +1,9 @@
 <template>
   <div class="article-list-page">
     <dl class="article-list">
-      <dd v-for="article in articleList" class="article-item" :key="article.id">
+      <dd v-for="article in articleList" class="article-item" :key="article.id" @click="jump2ArticleContent(article)">
         <article class="article-container">
-          <router-link v-html="article.banner" class="article-thumb" :to="'/article/' + article.number" tag="div"></router-link>
+          <router-link v-if="!inMobile" v-html="article.banner" class="article-thumb" :to="'/article/' + article.number" tag="div"></router-link>
           <router-link class="article-title" :to="'/article/' + article.number" tag="h2">{{ article.title }}</router-link>
           <blockquote class="article-quote" v-html="article.quote"></blockquote>
           <article-pieces :articleInfo="article"></article-pieces>
@@ -37,6 +37,7 @@ export default {
   },
   data () {
     return {
+      inMobile: this.$store.state.inMobile,
       articleList: [],
       hasMoreArticle: hasMoreArticle,
       loadingMore: false
@@ -66,6 +67,9 @@ export default {
         this.hasMoreArticle = hasMoreArticle = response.length === pagination.size
         this.$store.commit('concatArticleList', { category: this.$route.meta.category, list: articleList })
       })
+    },
+    jump2ArticleContent (article) {
+      if (this.inMobile) this.$router.push('/article/' + article.number)
     }
   }
 }
@@ -76,26 +80,46 @@ export default {
   font-size: 14px;
 }
 
+.in-mobile .article-list {
+  margin-top: 0;
+}
+
 .article-item {
   padding: .5em;
   margin: 1em 0;
   background-color: rgba(255, 255, 255, .8);
 }
 
+.in-mobile .article-item {
+  padding: .5em 1em;
+}
+
+.in-mobile .article-item:first-child {
+  margin-top: 0;
+}
+
 .article-item:hover {
   background-color: rgba(0, 0, 0, .05);
+}
+
+.in-mobile .article-item:hover {
+  background-color: rgba(255, 255, 255, .8);
 }
 
 .article-title {
   margin: 0;
   font-size: 16px;
-  color: #404040;
+  color: #5a5a5a;
   cursor: pointer;
   transition: transform .3s;
 }
 
 .article-title:hover {
   transform: translateX(.5em);
+}
+
+.in-mobile .article-title:hover {
+  transform: none;
 }
 
 .article-thumb {
@@ -119,6 +143,7 @@ export default {
 }
 
 .article-loading-more {
+  margin-bottom: 1em;
   font-size: 14px;
   line-height: 2.5;
   text-align: center;
@@ -130,6 +155,11 @@ export default {
 .article-loading-more:hover {
   color: #5a5a5a;
   background-color: #e9e9e9;
+}
+
+.in-mobile .article-loading-more:hover {
+  color: #919191;
+  background-color: rgba(255, 255, 255, .8);
 }
 </style>
 

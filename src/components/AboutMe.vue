@@ -3,22 +3,34 @@
     <ul class="experience">
       <li class="joke-section" data-period="<初中>">
         <p>体育老师对我说：“女生喜欢踢足球的男生”，我信了...</p>
-        <p>踢烂五双鞋也没有女生说喜欢我，不干了...</p>
+        <p>
+          <i class="fa fa-meh-o" aria-hidden="true"></i>
+          踢烂五双鞋也没有女生说喜欢我，不干了...
+        </p>
       </li>
       <li class="joke-section" data-period="<高中>">
         <p>选择成为一名体育生，高考全队文化成绩第一...</p>
-        <p>可专业成绩却因为受伤而惨不忍睹...</p>
+        <p>
+          <i class="fa fa-frown-o" aria-hidden="true"></i>
+          可专业成绩却因为受伤而惨不忍睹...
+        </p>
       </li>
       <li class="joke-section" data-period="<大学>">
         <p>选择室内设计专业，想做一枚高冷的设计师...</p>
-        <p>奈何“天赋“乃可望而不可即...</p>
+        <p>
+          <i class="fa fa-frown-o" aria-hidden="true"></i>
+          奈何“天赋“乃可望而不可即...
+        </p>
       </li>
       <li class="joke-section" data-period="<工作>">
         <p>老大说：“看你对电脑挺熟悉，试试看把公司官网修改下。”</p>
-        <p>从此踏上前端大坑...</p>
+        <p>
+          <i class="fa fa-smile-o" aria-hidden="true"></i>
+          从此踏上前端大坑...
+        </p>
       </li>
     </ul><!--
-    --><div class="instroduce">
+    --><div v-if="!inMobile" class="instroduce">
       <div class="instroduce-border-top"></div>
       <!--<img class="avatar" src="https://avatars3.githubusercontent.com/u/8335856?v=3&s=240" alt="avatar">-->
       <p class="name">MONINE</p>
@@ -28,6 +40,16 @@
   </div>
 </template>
 
+<script>
+export default {
+  data () {
+    return {
+      inMobile: this.$store.state.inMobile
+    }
+  }
+}
+</script>
+
 <style scoped>
 .experience {
   display: inline-block;
@@ -36,6 +58,11 @@
   margin: 0;
   list-style: none;
   background-color: rgba(255, 255, 255, .8);
+}
+
+.in-mobile .experience {
+  width: 100%;
+  padding: 1em;
 }
 
 .joke-section {
@@ -78,3 +105,10 @@
   font-size: 20px;
 }
 </style>
+
+<style>
+.about-me-page .joke-section p:last-child {
+  color: #919191;
+}
+</style>
+

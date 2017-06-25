@@ -1,11 +1,15 @@
 <template>
-  <div id="app">
-    <main-header></main-header>
+  <div id="app" :class="{ 'sidebar-active': mainSidebarActive }">
+    <main-sidebar v-if="inMobile" @toggleSidebar="toggleSidebar"></main-sidebar>
+    <main-header v-else></main-header>
     <main class="main">
-      <main-sidebar></main-sidebar>
+      <main-header v-if="inMobile" :mainSidebarActive="mainSidebarActive" @toggleSidebar="toggleSidebar"></main-header>
+      <main-sidebar v-else></main-sidebar>
       <router-view></router-view>
+      <div v-show="inMobile && mainSidebarActive" class="main-mask" @click="closeSidebar"></div>
     </main>
     <progress-bar :progress="progress" @overProcess="overProcess" defaultBG="linear-gradient(to bottom right, #7265e6, #108ee9, #00a854)"></progress-bar>
+    <tool-box v-if="!inMobile"></tool-box>
   </div>
 </template>
 
@@ -13,12 +17,20 @@
 import MainHeader from './components/MainHeader'
 import MainSidebar from './components/MainSidebar'
 import ProgressBar from './components/ProgressBar'
+import ToolBox from './components/ToolBox'
 
 export default {
   components: {
     MainHeader,
     MainSidebar,
-    ProgressBar
+    ProgressBar,
+    ToolBox
+  },
+  data () {
+    return {
+      inMobile: this.$store.state.inMobile,
+      mainSidebarActive: false
+    }
   },
   computed: {
     progress () {
@@ -28,6 +40,12 @@ export default {
   methods: {
     overProcess () {
       this.$store.commit('setProgress', { step: 'wait' })
+    },
+    toggleSidebar () {
+      this.mainSidebarActive = !this.mainSidebarActive
+    },
+    closeSidebar () {
+      this.mainSidebarActive = false
     }
   }
 }
@@ -39,15 +57,19 @@ export default {
   margin: 5.5em auto 1em;
 }
 
-.loader {
-  position: absolute;
-  z-index: 1;
-  top: .5em;
-  right: 1em;
-  font-size: 2em;
+.in-mobile .main {
+  width: 100%;
+  margin: 0;
+}
+
+.main-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 10em;
 }
 </style>
-
 
 <style>
 @import './app/css/base.css';

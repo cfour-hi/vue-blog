@@ -25,3 +25,23 @@
 .animated {
   animation-duration: .3s;
 }
+
+.in-mobile .main-sidebar {
+  transform: translate3d(-10em, 0, 0);
+  transition: transform .3s;
+}
+
+.in-mobile .sidebar-active .main-sidebar {
+  transform: translate3d(0, 0, 0);
+}
+
+.in-mobile .main-header,
+.in-mobile .main-container {
+  transition: transform .3s;
+  transform: translate3d(0, 0, 0);
+}
+
+.in-mobile .sidebar-active .main-header,
+.in-mobile .sidebar-active .main-container {
+  transform: translate3d(10em, 0, 0);
+}

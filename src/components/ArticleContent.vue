@@ -33,11 +33,14 @@ export default {
     this.$store.state.articles[this.$route.meta.category]
       ? this.articleInfo = this.$store.state.articles[this.$route.meta.category].find(article => article.number === +this.$route.params.number)
       : setArticleInfo(this)
+  },
+  mounted () {
+    document.scrollingElement.scrollTop = 0
   }
 }
 
 function setArticleInfo (vm) {
-  this.$store.commit('setProgress', { step: 'loading' })
+  vm.$store.commit('setProgress', { step: 'loading' })
 
   getArticleInfo(vm.$route.meta.category, vm.$route.params.number).then(response => {
     const category = articleCategoryList.find(category => category.label === vm.$route.meta.category)
@@ -53,6 +56,10 @@ function setArticleInfo (vm) {
   font-size: 14px;
   color: #404040;
   background-color: rgba(255, 255, 255, .8);
+}
+
+.in-mobile .article-container {
+  padding: 1em;
 }
 
 .article-title {
