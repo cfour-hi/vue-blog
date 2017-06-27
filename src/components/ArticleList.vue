@@ -3,7 +3,7 @@
     <dl class="article-list">
       <dd v-for="article in articleList" class="article-item" :key="article.id" @click="jump2ArticleContent(article)">
         <article class="article-container">
-          <router-link v-if="!inMobile" v-html="article.banner" class="article-thumb" :to="'/article/' + article.number" tag="div"></router-link>
+          <router-link v-if="!inMobile" v-html="article.thumb" class="article-thumb" :to="'/article/' + article.number" tag="div"></router-link>
           <router-link class="article-title" :to="'/article/' + article.number" tag="h2">{{ article.title }}</router-link>
           <blockquote class="article-quote" v-html="article.quote"></blockquote>
           <article-pieces :articleInfo="article"></article-pieces>

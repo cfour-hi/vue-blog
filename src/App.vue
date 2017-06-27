@@ -58,6 +58,7 @@ export default {
 }
 
 .in-mobile .main {
+  overflow-x: hidden;
   width: 100%;
   margin: 0;
 }

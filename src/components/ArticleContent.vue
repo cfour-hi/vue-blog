@@ -117,11 +117,6 @@ function setArticleInfo (vm) {
   font-size: 12px;
 }
 
-.article-content-page .article-content code {
-  font-size: 13px;
-  color: #5a5a5a;
-}
-
 .article-content-page .article-content pre {
   max-height: 50em;
   padding: 1em;
@@ -150,5 +145,6 @@ function setArticleInfo (vm) {
 .article-content-page .article-content pre code {
   font-size: 12px;
   color: #fff;
+  background-color: transparent;
 }
 </style>

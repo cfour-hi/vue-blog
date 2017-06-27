@@ -1,5 +1,5 @@
 import marked from 'marked'
-import hljs from 'hljs'
+import hljs from 'highlight.js'
 
 const renderer = new marked.Renderer()
 renderer.link = (href, title, text) => `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`

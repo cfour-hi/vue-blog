@@ -10,6 +10,7 @@ export function converArticleInfo (article) {
     createdAt: article.created_at.split('T')[0],
     quote: sections[0],
     banner: sections[1],
+    thumb: sections[1].replace(/size=1024\*1024/, 'size=256*256'),
     body: sections[2],
     labels: article.labels,
     commentNum: article.comments,
