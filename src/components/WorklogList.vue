@@ -233,7 +233,7 @@ function addTimelineInfo (vm, list) {
   overflow: hidden;
   position: relative;
   top: -1.2em;
-  height: 7.5em;
+  height: 7em;
   margin-left: 3em;
   font-size: 14px;
   border: 1px solid #e9e9e9;
