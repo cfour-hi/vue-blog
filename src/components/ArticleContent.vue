@@ -1,6 +1,6 @@
 <template>
   <div v-if="articleInfo.title" class="article-content-page">
-    <article class="article-container">
+    <article class="article-container" :style="{ 'border-top': `3px solid #${articleInfo.labels[0].color}` }">
       <h2 class="article-title">{{ articleInfo.title }}</h2>
       <article-pieces :articleInfo="articleInfo"></article-pieces>
       <i class="fa fa-quote-left fa-3x fa-pull-left fa-border" aria-hidden="true"></i>

@@ -241,10 +241,15 @@ function addTimelineInfo (vm, list) {
 }
 
 .timeline-quote {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
   position: absolute;
   width: 100%;
   padding: 0 1em;
   margin: 0;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
   color: #404040;
 }
 
