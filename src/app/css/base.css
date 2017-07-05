@@ -58,3 +58,8 @@ article code {
   border-radius: 3px;
   background-color: rgba(0, 0, 0, .05);
 }
+
+.in-mobile ul,
+.in-mobile ol {
+  padding-left: 1.5em;
+}

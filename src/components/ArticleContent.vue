@@ -1,6 +1,7 @@
 <template>
   <div v-if="articleInfo.title" class="article-content-page">
-    <article class="article-container" :style="{ 'border-top': `3px solid #${articleInfo.labels[0].color}` }">
+    <article class="article-container">
+      <div class="article-border-top" :style="{ 'background-color': '#' + articleInfo.labels[0].color }"></div>
       <h2 class="article-title">{{ articleInfo.title }}</h2>
       <article-pieces :articleInfo="articleInfo"></article-pieces>
       <i class="fa fa-quote-left fa-3x fa-pull-left fa-border" aria-hidden="true"></i>
@@ -60,6 +61,16 @@ function setArticleInfo (vm) {
 
 .in-mobile .article-container {
   padding: 1em;
+}
+
+.in-mobile .article-border-top {
+  margin: -1em -1em 0;
+}
+
+.article-border-top {
+  height: 3px;
+  opacity: .3;
+  margin: -2em -2em 0;
 }
 
 .article-title {

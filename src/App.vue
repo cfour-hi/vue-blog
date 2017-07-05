@@ -1,5 +1,6 @@
 <template>
   <div id="app" :class="{ 'sidebar-active': mainSidebarActive }">
+    <div v-if="!inMobile" id="particles-js"></div>
     <main-sidebar v-if="inMobile" @toggleSidebar="toggleSidebar"></main-sidebar>
     <main-header v-else></main-header>
     <main class="main">
@@ -14,6 +15,8 @@
 </template>
 
 <script>
+import particlesJS from 'particlesJS'
+
 import MainHeader from './components/MainHeader'
 import MainSidebar from './components/MainSidebar'
 import ProgressBar from './components/ProgressBar'
@@ -37,6 +40,26 @@ export default {
       return this.$store.state.progress
     }
   },
+  mounted () {
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 33, density: { enable: true, value_area: 666 } },
+        color: { value: '#d9d9d9' },
+        opacity: { value: 0.5 },
+        size: { value: 15, random: true },
+        line_linked: { enable: true, distance: 150, color: '#d9d9d9', opacity: 0.5, width: 1 },
+        move: { enable: true, speed: 3 }
+      },
+      interactivity: {
+        detect_on: 'canvas',
+        events: {
+          onhover: { enable: false },
+          onclick: { enable: false }
+        }
+      },
+      retina_detect: true
+    })
+  },
   methods: {
     overProcess () {
       this.$store.commit('setProgress', { step: 'wait' })
@@ -52,6 +75,15 @@ export default {
 </script>
 
 <style scoped>
+#particles-js {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .main {
   width: 60em;
   margin: 5.5em auto 1em;

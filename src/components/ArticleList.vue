@@ -174,16 +174,16 @@ export default {
   height: 10em;
   cursor: pointer;
   object-fit: cover;
-  transition: transform .3s;
+  transition: transform .5s;
 }
 
 .article-list-page .article-item:hover .article-thumb img {
   background-color: rgba(255, 255, 255, .8);
-  transform: scale(1.2) rotate(0);
+  transform: scale(1.05);
 }
 
 .article-list-page .article-item .article-thumb img:hover {
-  transform: scale(1.2) rotate(9deg);
+  transform: scale(1.05);
 }
 
 .article-list-page .article-quote p,
