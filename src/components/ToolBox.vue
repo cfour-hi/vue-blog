@@ -25,19 +25,18 @@ export default {
 <style scoped>
 .comp__tool-box {
   position: fixed;
-  right: 2em;
+  right: 1em;
   bottom: 1em;
-  width: 3em;
   font-size: 12px;
 }
 
 .fa {
-  width: 2em;
+  width: 1.5em;
   border-radius: 3px;
   text-align: center;
-  line-height: 2em;
+  line-height: 1.4em;
   color: #fff;
-  background-color: #49a9ee;
+  background-color: rgba(73, 169, 238, .8);
   cursor: pointer;
   transition: opacity .3s;
 }

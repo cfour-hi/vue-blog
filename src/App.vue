@@ -105,6 +105,8 @@ export default {
 </style>
 
 <style>
+@import './app/css/normalize@7.0.0.css';
+@import './app/css/vs2015.css';
 @import './app/css/base.css';
 @import './app/css/app.css';
 </style>

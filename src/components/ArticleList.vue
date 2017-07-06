@@ -174,7 +174,7 @@ export default {
   height: 10em;
   cursor: pointer;
   object-fit: cover;
-  transition: transform .5s;
+  transition: transform .3s;
 }
 
 .article-list-page .article-item:hover .article-thumb img {
@@ -183,7 +183,7 @@ export default {
 }
 
 .article-list-page .article-item .article-thumb img:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) rotate(3deg);
 }
 
 .article-list-page .article-quote p,

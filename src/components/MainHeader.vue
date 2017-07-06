@@ -38,7 +38,12 @@ export default {
   left: 0;
   height: 4.5em;
   border-bottom: 1px solid #f5f5f5;
+  margin-left: calc(100vw - 100%);
   background-color: rgba(255, 255, 255, .8);
+}
+
+.in-mobile .main-header {
+  margin-left: 0;
 }
 
 .fa-bars {
