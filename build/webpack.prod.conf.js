@@ -60,7 +60,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: config.build.index,
-      template: 'index.tpl.html',
+      template: 'index.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -70,7 +70,8 @@ var webpackConfig = merge(baseWebpackConfig, {
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'dependency',
+      env: JSON.parse(env.NODE_ENV)
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
