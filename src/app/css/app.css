@@ -23,7 +23,7 @@
 }
 
 .animated {
-  animation-duration: .3s;
+  animation-duration: .3s !important;
 }
 
 .in-mobile .main-sidebar {

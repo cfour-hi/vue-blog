@@ -1,8 +1,11 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import 'babel-polyfill'
-import 'font-awesome/css/font-awesome.css'
-import 'animate.css'
+
+if (process.env.NODE_ENV === 'development') {
+  import('font-awesome/css/font-awesome.css')
+  import('animate.css')
+}
 
 import Vue from 'vue'
 import axios from 'axios'

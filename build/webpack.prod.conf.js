@@ -26,14 +26,12 @@ var webpackConfig = merge(baseWebpackConfig, {
   },
   externals: {
     'babel-polyfill': '_babelPolyfill',
-    vue: 'vue',
+    vue: 'Vue',
     'vue-router': 'VueRouter',
     vuex: 'Vuex',
     axios: 'axios',
     marked: 'marked',
-    'highlight.js': 'hljs',
-    'animate.css': 'animate.css',
-    'font-awesome/css/font-awesome.css': 'font-awesome/css/font-awesome.css'
+    'highlight.js': 'hljs'
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html

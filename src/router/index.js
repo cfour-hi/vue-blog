@@ -10,7 +10,9 @@ const ArticleList = r => { require.ensure(['@/components/ArticleList'], () => { 
 const ArticleContent = r => { require.ensure(['@/components/ArticleContent'], () => { r(require('@/components/ArticleContent')) }) }
 const WorklogList = r => { require.ensure(['@/components/WorklogList'], () => { r(require('@/components/WorklogList')) }) }
 
-Vue.use(Router)
+if (process.env.NODE_ENV === 'development') {
+  Vue.use(Router)
+}
 
 export const routes = [
   {
