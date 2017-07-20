@@ -1,17 +1,21 @@
 <template>
   <section class="main-container">
-    <router-view v-if="inMobile"></router-view>
-    <transition v-else name="fade" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
-      <router-view></router-view>
+    <transition name="fade" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
+      <keep-alive :include="keepAliveComps">
+        <router-view></router-view>
+      </keep-alive>
     </transition>
   </section>
 </template>
 
 <script>
+import { keepAliveComps } from '@/app/js/config'
+
 export default {
   data () {
     return {
-      inMobile: this.$store.state.inMobile
+      inMobile: this.$store.state.inMobile,
+      keepAliveComps: keepAliveComps.join(',')
     }
   }
 }

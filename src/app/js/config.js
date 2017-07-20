@@ -15,3 +15,9 @@ export const navRoutes = {
 export const sidebar = {
   lineHeight: 2.5
 }
+
+export const keepAliveComps = [
+  'about-me',
+  'article-list',
+  'worklog-list'
+]

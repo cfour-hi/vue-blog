@@ -1,5 +1,5 @@
 <template>
-  <div class="about-me-page" v-once>
+  <div v-once class="page__about-me">
     <ul class="experience">
       <li class="joke-section" data-period="<初中>">
         <p>体育老师对我说：“女生喜欢踢足球的男生”，我信了...</p>
@@ -42,6 +42,7 @@
 
 <script>
 export default {
+  name: 'about-me',
   data () {
     return {
       inMobile: this.$store.state.inMobile
@@ -107,7 +108,7 @@ export default {
 </style>
 
 <style>
-.about-me-page .joke-section p:last-child {
+.page__about-me .joke-section p:last-child {
   color: #919191;
 }
 </style>

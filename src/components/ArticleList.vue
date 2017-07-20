@@ -32,6 +32,7 @@ const pagination = {
 let hasMoreArticle = false
 
 export default {
+  name: 'article-list',
   components: {
     ArticlePieces
   },
@@ -44,9 +45,7 @@ export default {
     }
   },
   created () {
-    this.$store.state.articles[this.$route.meta.category]
-      ? this.articleList = this.$store.state.articles[this.$route.meta.category]
-      : this.getArticleList()
+    this.getArticleList()
   },
   methods: {
     getArticleList () {
@@ -191,7 +190,7 @@ export default {
   margin: .5em 0;
 }
 
-.article-list-page .article-pieces {
+.article-list-page .comp__article-pieces {
   margin-top: .5em;
 }
 </style>

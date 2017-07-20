@@ -1,18 +1,20 @@
 <template>
-  <div v-if="Object.keys(timelines).length" class="worklog-timeline-page">
+  <div v-if="Object.keys(timelines).length" class="page__worklog-timeline">
     <ul class="timeline-list">
       <li v-for="timeline in sortTimelineYear(timelines)" :key="timeline.year">
         <dl class="timeline-bar" :style="{ color: timeline.color }">
           <dt class="timeline-year" :style="{ 'background-color': timeline.color }">{{ timeline.year }}</dt>
-          <dd v-for="(worklog, index) in timeline.worklog" v-if="inMobile" :key="worklog.id" class="timeline-month--mobile">
-            <router-link :to="'/worklog/' + worklog.number" :style="{ color: worklog.activeStyle.color }" class="timeline-month-link--mobile">{{ worklog.month }}</router-link>
-            <article class="timeline-article--mobile">
-              <blockquote v-html="worklog.quote" class="timeline-quote--mobile"></blockquote>
-            </article>
-          </dd>
-          <dd v-else :class="{ active: timeline.activeIndex === index }" :style="[ timeline.activeIndex === index ? worklog.activeStyle : '' ]" class="timeline-month" @mouseover="toggleTimelineMonth(timeline, index)">
-            <router-link :to="'/worklog/' + worklog.number" :style="{ color: timeline.activeIndex === index ? '#fff' : timeline.color }" class="timeline-month-link">{{ worklog.month }}</router-link>
-          </dd>
+          <template v-for="(worklog, index) in timeline.worklog">
+            <dd v-if="inMobile" :key="worklog.id" class="timeline-month--mobile">
+              <router-link :to="'/worklog/' + worklog.number" :style="{ color: worklog.activeStyle.color }" class="timeline-month-link--mobile">{{ worklog.month }}</router-link>
+              <article class="timeline-article--mobile">
+                <blockquote v-html="worklog.quote" class="timeline-quote--mobile"></blockquote>
+              </article>
+            </dd>
+            <dd v-else :key="worklog.id" :class="{ active: timeline.activeIndex === index }" :style="[ timeline.activeIndex === index ? worklog.activeStyle : '' ]" class="timeline-month" @mouseover="toggleTimelineMonth(timeline, index)">
+              <router-link :to="'/worklog/' + worklog.number" :style="{ color: timeline.activeIndex === index ? '#fff' : timeline.color }" class="timeline-month-link">{{ worklog.month }}</router-link>
+            </dd>
+          </template>
         </dl>
         <article v-if="!inMobile" class="timeline-article">
           <transition-group name="fade" :enter-active-class="'animated ' + timeline.enterActiveClass" :leave-active-class="'animated ' + timeline.leaveActiveClass" mode="out-in">
@@ -41,6 +43,7 @@ const pagination = {
 let hasMoreWorklog = false
 
 export default {
+  name: 'worklog-list',
   data () {
     return {
       inMobile: this.$store.state.inMobile,
@@ -49,9 +52,7 @@ export default {
     }
   },
   created () {
-    this.$store.state.articles[this.$route.meta.category]
-      ? addTimelineInfo(this, this.$store.state.articles[this.$route.meta.category])
-      : this.getWorklogList()
+    this.getWorklogList()
   },
   methods: {
     getWorklogList () {
@@ -111,12 +112,12 @@ function addTimelineInfo (vm, list) {
 
 
 <style scoped>
-.worklog-timeline-page {
+.page__worklog-timeline {
   padding: 2em;
   background-color: rgba(255, 255, 255, .8);
 }
 
-.in-mobile .worklog-timeline-page {
+.in-mobile .page__worklog-timeline {
   padding: 1em;
   font-size: 14px;
 }
@@ -277,7 +278,7 @@ function addTimelineInfo (vm, list) {
 </style>
 
 <style>
-.worklog-timeline-page .timeline-quote--mobile p {
+.page__worklog-timeline .timeline-quote--mobile p {
   margin-bottom: .5em;
 }
 </style>

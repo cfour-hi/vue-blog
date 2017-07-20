@@ -53,7 +53,7 @@ table td {
 
 article code {
   padding: 2px .5em;
-  font-size: 13px;
+  font-size: inherit;
   color: #666;
   border-radius: 3px;
   background-color: rgba(0, 0, 0, .05);

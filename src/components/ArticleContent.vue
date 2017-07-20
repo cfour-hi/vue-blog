@@ -1,6 +1,6 @@
 <template>
-  <div v-if="articleInfo.title" class="article-content-page">
-    <article class="article-container">
+  <div class="page__article-content">
+    <article v-if="articleInfo.title" class="article-container">
       <div class="article-border-top" :style="{ 'background-color': '#' + articleInfo.labels[0].color }"></div>
       <h2 class="article-title">{{ articleInfo.title }}</h2>
       <article-pieces :articleInfo="articleInfo"></article-pieces>
@@ -9,7 +9,7 @@
       <div v-if="articleInfo.banner" v-html="articleInfo.banner" class="article-banner" alt="banner"></div>
       <div v-html="articleInfo.body" class="article-content"></div>
     </article>
-    <article-comment v-if="articleInfo.commentUrl" :comment-url="articleInfo.commentUrl"></article-comment>
+    <article-comment v-if="articleInfo.commentNum" :comment-url="articleInfo.commentUrl"></article-comment>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ import { getArticleInfo } from '@/api'
 import { articleCategoryList } from '@/app/js/config'
 
 export default {
+  name: 'article-content',
   components: {
     ArticlePieces,
     ArticleComment
@@ -87,21 +88,21 @@ function setArticleInfo (vm) {
 </style>
 
 <style>
-.article-content-page .article-pieces {
+.page__article-content .comp__article-pieces {
   margin-bottom: 1.2em;
   text-align: center;
 }
 
-.article-content-page .article-quote ol {
+.page__article-content .article-quote ol {
   padding-left: 7em;
   margin: 0;
 }
 
-.article-content-page .article-container img {
+.page__article-content .article-container img {
   border-radius: 5px;
 }
 
-.article-content-page .article-content blockquote {
+.page__article-content .article-content blockquote {
   padding: 1px 1em;
   margin-left: 0;
   margin-right: 0;
@@ -111,24 +112,24 @@ function setArticleInfo (vm) {
   background-color: #ecf6fd;
 }
 
-.article-content-page .article-content a,
+.page__article-content .article-content a,
 .article-container blockquote a {
   padding-bottom: 2px;
   border-bottom: 1px solid #919191;
   text-decoration: none;
 }
 
-.article-content-page .article-content a:hover,
+.page__article-content .article-content a:hover,
 .article-container blockquote a:hover {
   color: #7265e6;
   border-color: currentColor;
 }
 
-.article-content-page .article-content em {
+.page__article-content .article-content em {
   font-size: 12px;
 }
 
-.article-content-page .article-content pre {
+.page__article-content .article-content pre {
   max-height: 50em;
   padding: 1em;
   border-radius: 5px;
@@ -138,22 +139,22 @@ function setArticleInfo (vm) {
   -webkit-overflow-scrolling: touch;
 }
 
-.article-content-page .article-content pre::-webkit-scrollbar {
+.page__article-content .article-content pre::-webkit-scrollbar {
   width: 5px;
   height: 5px;
   background-color: transparent;
 }
 
-.article-content-page .article-content pre::-webkit-scrollbar-thumb {
+.page__article-content .article-content pre::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: #bfbfbf;
 }
 
-.article-content-page .article-content pre::-webkit-scrollbar-corner {
+.page__article-content .article-content pre::-webkit-scrollbar-corner {
   background-color: #fff;
 }
 
-.article-content-page .article-content pre code {
+.page__article-content .article-content pre code {
   font-size: 12px;
   color: #fff;
   background-color: transparent;

@@ -41,24 +41,26 @@ export default {
     }
   },
   mounted () {
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 33, density: { enable: true, value_area: 666 } },
-        color: { value: '#d9d9d9' },
-        opacity: { value: 0.5 },
-        size: { value: 15, random: true },
-        line_linked: { enable: true, distance: 150, color: '#d9d9d9', opacity: 0.5, width: 1 },
-        move: { enable: true, speed: 3 }
-      },
-      interactivity: {
-        detect_on: 'canvas',
-        events: {
-          onhover: { enable: false },
-          onclick: { enable: false }
-        }
-      },
-      retina_detect: true
-    })
+    if (process.env.NODE_ENV === 'production') {
+      particlesJS('particles-js', {
+        particles: {
+          number: { value: 33, density: { enable: true, value_area: 666 } },
+          color: { value: '#d9d9d9' },
+          opacity: { value: 0.5 },
+          size: { value: 15, random: true },
+          line_linked: { enable: true, distance: 150, color: '#d9d9d9', opacity: 0.5, width: 1 },
+          move: { enable: true, speed: 3 }
+        },
+        interactivity: {
+          detect_on: 'canvas',
+          events: {
+            onhover: { enable: false },
+            onclick: { enable: false }
+          }
+        },
+        retina_detect: true
+      })
+    }
   },
   methods: {
     overProcess () {

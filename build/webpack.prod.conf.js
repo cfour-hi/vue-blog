@@ -31,7 +31,9 @@ var webpackConfig = merge(baseWebpackConfig, {
     vuex: 'Vuex',
     axios: 'axios',
     marked: 'marked',
-    'highlight.js': 'hljs'
+    'highlight.js': 'hljs',
+    'animate.css': 'animate.css',
+    'font-awesome/css/font-awesome.css': 'font-awesome/css/font-awesome.css'
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html

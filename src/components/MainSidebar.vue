@@ -85,12 +85,13 @@ function generateNavList () {
 }
 
 .main-nav {
- position: relative;
+  position: relative;
 }
 
 .nav-item {
   display: block;
   text-decoration: none;
+  font-family: 'HoangYen11acb2198d6177d1';
   color: #5a5a5a;
 }
 

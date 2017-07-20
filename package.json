@@ -11,8 +11,10 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
+    "font-awesome": "^4.7.0",
     "highlight.js": "^9.12.0",
     "marked": "^0.3.6",
     "vue": "^2.2.6",

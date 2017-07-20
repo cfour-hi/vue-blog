@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!!width" class="progress-bar">
+  <div v-show="!!width" class="comp__progress-bar">
     <div class="progress-loader" :style="{ width: width + '%', background } "></div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style scoped>
-.progress-bar {
+.comp__progress-bar {
   position: fixed;
   z-index: 1;
   top: 0;

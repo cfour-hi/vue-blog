@@ -1,18 +1,20 @@
 <template>
-  <dl v-if="commentList.length" class="comment-list">
-    <dd v-for="comment in commentList" class="comment-item" :key="comment.id">
-      <a v-if="!inMobile" class="commenter-avatar-link" target="_blank" :href="comment.user.url">
-        <img class="commenter-avatar" :src="comment.user.avatar_url" alt="avatar">
-      </a>
-      <div class="comment-header">
-        <a class="commenter-name-link" target="_blank" :href="comment.user.url">
-          <strong>{{ comment.user.login }}</strong>
+  <div class="comp__article-comment">
+    <dl v-if="commentList.length" class="comment-list">
+      <dd v-for="comment in commentList" class="comment-item" :key="comment.id">
+        <a v-if="!inMobile" class="commenter-avatar-link" target="_blank" :href="comment.user.url">
+          <img class="commenter-avatar" :src="comment.user.avatar_url" alt="avatar">
         </a>
-        <span class="comment-created">{{ comment.createdAt }}</span>
-      </div>
-      <article class="comment-body" v-html="comment.body"></article>
-    </dd>
-  </dl>
+        <div class="comment-header">
+          <a class="commenter-name-link" target="_blank" :href="comment.user.url">
+            <strong>{{ comment.user.login }}</strong>
+          </a>
+          <span class="comment-created">{{ comment.createdAt }}</span>
+        </div>
+        <article class="comment-body" v-html="comment.body"></article>
+      </dd>
+    </dl>
+  </div>
 </template>
 
 <script>
