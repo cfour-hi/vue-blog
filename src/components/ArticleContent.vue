@@ -102,6 +102,23 @@ function setArticleInfo (vm) {
   border-radius: 5px;
 }
 
+.page__article-content .article-content h3 {
+  position: relative;
+   padding-left: 1em;
+  line-height: 3;
+}
+
+ .page__article-content .article-content h3::before {
+  content: '';
+  position: absolute;
+  top: .8em;
+  left: 0;
+  width: 5px;
+  height: 1.4em;
+  border-radius: 5px;
+  background-color: #f56a00;
+}
+
 .page__article-content .article-content blockquote {
   padding: 1px 1em;
   margin-left: 0;
@@ -155,6 +172,7 @@ function setArticleInfo (vm) {
 }
 
 .page__article-content .article-content pre code {
+  padding: 0;
   font-size: 12px;
   color: #fff;
   background-color: transparent;
