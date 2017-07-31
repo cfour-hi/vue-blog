@@ -63,3 +63,13 @@ article code {
 .in-mobile ol {
   padding-left: 1.5em;
 }
+
+.clearfix::before,
+.clearfix::after {
+  content: '';
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
+}

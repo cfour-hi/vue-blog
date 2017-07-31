@@ -1,16 +1,16 @@
 <template>
   <div id="app" :class="{ 'sidebar-active': mainSidebarActive }">
-    <div v-if="!inMobile" id="particles-js"></div>
-    <main-sidebar v-if="inMobile" @toggleSidebar="toggleSidebar"></main-sidebar>
+    <div v-if="!$store.state.inMobile" id="particles-js"></div>
+    <main-sidebar v-if="$store.state.inMobile" @toggleSidebar="toggleSidebar"></main-sidebar>
     <main-header v-else></main-header>
     <main class="main">
-      <main-header v-if="inMobile" :mainSidebarActive="mainSidebarActive" @toggleSidebar="toggleSidebar"></main-header>
+      <main-header v-if="$store.state.inMobile" :mainSidebarActive="mainSidebarActive" @toggleSidebar="toggleSidebar"></main-header>
       <main-sidebar v-else></main-sidebar>
       <router-view></router-view>
-      <div v-show="inMobile && mainSidebarActive" class="main-mask" @click="closeSidebar"></div>
+      <div v-show="$store.state.inMobile && mainSidebarActive" class="main-mask" @click="closeSidebar"></div>
     </main>
     <progress-bar :progress="progress" @overProcess="overProcess" defaultBG="linear-gradient(to bottom right, #7265e6, #108ee9, #00a854)"></progress-bar>
-    <tool-box v-if="!inMobile"></tool-box>
+    <tool-box v-if="!$store.state.inMobile"></tool-box>
   </div>
 </template>
 
@@ -31,7 +31,6 @@ export default {
   },
   data () {
     return {
-      inMobile: this.$store.state.inMobile,
       mainSidebarActive: false
     }
   },
@@ -41,7 +40,7 @@ export default {
     }
   },
   mounted () {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV !== 'production' && !this.$store.state.inMobile) {
       particlesJS('particles-js', {
         particles: {
           number: { value: 33, density: { enable: true, value_area: 666 } },

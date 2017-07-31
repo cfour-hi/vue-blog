@@ -1,8 +1,8 @@
 <template>
   <header class="main-header">
-    <i v-if="inMobile" :class="{ active: mainSidebarActive }" class="fa fa-bars" aria-hidden="true" @click="toggleSidebar"></i>
+    <i v-if="$store.state.inMobile" :class="{ active: mainSidebarActive }" class="fa fa-bars" aria-hidden="true" @click="toggleSidebar"></i>
     <section class="header-container">
-      <h1 class="bloger-name">MONINE</h1>
+      <router-link to="/" tag="h1" class="bloger-name">MONINE</router-link>
     </section>
   </header>
 </template>
@@ -17,9 +17,7 @@ export default {
     }
   },
   data () {
-    return {
-      inMobile: this.$store.state.inMobile
-    }
+    return {}
   },
   methods: {
     toggleSidebar () {
@@ -38,7 +36,7 @@ export default {
   left: 0;
   height: 4.5em;
   border-bottom: 1px solid #f5f5f5;
-  margin-left: calc(100vw - 100%);
+  padding-left: calc(100vw - 100%);
   background-color: rgba(255, 255, 255, .8);
 }
 
@@ -71,9 +69,11 @@ export default {
 }
 
 .bloger-name {
+  display: inline-block;
   margin: 0;
   line-height: 2.25;
   font-family: 'Agnes-Boldacb25b88f177d1';
+  cursor: pointer;
 }
 </style>
 

@@ -14,7 +14,6 @@ import { keepAliveComps } from '@/app/js/config'
 export default {
   data () {
     return {
-      inMobile: this.$store.state.inMobile,
       keepAliveComps: keepAliveComps.join(',')
     }
   }

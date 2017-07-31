@@ -1,5 +1,5 @@
 <template>
-  <div v-once class="page__about-me">
+  <div v-once class="page__about-me clearfix">
     <ul class="experience">
       <li class="joke-section" data-period="<初中>">
         <p>体育老师对我说：“女生喜欢踢足球的男生”，我信了...</p>
@@ -29,8 +29,8 @@
           从此踏上前端大坑...
         </p>
       </li>
-    </ul><!--
-    --><div v-if="!inMobile" class="instroduce">
+    </ul>
+    <div v-if="!$store.state.inMobile" class="instroduce">
       <div class="instroduce-border-top"></div>
       <!--<img class="avatar" src="https://avatars3.githubusercontent.com/u/8335856?v=3&s=240" alt="avatar">-->
       <p class="name">MONINE</p>
@@ -44,16 +44,14 @@
 export default {
   name: 'about-me',
   data () {
-    return {
-      inMobile: this.$store.state.inMobile
-    }
+    return {}
   }
 }
 </script>
 
 <style scoped>
 .experience {
-  display: inline-block;
+  float: left;
   width: 37em;
   padding: 1em 2em;
   margin: 0;
@@ -83,7 +81,7 @@ export default {
 
 .instroduce {
   vertical-align: top;
-  display: inline-block;
+  float: left;
   width: 11em;
   margin-left: 1em;
   font-family: 'HoangYen11acb2198d6177d1';

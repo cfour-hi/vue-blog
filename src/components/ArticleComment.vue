@@ -2,7 +2,7 @@
   <div class="comp__article-comment">
     <dl v-if="commentList.length" class="comment-list">
       <dd v-for="comment in commentList" class="comment-item" :key="comment.id">
-        <a v-if="!inMobile" class="commenter-avatar-link" target="_blank" :href="comment.user.url">
+        <a v-if="!$store.state.inMobile" class="commenter-avatar-link" target="_blank" :href="comment.user.url">
           <img class="commenter-avatar" :src="comment.user.avatar_url" alt="avatar">
         </a>
         <div class="comment-header">
@@ -28,7 +28,6 @@ export default {
   props: ['commentUrl'],
   data () {
     return {
-      inMobile: this.$store.state.inMobile,
       commentList: []
     }
   },

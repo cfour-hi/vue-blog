@@ -1,7 +1,7 @@
 <template>
   <aside class="main-sidebar">
-    <img v-if="inMobile" src="https://avatars3.githubusercontent.com/u/8335856?v=3&s=240" alt="avatar" class="avatar">
-    <p v-if="inMobile" class="be-better">Be better</p>
+    <img v-if="$store.state.inMobile" src="https://avatars3.githubusercontent.com/u/8335856?v=3&s=240" alt="avatar" class="avatar">
+    <p v-if="$store.state.inMobile" class="be-better">Be better</p>
     <div class="slide-bar" :style="{ height: sidebarLineHeight, transform: 'translateY(' + sliderBarTranslate + ')' }"></div>
     <nav class="main-nav">
       <router-link v-for="(nav, index) in navs" :key="nav.label" :to="nav.route" :exact="nav.exact" :style="{ 'line-height': sidebarLineHeight }" class="nav-item" @click.native="toggleSidebar">
@@ -9,7 +9,7 @@
         {{ nav.label }}
       </router-link>
     </nav>
-    <footer v-if="inMobile" class="footer">
+    <footer v-if="$store.state.inMobile" class="footer">
       <i class="fa fa-copyright" aria-hidden="true"></i>
       2016 - {{ year }}
     </footer>
@@ -24,7 +24,6 @@ export default {
   name: 'main-sidebar',
   data () {
     return {
-      inMobile: this.$store.state.inMobile,
       navs: generateNavList(),
       sidebarLineHeight: sidebar.lineHeight + 'em',
       year: (new Date()).getFullYear()

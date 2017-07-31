@@ -5,7 +5,7 @@
         <dl class="timeline-bar" :style="{ color: timeline.color }">
           <dt class="timeline-year" :style="{ 'background-color': timeline.color }">{{ timeline.year }}</dt>
           <template v-for="(worklog, index) in timeline.worklog">
-            <dd v-if="inMobile" :key="worklog.id" class="timeline-month--mobile">
+            <dd v-if="$store.state.inMobile" :key="worklog.id" class="timeline-month--mobile">
               <router-link :to="'/worklog/' + worklog.number" :style="{ color: worklog.activeStyle.color }" class="timeline-month-link--mobile">{{ worklog.month }}</router-link>
               <article class="timeline-article--mobile">
                 <blockquote v-html="worklog.quote" class="timeline-quote--mobile"></blockquote>
@@ -16,7 +16,7 @@
             </dd>
           </template>
         </dl>
-        <article v-if="!inMobile" class="timeline-article">
+        <article v-if="!$store.state.inMobile" class="timeline-article">
           <transition-group name="fade" :enter-active-class="'animated ' + timeline.enterActiveClass" :leave-active-class="'animated ' + timeline.leaveActiveClass" mode="out-in">
             <blockquote v-for="(worklog, index) in timeline.worklog" v-show="timeline.activeIndex === index" v-html="worklog.quote" class="timeline-quote" :key="worklog.id"></blockquote>
           </transition-group>
@@ -46,7 +46,6 @@ export default {
   name: 'worklog-list',
   data () {
     return {
-      inMobile: this.$store.state.inMobile,
       timelines: {},
       hasMoreWorklog: hasMoreWorklog
     }
@@ -95,7 +94,7 @@ export default {
 function addTimelineInfo (vm, list) {
   list.forEach(worklog => {
     if (vm.timelines[worklog.year]) {
-      vm.inMobile ? vm.timelines[worklog.year].worklog.push(worklog) : vm.timelines[worklog.year].worklog.unshift(worklog)
+      vm.$store.state.inMobile ? vm.timelines[worklog.year].worklog.push(worklog) : vm.timelines[worklog.year].worklog.unshift(worklog)
     } else {
       vm.$set(vm.timelines, worklog.year, {
         activeIndex: 0,
