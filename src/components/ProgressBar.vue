@@ -21,9 +21,7 @@ export default {
     errorBG: { type: String, default: '#f04134' }
   },
   data () {
-    return {
-      width: 0
-    }
+    return { width: 0 }
   },
   computed: {
     background () {
@@ -33,8 +31,8 @@ export default {
   watch: {
     progress (to, from) {
       if (!progress[to]) return
-      this.width += 0.1
 
+      this.width += 0.1
       setTimeout(() => {
         this.width = progress[to] - 0.1
 

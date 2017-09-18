@@ -6,8 +6,6 @@ renderer.link = (href, title, text) => `<a href="${href}" title="${title || ''}"
 
 marked.setOptions({
   renderer,
-  highlight (code) {
-    return hljs.highlightAuto(code).value
-  },
+  highlight: code => hljs.highlightAuto(code).value,
   breaks: true
 })

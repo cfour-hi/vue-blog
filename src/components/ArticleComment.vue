@@ -32,7 +32,8 @@ export default {
     }
   },
   created () {
-    this.$store.state.comments[this.$route.meta.category] && this.$store.state.comments[this.$route.meta.category][this.$route.params.number]
+    this.$store.state.comments[this.$route.meta.category] &&
+    this.$store.state.comments[this.$route.meta.category][this.$route.params.number]
       ? this.commentList = this.$store.state.comments[this.$route.meta.category][this.$route.params.number]
       : setCommentList(this)
   }
@@ -52,9 +53,7 @@ function filterCommentInfo (comment) {
 
 function setCommentList (vm) {
   getCommentList(vm.commentUrl, page).then(response => {
-    response.forEach(comment => {
-      vm.commentList.push(filterCommentInfo(comment))
-    })
+    response.forEach(comment => vm.commentList.push(filterCommentInfo(comment)))
 
     vm.$store.commit('addCommentList', {
       category: vm.$route.meta.category,

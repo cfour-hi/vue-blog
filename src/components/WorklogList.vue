@@ -51,30 +51,24 @@ export default {
     }
   },
   created () {
-    this.getWorklogList()
+    this._getWorklogList()
   },
   methods: {
-    getWorklogList () {
+    _getWorklogList () {
       this.$store.commit('setProgress', { step: 'loading' })
 
       getWorklogList(pagination).then(response => {
         const worklogList = []
-        response.forEach(worklog => {
-          worklogList.push(converWorklogInfo(worklog))
-        })
-
+        response.forEach(worklog => worklogList.push(converWorklogInfo(worklog)))
         pagination.page += 1
         this.hasMoreArticle = hasMoreWorklog = response.length === pagination.size
-
         addTimelineInfo(this, worklogList)
         this.$store.commit('concatArticleList', { category: this.$route.meta.category, list: worklogList })
       })
     },
     sortTimelineYear (timelines) {
       const timelineList = []
-      Object.keys(timelines).forEach(year => {
-        timelineList.unshift(timelines[year])
-      })
+      Object.keys(timelines).forEach(year => timelineList.unshift(timelines[year]))
       return timelineList
     },
     toggleTimelineMonth (timeline, index) {

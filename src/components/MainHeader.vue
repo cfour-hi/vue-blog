@@ -11,13 +11,7 @@
 export default {
   name: 'main-header',
   props: {
-    mainSidebarActive: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data () {
-    return {}
+    mainSidebarActive: { type: Boolean, default: false }
   },
   methods: {
     toggleSidebar () {

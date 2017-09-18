@@ -22,10 +22,7 @@ import { articleCategoryList } from '@/app/js/config'
 
 export default {
   name: 'article-content',
-  components: {
-    ArticlePieces,
-    ArticleComment
-  },
+  components: { ArticlePieces, ArticleComment },
   data () {
     return {
       articleInfo: {}

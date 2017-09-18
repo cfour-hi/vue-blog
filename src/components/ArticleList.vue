@@ -24,18 +24,13 @@ import ArticlePieces from './ArticlePieces'
 import { getArticleList } from '@/api'
 import { converArticleInfo } from '@/app/js/app'
 
-const pagination = {
-  page: 1,
-  size: 5
-}
+const pagination = { page: 1, size: 5 }
 
 let hasMoreArticle = false
 
 export default {
   name: 'article-list',
-  components: {
-    ArticlePieces
-  },
+  components: { ArticlePieces },
   data () {
     return {
       articleList: [],
@@ -49,16 +44,13 @@ export default {
   methods: {
     getArticleList () {
       if (this.loadingMore) return
-      this.loadingMore = true
 
+      this.loadingMore = true
       this.$store.commit('setProgress', { step: 'loading' })
 
       getArticleList(pagination).then(response => {
         const articleList = []
-        response.forEach(article => {
-          articleList.push(converArticleInfo(article))
-        })
-
+        response.forEach(article => articleList.push(converArticleInfo(article)))
         pagination.page += 1
         this.loadingMore = false
         this.articleList = this.articleList.concat(articleList)

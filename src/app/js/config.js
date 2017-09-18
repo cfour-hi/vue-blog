@@ -1,4 +1,4 @@
-import { ARTICLE, WORKLOG, ABOUT, BLOG_REPO, WORKLOG_REPO } from '@/shared/constants'
+import { ARTICLE, WORKLOG, BLOG_REPO, WORKLOG_REPO } from '@/shared/constants'
 import { converArticleInfo, converWorklogInfo } from '@/app/js/app'
 
 export const articleCategoryList = [
@@ -8,8 +8,8 @@ export const articleCategoryList = [
 
 export const navRoutes = {
   [ARTICLE]: { label: ARTICLE.toUpperCase(), route: '/' + ARTICLE, iconClass: 'fa-chrome' },
-  [WORKLOG]: { label: WORKLOG.toUpperCase(), route: '/' + WORKLOG, iconClass: 'fa-internet-explorer' },
-  [ABOUT]: { label: ABOUT.toUpperCase(), route: '/' + ABOUT, iconClass: 'fa-firefox', exact: true }
+  [WORKLOG]: { label: WORKLOG.toUpperCase(), route: '/' + WORKLOG, iconClass: 'fa-internet-explorer' }
+  // [ABOUT]: { label: ABOUT.toUpperCase(), route: '/' + ABOUT, iconClass: 'fa-firefox', exact: true }
 }
 
 export const sidebar = {

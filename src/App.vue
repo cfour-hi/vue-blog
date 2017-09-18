@@ -6,7 +6,9 @@
     <main class="main">
       <main-header v-if="$store.state.inMobile" :mainSidebarActive="mainSidebarActive" @toggleSidebar="toggleSidebar"></main-header>
       <main-sidebar v-else></main-sidebar>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
       <div v-show="$store.state.inMobile && mainSidebarActive" class="main-mask" @click="closeSidebar"></div>
     </main>
     <progress-bar :progress="progress" @overProcess="overProcess" defaultBG="linear-gradient(to bottom right, #7265e6, #108ee9, #00a854)"></progress-bar>
@@ -15,8 +17,6 @@
 </template>
 
 <script>
-import particlesJS from 'particlesJS'
-
 import MainHeader from './components/MainHeader'
 import MainSidebar from './components/MainSidebar'
 import ProgressBar from './components/ProgressBar'
@@ -37,28 +37,6 @@ export default {
   computed: {
     progress () {
       return this.$store.state.progress
-    }
-  },
-  mounted () {
-    if (process.env.NODE_ENV !== 'production' && !this.$store.state.inMobile) {
-      particlesJS('particles-js', {
-        particles: {
-          number: { value: 33, density: { enable: true, value_area: 666 } },
-          color: { value: '#d9d9d9' },
-          opacity: { value: 0.5 },
-          size: { value: 15, random: true },
-          line_linked: { enable: true, distance: 150, color: '#d9d9d9', opacity: 0.5, width: 1 },
-          move: { enable: true, speed: 3 }
-        },
-        interactivity: {
-          detect_on: 'canvas',
-          events: {
-            onhover: { enable: false },
-            onclick: { enable: false }
-          }
-        },
-        retina_detect: true
-      })
     }
   },
   methods: {
