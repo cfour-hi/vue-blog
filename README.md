@@ -1,21 +1,7 @@
-# vue-blog-2
+# Vue 搭建的博客
 
-> A Vue.js project
+内容写在 Github Issues，使用 [Github REST API v3](https://developer.github.com/v3/) 获取。
 
-## Build Setup
+## 介绍
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+项目使用 [vue-cli](https://github.com/vuejs/vue-cli) + [vuejs-templates/webpack](https://github.com/vuejs-templates/webpack) 生成， [ES6](http://es6.ruanyifeng.com/) 语法 + [babel](https://babeljs.io/) 编译，遵循 [JavaScript Standard Style](https://standardjs.com/readme-zhcn.html) 规范，[ESLint](https://eslint.org/) 检查错误，依赖 [marked](https://github.com/chjj/marked) 解析编译 markdown 语法和 [highlight.js](https://highlightjs.org/) 高亮代码。
